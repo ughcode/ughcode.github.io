@@ -25,25 +25,36 @@
       .split(delimiter)
       .forEach(function (part, index, parts) {
 
-        if (index !== 0) { // not TOC
-          if (index < parts.length - 1) { // not last one
-            matches = parts[index + 1].match(/<.*id="(.+)".*>(.+)<.+/);
-            part +=
-              "<div class='next'><a href='" + matches[1] + ".html'>" + matches[2] + "</a></div>";
-          }
+        if (index === 0) { // TOC
+            // fix links to not be just anchors
+          part = part.replace(/<a href="#(.+)"/g, function (_match, capture) {
+            return "<a href='" + capture + ".html'";
+          });
+        } else {
+
+          part += "<div class='navigation'>";
 
           if (index > 1) { // not preface
             matches = parts[index - 1].match(/<.*id="(.+)".*>(.+)<.+/);
             part +=
-              "<div class='prev'><a href='" + matches[1] + ".html'>" + matches[2] + "</a></div>";
+              "<a href='" + matches[1] + ".html'>" + matches[2] + "</a>";
           }
 
+          if (index < parts.length - 1) { // not last one
+            matches = parts[index + 1].match(/<.*id="(.+)".*>(.+)<.+/);
             part +=
-              "<div class='toc'><a href='TOC.html'>Table of Contents</a></div>";
+              "<a class='next' href='" + matches[1] + ".html'>" + matches[2] + "</a>";
+          }
 
-            part +=
-              "<div class='toc'><a href='../index.html'>Home</a></div>";
+          part += "</div>";
+
+          part +=
+            "<div class='toc'><a href='TOC.html'>Table of Contents</a></div>";
+
         }
+
+        part +=
+          "<div class='toc'><a href='../index.html'>Home</a></div>";
 
         thisHref = part.match(/id="(.+)"/)[1];
 

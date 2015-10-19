@@ -29,26 +29,29 @@ p {
   max-width: 600px;
   margin: 0 auto;
   box-sizing: border-box;
-  border-bottom: 1px solid;
 }
 
 .cover {
   padding-top: 5%;
   min-height: 100%;
+  border-bottom: 1px solid;
 }
 
-.prev {
+.navigation {
+  border-bottom: 1px solid lightgray;
   margin-bottom: 20px;
+  padding-bottom: 20px;
+  height: 30px;
+}
+
+.navigation a.next {
+    float: right;
 }
 
 .toc:before {
   content: '';
   display: block;
   clear: both;
-}
-
-.next {
-  float: right;
 }
 
 .social {
