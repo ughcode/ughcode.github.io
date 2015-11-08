@@ -25,18 +25,20 @@
       .split(delimiter)
       .forEach(function (part, index, parts) {
 
-        if (index !== 0) { // not TOC
-          if (index < parts.length - 1) { // not last one
-            matches = parts[index + 1].match(/<.*id="(.+)".*>(.+)<.+/);
-            part +=
-              "<div class='next'><a href='" + matches[1] + ".html'>" + matches[2] + "</a></div>";
-          }
+        if (index === 0) { // TOC
+            part = part.replace(/(href=")#(.+)(")/g, "$1$2.html$3");
+        } else {
+            if (index < parts.length - 1) { // not last one
+                matches = parts[index + 1].match(/<.*id="(.+)".*>(.+)<.+/);
+                part +=
+                  "<div class='next'><a href='" + matches[1] + ".html'>" + matches[2] + "</a></div>";
+            }
 
-          if (index > 1) { // not preface
-            matches = parts[index - 1].match(/<.*id="(.+)".*>(.+)<.+/);
-            part +=
-              "<div class='prev'><a href='" + matches[1] + ".html'>" + matches[2] + "</a></div>";
-          }
+            if (index > 1) { // not preface
+                matches = parts[index - 1].match(/<.*id="(.+)".*>(.+)<.+/);
+                part +=
+                  "<div class='prev'><a href='" + matches[1] + ".html'>" + matches[2] + "</a></div>";
+            }
 
             part +=
               "<div class='toc'><a href='TOC.html'>Table of Contents</a></div>";

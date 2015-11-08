@@ -12,10 +12,17 @@ a {
 
 h1 {
   font-size: 5em;
+  background-color: rgb(244, 211, 19);
+  display: inline-block;
 }
 
 h2 {
   font-size: 2em;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.3em;
   font-weight: 400;
 }
 
@@ -25,16 +32,31 @@ p {
 }
 
 .container {
-  padding: 5px;
+  padding: 10px 40px;
   max-width: 600px;
   margin: 0 auto;
   box-sizing: border-box;
-  border-bottom: 1px solid;
 }
 
 .cover {
   padding-top: 5%;
   min-height: 100%;
+  position: relative;
+}
+
+.bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  padding: inherit;
+  text-align: center;
+}
+
+.bottom h3 {
+  border-bottom: 1px solid #333;
+  padding-bottom: 25px;
+  margin-top: -25px;
 }
 
 .prev {
