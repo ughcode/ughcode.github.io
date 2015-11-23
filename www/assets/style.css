@@ -22,7 +22,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.3em;
+  font-size: 1.1em;
   font-weight: 400;
 }
 
@@ -33,12 +33,13 @@ p {
 
 .container {
   padding: 10px 40px;
-  max-width: 600px;
+  max-width: 660px;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
 .cover {
+  max-width: 600px;
   padding-top: 5%;
   min-height: 100%;
   position: relative;
