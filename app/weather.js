@@ -115,12 +115,8 @@
     textEl.innerText = getDescription(temp);
 
     // Try to figure our what we're doing here:
-    var rotatePercent =
-      (temp - weatherData.main.temp_min) /
-      (weatherData.main.temp_max - weatherData.main.temp_min);
-
     borderEl.style.transform =
-      "rotate(" + rotatePercent * 360 + "deg)";
+      "rotate(" + (temp / 100) * 360 + "deg)";
   }
 
   /*
