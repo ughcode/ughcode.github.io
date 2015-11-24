@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<!-- Head section, not visible to the end user and is used
+to reference our other files -->
+
+<head>
+
+  <!-- Note the order of the files. weather.js is dependent
+  on weather_app.js and therefore is included after -->
+
+  <link href="weather.css" rel="stylesheet" type="text/css">
+
+  <script src="weather_app.js"></script>
+
+  <script src="weather.js"></script>
+
+</head>
+
+
+<!-- Body section, visible to the end user. The elements
+we're gonna work with are all here -->
+
+<body>
+
+  <div class="container">
+
+    <h2 id="text">Ugh.</h2>
+
+    <p>
+      Current Temperature in
+      <span id="location">Your Current Location</span>:
+    </p>
+
+    <div class="temp-container">
+      <div id="border"></div>
+      <div id="temp">Loading...</div>
+    </div>
+
+
+    <form id="form" action="#">
+      <input type="text" id="zip" placeholder="Enter Zip Code" />
+    </form>
+
+  </div>
+
+</body>
+
+</html>

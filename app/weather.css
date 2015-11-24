@@ -1,0 +1,56 @@
+html, body, .container {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: "Helvetica Neue";
+  font-size: 16px;
+  color: white;
+}
+
+.container {
+  overflow-y: auto;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: rebeccapurple;
+}
+
+.temp-container {
+  position: relative;
+  margin: 50px auto;
+  width: 300px;
+  height: 300px;
+}
+
+.temp-container #border {
+  border: 20px solid rebeccapurple;
+  border-bottom-color: white;
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-sizing: border-box;
+  transition: transform 2s ease-out;
+}
+
+.temp-container #temp {
+  top: 50%;
+  position: relative;
+}
+
+#form {
+  width: 300px;
+  margin: 0 auto;
+}
+
+#form #zip {
+  height: 30px;
+  width: 100%;
+  text-align: center;
+  border: none;
+}
+
