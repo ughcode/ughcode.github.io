@@ -21,11 +21,6 @@ h2 {
   font-weight: 400;
 }
 
-h3 {
-  font-size: 1.1em;
-  font-weight: 400;
-}
-
 p {
   text-align: justify;
   line-height: 1.8;
@@ -54,9 +49,9 @@ p {
   text-align: center;
 }
 
-.bottom h3 {
+.bottom > div {
   border-bottom: 1px solid #333;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
   margin-top: -25px;
 }
 
