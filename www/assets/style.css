@@ -11,6 +11,7 @@ a {
 }
 
 h1 {
+  margin: 10% 0;
   font-size: 5em;
   background-color: rgb(244, 211, 19);
   display: inline-block;
