@@ -78,6 +78,26 @@ p {
   text-align: center;
 }
 
+.social > * {
+  display: inline-block;
+  vertical-align: bottom;
+  margin: 10px;
+}
+
+.facebook {
+  top: -5px;
+  position: relative;
+}
+
+.product-hunt {
+  overflow: hidden;
+}
+
+.product-hunt iframe {
+  margin-top: -37px;
+}
+
+
 /**
  * Pandoc CSS
  */

@@ -7,7 +7,16 @@
 
   'use strict';
 
-  var htmlTemplate = fs.readFileSync('template.html', 'utf-8');
+  var social = fs.readFileSync('src/_social.html', 'utf-8');
+  var head = fs.readFileSync('src/_head.html', 'utf-8');
+
+  var htmlTemplate = fs.readFileSync('src/template.html', 'utf-8')
+    .replace('{{social}}', social)
+    .replace('{{head}}', head);
+
+  var indexTemplate = fs.readFileSync('src/template_index.html', 'utf-8')
+    .replace('{{social}}', social)
+    .replace('{{head}}', head);
 
   var delimiter = /\n(?=<h2 id=.+<\/h2>)/;
 
@@ -28,7 +37,7 @@
         if (index === 0) { // TOC
             // fix links to not be just anchors
           part = part.replace(/<a href="#(.+)"/g, function (_match, capture) {
-            return "<a href='" + capture + ".html'";
+            return "<a href='/www/" + capture + ".html'";
           });
         } else {
 
@@ -37,28 +46,33 @@
           if (index > 1) { // not preface
             matches = parts[index - 1].match(/<.*id="(.+)".*>(.+)<.+/);
             part +=
-              "<a href='" + matches[1] + ".html'>" + matches[2] + "</a>";
+              "<a href='/www/" + matches[1] + ".html'>" + matches[2] + "</a>";
           }
 
           if (index < parts.length - 1) { // not last one
             matches = parts[index + 1].match(/<.*id="(.+)".*>(.+)<.+/);
             part +=
-              "<a class='next' href='" + matches[1] + ".html'>" + matches[2] + "</a>";
+              "<a class='next' href='/www/" + matches[1] + ".html'>" + matches[2] + "</a>";
           }
 
           part += "</div>";
 
           part +=
-            "<div class='toc'><a href='TOC.html'>Table of Contents</a></div>";
+            "<div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div>";
 
         }
 
         part +=
-          "<div class='toc'><a href='../index.html'>Home</a></div>";
+          "<div class='toc'><a href='/index.html'>Home</a></div>";
 
         thisHref = part.match(/id="(.+)"/)[1];
 
+        if (index === 1) { // preface
+          fs.writeFile('index.html', indexTemplate.replace('{{content}}', part));
+        }
+
         part = htmlTemplate.replace('{{content}}', part);
+
         fs.writeFile('www/' + thisHref + '.html', part);
 
       });

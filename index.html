@@ -1,92 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-  <link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700' rel='stylesheet' type='text/css'>
-  <link rel='stylesheet' href='www/assets/style.css' media='all' type='text/css'>
-  <title>Ugh, Code.</title>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - An Introduction to Programming for the Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="An Introduction to Programming for the Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+<script src="//hnbutton.appspot.com/static/hn.min.js" async defer></script>
+
 </head>
 <body>
-
-  <div class='container cover'>
+  <div class="container cover">
     <h1>Ugh, Code.</h1>
     <h2>An Introduction to Programming for the Less Enthused</h2>
-    <div class='bottom'>
+    <div class="bottom">
       <div>
-        <a href='http://peleg.io' target='_blank'>Peleg Rosenthal</a>
+        <a href="http://peleg.io" target="_blank">Peleg Rosenthal</a>
       </div>
     </div>
   </div>
 
-  <div class='container'>
-    <h2>Preface</h2>
-    <p>
-    So you wanna build something. The next big app that's gonna make you rich (it
-    won't) and you keep bugging your coder friends to do it for you for some
-    percentage of nothing. If they're good at what they do, they most likely
-    already have a job and don't have time for your shenanigans. Plus it's your
-    idea, so you should build it.
-    </p>
+  <div class="container">
+    <h2 id="preface">Preface</h2>
+<p>So you wanna build something. The next big app that's gonna make you rich (it won't) and you keep bugging your coder friends to do it for you for some percentage of nothing. If they're good at what they do, they most likely already have a job and don't have time for your shenanigans. Plus, it's your idea, so you should build it.</p>
+<p>But you need to know how to program in order to do that. &quot;It's not my thing,&quot; you say in a whiny voice; you're the idea guy, the visionary. Plus, you're bad at math and one time you made the mistake of looking at the source code of a website which assured you coding was meant to be done most likely by aliens. Mmm hmm. I've said it all before.</p>
+<p>Well, coding isn't hard. And I guarantee you that no developer is going to do a better job than you are if you're willing to be patient and put some effort into the journey; nothing exceptional, just the same amount of effort you applied when you were learning how to read. Or a more recent experience -- the same amount of effort you used when you learned how to drink beer. At first it tasted like shit, but then you realized the benefits of knowing how to fake it and drink it without making a face -- it made you cool, and all of a sudden you were a tolerable human being. You may have even gotten laid.</p>
+<p>Learning how to program is no different than any other learning experience, it can be fun, it can be a bitch, but when you understand the benefits of knowing how to do it, you'll be willing to put in the effort. At least I sure hope so.</p>
+<p>This book is here to help you get started; to introduce you to the world of programming, to show you where and how to find your answers, and most of all, to keep you motivated. It doesn't take a genius to program and we're not in the business of making missiles (or maybe that's why you're here, iono), so we should take the subject lightly. To be a good programmer, it takes organization, persistence, and creativity. Last time I checked, we were all equipped with those qualities to some extent. So, congratulations, you're in.</p>
+<p>While this book is a great way to get into the world of programming, it is just your gateway drug -- it could get you hooked, but it won't be the one you should stop at. While anyone is welcome to enjoy these pages, this book is intended for people completely new to computer programming. If you are not new and you're looking for a more specialized resource, I suggest you keep looking. One place you can find suggestions for further steps is this book's resource list which can be found at the end of the book. Go fetch.</p>
+<div class='navigation'><a class='next' href='/www/about-me.html'>About: Me</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="twitter">
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://ughco.de" data-text="Ugh, Code - An Introduction to Programming for the Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="product-hunt">
+  <iframe
+    src="http://c.yvoschaap.com/producthunt/counter.html#href=https%3A%2F%2Fughco.de%2F&layout=tall"
+    width="56" height="65" scrolling="no" frameborder="0"
+    allowtransparency="true"></iframe>
+</div>
+<div class="reddit">
+  <a href="//www.reddit.com/submit"
+    onclick="window.location = '//www.reddit.com/submit?url=https%3A%2F%2Fughco.de'; return false">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news">
+  <a href="//news.ycombinator.com/submit" class="hn-share-button" data-title="Some Title" data-url="https://ughco.de">Vote on HN</a>
+</div>
 
-    <p>
-    But you need to know how to program in order to do that. "It's not my thing"
-    you say in a whiny voice; you're the idea guy, the visionary. Plus, you're bad
-    at math and one time you made the mistake of looking at the source code of a
-    website which led to the innocuous feeling of having a seizure. Mmm hmm. I've
-    said it all before.
-    </p>
-
-    <p>
-    Well coding isn't hard. And I guarantee you that no developer is going to do a
-    better job than you if you're willing to be patient and put some effort into
-    the journey; nothing exceptional, just the same amount of effort you applied
-    when you were learning how to read. Or a more recent experience -- the same
-    amount of effort you used to learn how to drink beer. Well at first it tasted
-    like shit, but then you realized the benefits of knowing how to fake it and
-    drink it without making a face -- it made you cool, and all of a sudden you
-    were a tolerable human being. You may have even gotten laid.
-    </p>
-
-    <p>
-    Learning how to program is no different than any other learning experience, it
-    can be fun, it can be a bitch, but when you understand the benefit of knowing
-    how to do it, you'll be willing to put in the effort. I sure hope.
-    </p>
-
-    <p>
-    This book is here to help you get started; introduce you to the world of
-    programming, show you where and how to find your answers and most of all, keep
-    you motivated. It doesn't take a genius to program and we're not in the
-    business of making missiles (or maybe that's why you're here, iono), so we
-    should take the subject lightly. To be a good programmer, it takes
-    organization, persistence, and creativity. Last time I checked, we were all
-    equipped with those qualities to some extent. So congratulations, you're in.
-    </p>
-
-    <p>
-    While this book is a great way to get into the world of programming, it is just
-    your gateway drug -- it could get you hooked, but it won't be the one you
-    should stop at. While anyone is welcome to enjoy these pages, this book is
-    intended for people completely new to computer programming. If you are not new
-    and you're looking for a more specialized resource, I suggest you keep looking.
-    One place you can find suggestions for further steps is this books resources
-    list which can be found more towards the end of the book. Go fetch.
-    </p>
-
-    <div class='navigation'>
-        <a class='next' href='www/about-me.html'>About: Me</a>
-    </div>
-    <div class='toc'><a href='www/TOC.html'>Table of Contents</a></div>
-
-    <div class='social'>
-      <div class='twitter'>
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://ughco.de" data-text="Ugh, Code - An Introduction to Programming for the Less Enthused">Tweet</a>
-        <script>
-          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-        </script>
-      </div>
     </div>
   </div>
-
 </body>
 </html>
