@@ -1,7 +1,7 @@
 
 (function () {
 
-  var apiUrl = 'http://api.openweathermap.org/data/2.5/weather';
+  var apiUrl = 'https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather';
 
   var apiKey = 'fa32fe96da1b6e0398aecdf455e73263';
 
