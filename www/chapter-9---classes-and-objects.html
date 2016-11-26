@@ -27,7 +27,7 @@
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span></code></pre></div>
 <p>The keyword <code>new</code> in JS is used to instantiate (create) an object. So just like before, when we had this expression:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> peleg <span class="op">=</span> <span class="op">{};</span></code></pre></div>
-<p>create a literal object for us, this time we're gonna create an object in a more unique way -- by using a constructor method.</p>
+<p>create a literal object for us, this time we're going to create an object in a more unique way -- by using a constructor method.</p>
 <p>In Object Oriented Programming (OOP), we have classes and objects. Objects are just instances of classes, which therefore can be thought of as object factories. So in this case, <code>XMLHttpRequest</code> is a built-in object factory (or class), which when we invoke it with the <code>new</code> keyword, returns us with an object of its type (or an instance of the class <code>XMLHttpRequest</code>).</p>
 <p>If you're still a bit confused about this, think of how we created our <code>peleg</code> object earlier. Another way for us to create that object is this:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> peleg <span class="op">=</span> <span class="kw">new</span> <span class="at">Object</span>()<span class="op">;</span></code></pre></div>
@@ -83,7 +83,7 @@ peleg <span class="kw">instanceof</span> Object<span class="op">;</span> <span c
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span></code></pre></div>
 <p>Be a doll and type the following in your Console and then hit Enter:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">xhrObject</span>.<span class="at">onload</span><span class="op">;</span></code></pre></div>
-<p>What did it return? <code>undefined</code>? Well, now we're gonna talk a bit about callbacks. Callbacks are something that you'll see used often in JS and it is the language's way to mitigate the issues that arise from its asynchronous nature.</p>
+<p>What did it return? <code>undefined</code>? Well, now we're going to talk a bit about callbacks. Callbacks are something that you'll see used often in JS and it is the language's way to mitigate the issues that arise from its asynchronous nature.</p>
 <p>Basically, a callback is just a function. This function is passed as an argument to another function at invocation time so it -- the callback -- can be invoked by the parent function at a later time. Now if you used this description with me when I first learned JS, I would probably start crying.</p>
 <p>But seriously, lemme give it another shot.</p>
 <p>Remember our call to <code>makeRequest</code> from within <code>getWeather</code>?</p>

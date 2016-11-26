@@ -41,7 +41,7 @@
 <p>So <code>geolocation</code> as you may have already understood from our code above, has a method called <code>getCurrentPosition</code>, and we're going to invoke it like so:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>()<span class="op">;</span></code></pre></div>
 <p>Again, how did I know this? Well I knew it was possible from reading stuff about it a couple of times and seeing prompts asking for me to allow site X to access my location across the web. So I knew it was possible, and when I wanted to implement it I just googled it and found docs online on how to use the browser's geolocation services.</p>
-<p>Since there's a lot that needs to happen behind the scenes in order to get the user's position (the browser needs to first ask for the user's permission, then it needs to see what geolocation tools are available on the computer, then load them, etc.), this operation is also done asynchronously (because it involves IO). This simply means the browser is not gonna sit around waiting for the coordinates to arrive. It will instead continue executing the rest of your code and serve its master user. Only when it has results from the operation (could be a failure, too), will it execute the code relevant to our geolocation logic via the callback we will provide to it.</p>
+<p>Since there's a lot that needs to happen behind the scenes in order to get the user's position (the browser needs to first ask for the user's permission, then it needs to see what geolocation tools are available on the computer, then load them, etc.), this operation is also done asynchronously (because it involves IO). This simply means the browser is not going to sit around waiting for the coordinates to arrive. It will instead continue executing the rest of your code and serve its master user. Only when it has results from the operation (could be a failure, too), will it execute the code relevant to our geolocation logic via the callback we will provide to it.</p>
 <p>See below how we're passing another function to be used as a callback to <code>getCurrentPosition</code>:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>(<span class="kw">function</span> (position) <span class="op">{</span>
 
@@ -70,7 +70,7 @@
 <span class="cf">if</span> (<span class="kw">true</span>) <span class="op">{</span>
   <span class="va">console</span>.<span class="at">log</span>(<span class="kw">true</span>)<span class="op">;</span>
 <span class="op">}</span></code></pre></div>
-<p>Hmm I wonder which one is gonna do what. Is it gonna print <code>false</code> or <code>true</code> to the Console? Don't just stand there! Try and see for yourself! It's not like a mistake in your browser will launch a nuke and start a war, so what are you afraid of?!</p>
+<p>Hmm I wonder which one is going to do what. Is it going to print <code>false</code> or <code>true</code> to the Console? Don't just stand there! Try and see for yourself! It's not like a mistake in your browser will launch a nuke and start a war, so what are you afraid of?!</p>
 <hr />
 
 <p>So conditionals.</p>

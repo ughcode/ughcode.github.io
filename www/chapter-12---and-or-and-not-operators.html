@@ -46,7 +46,7 @@
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> ( <span class="op">!</span>(<span class="va">charlie</span>.<span class="at">isHungry</span> <span class="op">||</span> <span class="va">charlie</span>.<span class="at">isThirsty</span>) ) <span class="op">{</span>
   <span class="co">// magical code</span>
 <span class="op">}</span></code></pre></div>
-<p>Now I'm gonna tell you that in most computer languages this: <code>||</code> (double pipe, which is located right under your backspace/delete key) means OR. So let's just look at what's inside the inner set of parentheses:</p>
+<p>Now I'm going to tell you that in most computer languages this: <code>||</code> (double pipe, which is located right under your backspace/delete key) means OR. So let's just look at what's inside the inner set of parentheses:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">charlie</span>.<span class="at">isHungry</span> <span class="op">||</span> <span class="va">charlie</span>.<span class="at">isThirsty</span></code></pre></div>
 <p>This means what you think it means and is: Charlie is hungry OR thirsty. It's not a lot: Is the dog hungry or thirsty. It's as simple as it can be.</p>
 <p>You do this all the time throughout the day, but it's important we take the time to understand this since the OR operator in computer-land is a <em>non-exclusive</em> OR which means if <em>both</em> values are truthy the result of the entire boolean expression will <em>still</em> be <code>true</code>. Just keep reading.</p>
