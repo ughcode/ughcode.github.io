@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-5---arrays">Chapter 5 - Arrays</h2>
+<p>JavaScript has another special built-in object &quot;type&quot; that is very useful -- the Array.</p>
+<p>Arrays are like lists. Well, they are lists that are called arrays. And you create them like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> groceries <span class="op">=</span> [<span class="st">&#39;cheese&#39;</span><span class="op">,</span> <span class="st">&#39;milk&#39;</span><span class="op">,</span> <span class="st">&#39;eggs&#39;</span>]<span class="op">;</span></code></pre></div>
+<p>So now we have an array that is stored in memory and you can reach via the reference we have in our variable, <code>groceries</code>. The square brackets (<code>[]</code>) are similar to the curly braces we used earlier to declare our objects. This time, they are used to declare a literal <em>array</em> object.</p>
+<p>So now if you typed the following into your Console:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">typeof</span> groceries<span class="op">;</span></code></pre></div>
+<p>You are going to most likely expect to get the string &quot;array&quot; in return. But go ahead, hit Enter. What did you get? &quot;object&quot;? What?!</p>
+<p>The reason the type of our array is &quot;object&quot; is because in JS's case arrays are still objects. They are special objects with special attributes, but their type is still an object. In fact, every data structure in JS that is not one of the five primitives we mentioned earlier is an object!</p>
+<p>Arrays have special properties -- they are so special that they are just numbers. If you type the following:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">groceries[<span class="dv">0</span>]<span class="op">;</span></code></pre></div>
+<p>The expression will yield the first element in our array, which is the string &quot;cheese&quot;. FYI, in most programming languages the first number is zero (and not one). Zero is a perfectly good number and we should treat it as such. Based on that, the first element in our array is located at the zeroth index. This means that in order for us to get our last grocery (eggs), we'll need to refer to it as this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">groceries[<span class="dv">2</span>]<span class="op">;</span> <span class="co">// &#39;eggs&#39; is at index 2 and NOT 3</span></code></pre></div>
+<p>Now, remember the <code>length</code> property that was available in our string example? Well if you don't, it was simply a built in property that had the number of characters in the string. The <code>length</code> property is also available in arrays and it contains the number of elements in the array. With this knowledge you can do the following:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">groceries[<span class="va">groceries</span>.<span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>]<span class="op">;</span></code></pre></div>
+<p>and get the last element in the array even if you didn't know how many elements it contained. Why the subtraction of 1 from the groceries length, you ask? Like we've said, arrays are zero based and so the first element of it is accessed via the index 0. Therefore the length itself, being a simple count of the elements, is 3, but the last element of our array is only at index 2. That's why.</p>
+<p>So what are arrays good for if they behave so similarly to regular objects? Well they're good for ordered lists. Whenever you want to store data in a consecutive order and access it as such, use an array! We are going to integrate an array in our application in just a bit so hang tight.</p>
+<div class='navigation'><a href='/www/chapter-4---objects.html'>Chapter 4 - Objects</a><a class='next' href='/www/chapter-6---functions.html'>Chapter 6 - Functions</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

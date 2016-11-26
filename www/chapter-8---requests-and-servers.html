@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-8---requests-and-servers">Chapter 8 - Requests and Servers</h2>
+<p>So we just invoked our <code>makeRequest</code> function in the previous chapter. It looked like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">makeRequest</span>(url<span class="op">,</span> callback)<span class="op">;</span></code></pre></div>
+<p>The third point/comment in our application was this:</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Declare a function that is responsible for making HTTP requests.</li>
+</ol>
+<p>and this was its declaration:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">makeRequest</span>(url<span class="op">,</span> callback) <span class="op">{</span>
+  <span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
+  <span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+    <span class="kw">var</span> parsedResponse <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(<span class="va">xhrObject</span>.<span class="at">responseText</span>)
+    <span class="at">callback</span>(parsedResponse)<span class="op">;</span>
+  <span class="op">};</span>
+  <span class="va">xhrObject</span>.<span class="at">open</span>(<span class="st">&#39;GET&#39;</span><span class="op">,</span> url<span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>
+  <span class="va">xhrObject</span>.<span class="at">send</span>()<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>In the interwebs we can make requests to servers and get their responses. Seems vague? Well, servers are just computers. Like the computer you're using right now. Only they don't have screens attached to them (most times), and they are configured to serve a large load of requests. So they're basically just strong computers. Simple enough?</p>
+<p>Requests are when one computer is sending data requesting certain, other data from another computer over the network. Responses are when the computer that has received the request sends the requested data as a response to the initial request.</p>
+<!-- TODO: confusing -->
+<p>When you navigate your browser to http://pornhub.com your computer first resolves the URL to an IP address. IP address, simply put, is the address of a computer on the network and is how it can be reached by other computers on the network. Once your computer has Pornhub's underlying IP address, it sends the request to its server. Pornhub's server receives your computer's request and prepares the data (your porn videos) for you. Lastly, Pornhub's server responds to your computer's request and sends all your porn back to your computer which can be found with your IP address which can be found in your computer's request.</p>
+<p>So that's what our <code>makeRequest</code> function is intended to do. It's designed to make a request to the specified URL (passed as the first argument to it), and then, when it receives the response to its request from the server, it does something else. That something else is an invocation of yet another function. That function is the second argument we passed to it. That function that's to be called at a later time is referred to as a <em>callback</em> function and is supposed to handle the weather data it will receive eventually.</p>
+<p>We've made some serious progress but now our brains hurt. Still don't get what a callback function is? I didn't get it for the longest. We'll discuss it more later. In the meantime let's take a little break and talk some fluff.</p>
+<div class='navigation'><a href='/www/chapter-7---operators.html'>Chapter 7 - Operators</a><a class='next' href='/www/about-looking-it-up.html'>About: Looking it Up</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

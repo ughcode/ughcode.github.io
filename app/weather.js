@@ -11,10 +11,7 @@
       '&units=imperial' +
       '&' + parameterize(locationObject);
 
-    makeRequest(url, function (responseText) {
-      response = JSON.parse(responseText);
-      callback(response);
-    });
+    makeRequest(url, callback);
   }
 
   function parameterize(object) {
@@ -28,7 +25,8 @@
   function makeRequest(url, callback) {
     var xhrObject = new XMLHttpRequest();
     xhrObject.onload = function () {
-      callback(xhrObject.responseText);
+      var parsedResponse = JSON.parse(xhrObject.responseText);
+      callback(parsedResponse);
     };
     xhrObject.open('GET', url, true);
     xhrObject.send();

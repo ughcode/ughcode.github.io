@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-12---and-or-and-not-operators">Chapter 12 - AND, OR, and NOT Operators</h2>
+<p>Remember our example from earlier with Charlie and the crying and the food and the love? Well if you don't, it looked like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isCrying</span>) <span class="op">{</span>
+  <span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isHungry</span>) <span class="op">{</span>
+    <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;food&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isThirsty</span>) <span class="op">{</span>
+    <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;water&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+    <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;love&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>Another way for us to write the inner conditional (although less efficient, but it doesn't matter for now since <a href="https://en.wikiquote.org/wiki/Donald_Knuth#Computer_Programming_as_an_Art_.281974.29">&quot;premature optimization is the root of all evil&quot;</a>):</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// Assuming he&#39;s already crying:</span>
+<span class="cf">if</span> ( <span class="op">!</span>(<span class="va">charlie</span>.<span class="at">isHungry</span> <span class="op">||</span> <span class="va">charlie</span>.<span class="at">isThirsty</span>) ) <span class="op">{</span>
+  <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;love&#39;</span>)<span class="op">;</span>
+<span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isHungry</span>) <span class="op">{</span>
+  <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;food&#39;</span>)<span class="op">;</span>
+<span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+  <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;water&#39;</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>The above code is probably more confusing than the conditional we had before it, but we should still try to understand it since it introduces a few concepts we will need in the future. So have a look at the first line:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> ( <span class="op">!</span>(<span class="va">charlie</span>.<span class="at">isHungry</span> <span class="op">||</span> <span class="va">charlie</span>.<span class="at">isThirsty</span>) ) <span class="op">{</span>
+  <span class="co">// magical code</span>
+<span class="op">}</span></code></pre></div>
+<p>Now I'm gonna tell you that in most computer languages this: <code>||</code> (double pipe, which is located right under your backspace/delete key) means OR. So let's just look at what's inside the inner set of parentheses:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">charlie</span>.<span class="at">isHungry</span> <span class="op">||</span> <span class="va">charlie</span>.<span class="at">isThirsty</span></code></pre></div>
+<p>This means what you think it means and is: Charlie is hungry OR thirsty. It's not a lot: Is the dog hungry or thirsty. It's as simple as it can be.</p>
+<p>You do this all the time throughout the day, but it's important we take the time to understand this since the OR operator in computer-land is a <em>non-exclusive</em> OR which means if <em>both</em> values are truthy the result of the entire boolean expression will <em>still</em> be <code>true</code>. Just keep reading.</p>
+<p>In your human life, when someone asks you this:</p>
+<p>&quot;Hey, Peleg, is the color of Charlie's fur black <em>or</em> gold?&quot; You should answer &quot;No&quot; to that question because the color of Charlie's fur is black <em>AND</em> gold. He was lucky enough to have both colors, so in human-land an <em>or</em> in this case would result in <code>false</code>. Better example, someone asks you: &quot;What is the color of this dress? 'Blue and black' <em>or</em> 'white and gold'?&quot; A valid response from you should be blue and black <em>OR</em> white and gold, but not both!</p>
+<p>Well computers' OR operators (<code>||</code>) are <em>inclusive</em> which means if <em>both</em> values are truthy the result of the whole expression will still be <code>true</code>:</p>
+<!-- TODO: "explain more" (Donnie) -->
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">(<span class="kw">true</span> <span class="op">||</span> <span class="kw">false</span>)  <span class="co">// will return true</span>
+(<span class="kw">false</span> <span class="op">||</span> <span class="kw">true</span>)  <span class="co">// true</span>
+(<span class="kw">false</span> <span class="op">||</span> <span class="kw">false</span>) <span class="co">// false</span>
+(<span class="kw">true</span> <span class="op">||</span> <span class="kw">true</span>)   <span class="co">// will STILL return true</span></code></pre></div>
+<p>Pay close attention to the last line above. In human language <code>(true || true)</code> would yield <code>false</code>!</p>
+<p>So in our example with Charlie:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">(<span class="va">charlie</span>.<span class="at">isHungry</span> <span class="op">||</span> <span class="va">charlie</span>.<span class="at">isThirsty</span>)</code></pre></div>
+<p>If he is hungry, or if he is thirsty, <strong>or if both</strong>, the value of the boolean expression enclosed in the parentheses will be <code>true</code>!</p>
+<p>But we're not stopping here. We enclosed our boolean expressions in a set of parentheses for a reason. We're going to switch the value of the entire expression. So whatever we get from the expression enclosed in parentheses (<code>true</code> or <code>false</code>), we <em>negate</em> it by using the negation operator, NOT, which is just an exclamation mark (<code>!</code>), also referred to as a <em>bang</em>. This special little guy means <em>NOT</em> and it just negates the value adjacent to it. So if we had a truthy value in our parentheses it'll now be <code>false</code> and vice versa.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">!</span>(<span class="va">charlie</span>.<span class="at">isHungry</span> <span class="op">||</span> <span class="va">charlie</span>.<span class="at">isThirsty</span>)</code></pre></div>
+<p>So now you can say it like this: if Charlie is NOT hungry <em>nor</em> thirsty. Make sure you understand why we used the parentheses. If we neglected to add them, our negation would only operate on the first value (<code>charlie.isHungry</code>) and not the resulting value of both. And this leads us to the AND operator which is like an OR, but it's not -- it's an AND.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isHungry</span> <span class="op">&amp;&amp;</span> <span class="va">charlie</span>.<span class="at">isThirsty</span>) <span class="op">{</span>
+  <span class="co">// some work</span>
+<span class="op">}</span></code></pre></div>
+<p>Meaning the interpreter will execute the code following that statement only if <em>both</em> conditions are truthy.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">true</span> <span class="op">&amp;&amp;</span> <span class="kw">true</span>   <span class="co">// will return true</span>
+<span class="kw">true</span> <span class="op">&amp;&amp;</span> <span class="kw">false</span>  <span class="co">// false</span>
+<span class="kw">false</span> <span class="op">&amp;&amp;</span> <span class="kw">true</span>  <span class="co">// false</span>
+<span class="kw">false</span> <span class="op">&amp;&amp;</span> <span class="kw">false</span> <span class="co">// false</span></code></pre></div>
+<!-- TODO: some confusion. ask Donnie to clarify -->
+<p>This AND operator (<code>&amp;&amp;</code>) works just like it does in human languages. &quot;Is Charlie's fur black <em>and</em> gold?&quot; Yes. &quot;Is it black and blue?&quot; No. &quot;Is it white and gold?&quot; No. So obviously, in our most recent example, only if Charlie is hungry <em>and</em> thirsty will the code in the block of the conditional get executed.</p>
+<p>Look at you, you're doing so well. If you still haven't set this book on fire, I'm proud of ya! This evening ditch the PBR and treat yourself to an adult beverage that doesn't come in a can.</p>
+<div class='navigation'><a href='/www/chapter-11---boolean-expressions.html'>Chapter 11 - Boolean Expressions</a><a class='next' href='/www/about-random-shit-i-built.html'>About: Random Shit I Built</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

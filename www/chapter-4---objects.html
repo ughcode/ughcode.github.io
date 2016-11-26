@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-4---objects">Chapter 4 - Objects</h2>
+<p>The next type in JS, which isn't a primitive, is Object.</p>
+<p>Objects, unlike their counterparts <em>are</em> natively mutable and are considered to be just a collection of properties. Think of our previous example of Charlie and Peleg; those would've been considered objects if we gave them a representation in JS and shortly we will see how.</p>
+<p>As we've mentioned before, objects in JS have unique attributes and behaviours. Peleg the human has certain attributes that aren't true about Charlie the dog. For Peleg, he speaks English, whereas Charlie just barks (mostly whines). So this can be considered analogous to the different objects in JS: A String <em>object</em>, for example, has a built in property in it which contains its length. Kindly enough, that property is also called <code>length</code> and it can be accessed like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="st">&quot;This is just a sample string&quot;</span>.<span class="at">length</span><span class="op">;</span></code></pre></div>
+<p>The value yielded from executing this command will be the number 28 (count the number of characters in the sentence).</p>
+<p>Side note to the curious: The string we're talking about here is a string <em>object</em> and not a primitive string as we've covered before. JS has an object representation to each of its primitives as well, and it simply switches between the two when it needs to. So when we try to do an &quot;objecty&quot; thing with a primitive, like get its <code>length</code> property, it will convert it to its object representation. How cool! *nerd glance*</p>
+<p>Now if you were crazy and tried to get the length of a Number type like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">(<span class="dv">6</span>).<span class="at">length</span></code></pre></div>
+<p>You would get <code>undefined</code>. The reason for that is that Numbers <em>don't</em> have the built-in property <code>length</code> in them and therefore the interpreter (read: computer) will print out <code>undefined</code> which is used to represent no value at all.</p>
+<p>Side note to the curious II: In the example above, the reason we wrapped the number six in parentheses was to avoid confusing the interpreter into thinking the dot after the number is used to represent a decimal number.</p>
+<p>Now before we continue, I want you to know that all of this stuff we've just covered is pretty high-level theoretical nonsense. Yes, it is important that you know it, but will it change much if you didn't get any of it at this point? Not really. The stuff we're going to cover in the rest of this book is gonna be a lot more hands-on and less confusing.</p>
+<hr />
+<p>And we're back!</p>
+<p>Remember I was blabbing about objects and how they are basically a collection of properties? Either way, an object is a collection of properties and it can be declared like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> imAnObject <span class="op">=</span> <span class="op">{</span> <span class="op">};</span></code></pre></div>
+<p>These fancy looking curly braces are the literal way of declaring objects in JS. In other languages they are different. This notation is called JSON and it stands for JavaScript Object Notation. It is used for a bunch of other stuff in computers, and not just in JS, simply because it's ridiculously convenient for representation of data.</p>
+<p>Now <code>imAnObject</code> is an object (its type is <code>Object</code>), and to make sure this is really the case, JS offers a special operator by the name of <code>typeof</code>:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">typeof</span> imAnObject<span class="op">;</span></code></pre></div>
+<p>Which will yield the string &quot;object&quot;. So now you can sleep soundly at night; you've got yourself an object.</p>
+<p>Back to our lovely duo, Peleg and Charlie. When you try this in your Console, make sure to include the colons and commas just like they are placed below. Otherwise you will get an error:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> peleg <span class="op">=</span> <span class="op">{</span>
+  <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Peleg&#39;</span><span class="op">,</span>
+  <span class="dt">legs</span><span class="op">:</span> <span class="dv">2</span>
+<span class="op">};</span>
+
+<span class="kw">var</span> charlie <span class="op">=</span> <span class="op">{</span>
+  <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Charlie&#39;</span><span class="op">,</span>
+  <span class="dt">legs</span><span class="op">:</span> <span class="dv">4</span>
+<span class="op">};</span></code></pre></div>
+<p>Now we have two objects to represent Peleg and Charlie.</p>
+<p>If you wanted to access the name property in one of these object, you'd do:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">charlie</span>.<span class="at">name</span><span class="op">;</span></code></pre></div>
+<p>Or:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">console</span>.<span class="at">log</span>(<span class="va">peleg</span>.<span class="at">name</span>)<span class="op">;</span></code></pre></div>
+<p>will print 'Peleg'.</p>
+<p>For convenience, we can also access our objects' properties using the bracket notation and a string, like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">peleg[<span class="st">&quot;name&quot;</span>]<span class="op">;</span></code></pre></div>
+<p>and this will yield the same exact thing.</p>
+<p>Now let's say you wanted to mess with us and change the name of <code>peleg</code> and assign a different value to the name property:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">peleg</span>.<span class="at">name</span> <span class="op">=</span> <span class="st">&quot;douchebag&quot;</span><span class="op">;</span></code></pre></div>
+<p>So the <code>name</code> property of <code>peleg</code> will now contain the string &quot;douchebag&quot;.</p>
+<p>What if you wanted to add a new property to <code>charlie</code> such as <code>lastFedTime</code>:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">charlie</span>.<span class="at">lastFedTime</span> <span class="op">=</span> <span class="st">&#39;12:43pm&#39;</span><span class="op">;</span></code></pre></div>
+<p>You got it, boss.</p>
+<p>Go get trashed and hookup with a stranger. Come back tomorrow. You've earned it.</p>
+<div class='navigation'><a href='/www/chapter-3---types.html'>Chapter 3 - Types</a><a class='next' href='/www/chapter-5---arrays.html'>Chapter 5 - Arrays</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

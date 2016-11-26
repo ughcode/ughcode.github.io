@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-3---types">Chapter 3 - Types</h2>
+<p>So now that you know what variables are (kinda?), it is a good time for us to talk about types. In our previous example (where I disclosed where I live), we had Peleg who is a human and Charlie who is a dog. In that case, I guess, Peleg's type in computer terms would be considered &quot;Human,&quot; whereas Charlie's type, &quot;Dog.&quot; We use this distinction between types so we can give them different <em>attributes</em> and expect from them different <em>behaviors</em>. Consider this: In real life, you would expect Charlie, whose type is Dog to have four legs, but from Peleg, the human, you'd expect to have only two.</p>
+<p>Now the following blurb is important to know so I decided to include it, but it may be a bit tough to grasp this early in your career as a programmer. Feel free to just index it in your magnificent brain and smile; it's not crucial to your programming abilities at this point.</p>
+<p>In computer-land we have different types of types. We have <em>primitive</em> types which are built-in in our language and are <em>immutable</em> (cannot be changed), and we have other types which are ones we can create and change (mutate), and are called <em>objects</em>. In JavaScript (this differs in different languages), we have the following types.</p>
+<h3 id="primitive-types">Primitive Types</h3>
+<p>JavaScript is kind enough to abstract most of this stuff so we don't have to be proficient in the data type system just yet, but generally speaking, JS has the following primitive types:</p>
+<ul>
+<li>Boolean - value can be either <code>true</code> or <code>false</code></li>
+<li>Null - value can only be <code>null</code></li>
+<li>Undefined - no value. A variable w/out a value will be <code>undefined</code></li>
+<li>Number - any number like <code>6</code>, <code>Infinity</code>, and <code>NaN</code> (Not a Number...)</li>
+<li>String - representation of any text like <code>&quot;hello&quot;</code></li>
+</ul>
+<p>These types are considered primitive in that they are immutable in their nature and cannot be changed. JS abstracts this stuff as well and allows us to change a string without having to care about the fact that it actually needs to duplicate the string in order for it to look like it's changed. So consider the following.</p>
+<p>Let's declare a variable <code>someString</code> and assign a string to it:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> someString <span class="op">=</span> <span class="st">&#39;This is just a random string.&#39;</span><span class="op">;</span></code></pre></div>
+<p>In order to append something to that string we can do the following:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">someString <span class="op">+=</span> <span class="st">&#39; And this is its extension.&#39;</span><span class="op">;</span></code></pre></div>
+<p>Which is, by the way, just a shorthand for this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">someString <span class="op">=</span> someString <span class="op">+</span> <span class="st">&#39; And this is its extension.&#39;</span><span class="op">;</span></code></pre></div>
+<p>Now, I just said we can't change the value of primitive types, and String is a primitive, so how come this <code>someString</code> now holds the original string <em>plus</em> the extension that we just added? Well JS did the hard work for you and discarded of your old string, created a new string that has all the parts that you want, and finally assigned its value to your original variable, <code>someString</code>. So now, check again the value of <code>someString</code>:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">console</span>.<span class="at">log</span>(someString)<span class="op">;</span></code></pre></div>
+<p>And that will print to your Console:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="st">&quot;This is just a random string. And this is its extension.&quot;</span></code></pre></div>
+<p>Voila, our variable has the entire string -- we've &quot;mutated&quot; it even though strings are immutable.</p>
+<div class='navigation'><a href='/www/about-impostor-syndrome.html'>About: Impostor Syndrome</a><a class='next' href='/www/chapter-4---objects.html'>Chapter 4 - Objects</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

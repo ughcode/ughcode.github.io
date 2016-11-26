@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="about-dom-document-object-model">About: DOM (Document Object Model)</h2>
+<p>While the following section has less to do with programming and more to do with the browser, it is nearly impossible to talk about JS without covering a bit of the browser's API and the DOM (Document Object Model). Long story short, this section has nothing to do with programming if all you really care about is making iPhone apps. If you wanna be a web dev (yay), it is pretty important. Either way, I think the DOM is hella fun and it'll put some of this stuff in context for you.</p>
+<p>So let's forget about the Console for a minute. We don't really expect a human, end user to open their browser's Console every time they want some weather information. Therefore, we shall turn our application into a real web app!</p>
+<p>Our web app is gonna consist of three different files:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>weather.js</code> -- is gonna be the heart of our application, and is basically the JS that we've worked on throughout this entire book. However, we're gonna introduce a few modifications to it in order for it to play nicely with the rest of our web application.</p></li>
+<li><p><code>main.js</code> -- will be responsible for tying our Weather App to the browser's elements that we're going to create in a separate HTML file.</p></li>
+<li><p><code>styles.css</code> -- will include some styling rules written in CSS (Cascading Style Sheets) to make things look purrdy.</p></li>
+<li><p><code>index.html</code> -- for all of our HTML. This file will include HTML for basic structure of elements on the page and also reference all of our JS and CSS files, therefore, this will be our entrance point to our app.</p></li>
+</ol>
+<p>Note that all of the above files are located in the GitHub repository <a href="https://github.com/ughcode/app">here</a>.</p>
+<h4 id="index.html">index.html</h4>
+<p>Let's start with <code>index.html</code> since it's our entrance point:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">/*
+  Filename: index.html
+  Find me on GitHub: 
+  github.com/ughcode/app/blob/master/chapter-14/web/index.html
+*/
+
+<span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+
+<span class="kw">&lt;html&gt;</span>
+
+<span class="co">&lt;!-- Head section, not visible to the end user and is used</span>
+<span class="co">to reference our other files --&gt;</span>
+
+<span class="kw">&lt;head&gt;</span>
+
+  <span class="co">&lt;!-- Note the order of the files. main.js is dependent</span>
+<span class="co">  on weather.js and therefore is included after --&gt;</span>
+
+  <span class="kw">&lt;link</span><span class="ot"> href=</span><span class="st">&quot;styles.css&quot;</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> type=</span><span class="st">&quot;text/css&quot;</span><span class="kw">&gt;</span>
+
+  <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;weather.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+
+  <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;main.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+
+<span class="kw">&lt;/head&gt;</span>
+
+
+<span class="co">&lt;!-- Body section, visible to the end user. The elements</span>
+<span class="co">we&#39;re gonna work with are all here --&gt;</span>
+
+<span class="kw">&lt;body&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;</span>
+
+    <span class="kw">&lt;h2</span><span class="ot"> id=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span>Ugh.<span class="kw">&lt;/h2&gt;</span>
+
+    <span class="kw">&lt;p&gt;</span>
+      Current Temperature in
+      <span class="kw">&lt;span</span><span class="ot"> id=</span><span class="st">&quot;location&quot;</span><span class="kw">&gt;</span>Your Current Location<span class="kw">&lt;/span&gt;</span>:
+    <span class="kw">&lt;/p&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;temp-container&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;border&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;temp&quot;</span><span class="kw">&gt;</span>Loading...<span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+
+    <span class="kw">&lt;form</span><span class="ot"> id=</span><span class="st">&quot;form&quot;</span><span class="ot"> action=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;zip&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Enter ZIP Code&quot;</span> <span class="kw">/&gt;</span>
+    <span class="kw">&lt;/form&gt;</span>
+
+  <span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;/body&gt;</span>
+
+<span class="kw">&lt;/html&gt;</span></code></pre></div>
+<p>The HTML above includes the following (in order of appearance):</p>
+<ol style="list-style-type: decimal">
+<li><p>A generic <code>DOCTYPE</code> declaration telling the browser which version of HTML we're using.</p></li>
+<li><p>A <code>&lt;head&gt;</code> opening tag declaring the beginning of our head section which is invisible to the user and includes <em>meta</em> information for the browser to use.</p></li>
+<li><p>A <code>&lt;link&gt;</code> tag used to include our CSS file.</p></li>
+<li><p>Two <code>&lt;script&gt;</code> tags to include our JS files.</p></li>
+<li><p>The beginning of our <code>&lt;body&gt;</code> section which <em>is</em> visible to the end user.</p></li>
+<li><p>A <code>&lt;div&gt;</code> element which is used to group together other HTML elements. It also has a <code>class</code> attribute so we can reference it directly in our CSS or JS files.</p></li>
+<li><p>An <code>&lt;h2&gt;</code> element used to create a header. It has an <code>id</code> attribute which is also used to reference it later from our CSS or JS files. The only difference is that <code>id</code>, unlike <code>class</code>, has to be unique. So we can only use the &quot;text&quot; id (<code>id=&quot;text&quot;</code>) once in the HTML file.</p></li>
+<li><p>More divs which are used to group some elements together.</p></li>
+<li><p>A <code>&lt;form&gt;</code> element used to group input elements used to get user input.</p></li>
+<li><p>An <code>&lt;input&gt;</code> element with <code>type</code> of &quot;text&quot; which will be used for the user to enter her zipcode.</p></li>
+</ol>
+<p>Play a bit with the different HTML elements so you can see what they look like IRL. Another tab in your DevTools which will be helpful for inspecting the HTML on the page is the &quot;Inspector&quot; (&quot;Elements&quot; in Chrome).</p>
+<h4 id="main.js">main.js</h4>
+<p><code>main.js</code> is the script that ties it all together. Read the inline comments to understand more!</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">/*</span>
+<span class="co">  Filename: main.js</span>
+<span class="co">  Find me on GitHub: </span>
+<span class="co">  github.com/ughcode/app/blob/master/chapter-14/web/main.js</span>
+<span class="co">*/</span>
+
+<span class="co">/*</span>
+<span class="co">  This file is intended to tie our Weather App to the DOM</span>
+<span class="co">  elements. Since it relies on weather_app.js, we need to</span>
+<span class="co">  make sure to include this file AFTER we include</span>
+<span class="co">  weather_app.js</span>
+<span class="co"> */</span>
+
+(<span class="kw">function</span> () <span class="op">{</span> <span class="co">// &lt;-- Creating a closure like we did before</span>
+
+
+  <span class="co">/*</span>
+<span class="co">    Creating an array which includes multiple objects. Each</span>
+<span class="co">    object is used to set a minimum temperature and a short</span>
+<span class="co">    description to give the user</span>
+<span class="co">   */</span>
+  <span class="kw">var</span> descriptions <span class="op">=</span> [
+    <span class="op">{</span>
+      <span class="dt">min</span><span class="op">:</span> <span class="dv">80</span><span class="op">,</span>
+      <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Ugh, it&#39;s hot as balls.&quot;</span>
+    <span class="op">},</span>
+    <span class="op">{</span>
+      <span class="dt">min</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span>
+      <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;It&#39;s warm, brah.&quot;</span>
+    <span class="op">},</span>
+    <span class="op">{</span>
+      <span class="dt">min</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span>
+      <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Getting chilly, eh?&quot;</span>
+    <span class="op">},</span>
+    <span class="op">{</span>
+      <span class="dt">min</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span>
+      <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Maybe moving to LA is not such a bad idea after all.&quot;</span>
+    <span class="op">},</span>
+    <span class="op">{</span>
+      <span class="dt">min</span><span class="op">:</span> <span class="op">-</span><span class="kw">Infinity</span><span class="op">,</span>
+      <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Shit. Fuck. Shit.&quot;</span>
+    <span class="op">}</span>
+  ]<span class="op">;</span>
+
+  <span class="co">/*</span>
+<span class="co">    Declaring variables that will be later accessed by our</span>
+<span class="co">    functions.  We declare them here so our functions can</span>
+<span class="co">    modify them and yet maintain their value between</span>
+<span class="co">    different function calls.</span>
+<span class="co">   */</span>
+  <span class="kw">var</span> tempEl<span class="op">,</span> textEl<span class="op">,</span> zipInputEl<span class="op">,</span> locationEl<span class="op">,</span> borderEl<span class="op">;</span>
+
+  <span class="co">/*</span>
+<span class="co">    This function is intended to run when our page has</span>
+<span class="co">    completed loading and all the necessary elements are</span>
+<span class="co">    present on the page.</span>
+<span class="co">   */</span>
+  <span class="kw">function</span> <span class="at">init</span>() <span class="op">{</span>
+
+    <span class="co">/*</span>
+<span class="co">      Get reference to DOM elements we&#39;re going to use</span>
+<span class="co">      throughout the app. Again, these variables will be</span>
+<span class="co">      accessible in the rest of the functions as well,</span>
+<span class="co">      since they were declared outside of this function.</span>
+<span class="co">     */</span>
+    zipInputEl <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&#39;zip&#39;</span>)<span class="op">;</span>
+    tempEl     <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&#39;temp&#39;</span>)<span class="op">;</span>
+    locationEl <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&#39;location&#39;</span>)<span class="op">;</span>
+    textEl     <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&#39;text&#39;</span>)<span class="op">;</span>
+    borderEl   <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&#39;border&#39;</span>)<span class="op">;</span>
+
+     <span class="co">/*</span>
+<span class="co">       Attach an event handler to our form so when it is</span>
+<span class="co">       submitted our formHandler function below will be</span>
+<span class="co">       called.</span>
+<span class="co">      */</span>
+    document
+      .<span class="at">getElementById</span>(<span class="st">&#39;form&#39;</span>)
+      .<span class="at">addEventListener</span>(<span class="st">&#39;submit&#39;</span><span class="op">,</span> formHandler)<span class="op">;</span>
+
+    <span class="co">/*</span>
+<span class="co">      Start with loading weather data for the user&#39;s current</span>
+<span class="co">      location and then update it on the page using the</span>
+<span class="co">      updateWeather function.</span>
+<span class="co">     */</span>
+    <span class="va">weatherApp</span>.<span class="at">weatherForMyLocation</span>(updateWeather)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="co">/*</span>
+<span class="co">    Attaching our init function to be called only after the</span>
+<span class="co">    browser finished loading the page and fired the &#39;load&#39;</span>
+<span class="co">    event (built-in).</span>
+<span class="co">   */</span>
+  <span class="va">window</span>.<span class="at">addEventListener</span>(<span class="st">&#39;load&#39;</span><span class="op">,</span> init)<span class="op">;</span>
+
+  <span class="co">/*</span>
+<span class="co">    This function is responsible for returning the</span>
+<span class="co">    (in-)appropriate description based on the temperature</span>
+<span class="co">    provided to it.</span>
+<span class="co">   */</span>
+  <span class="kw">function</span> <span class="at">getDescription</span>(temp) <span class="op">{</span>
+    <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">descriptions</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+      <span class="cf">if</span> (temp <span class="op">&gt;=</span> descriptions[i].<span class="at">min</span>) <span class="op">{</span>
+        <span class="cf">return</span> descriptions[i].<span class="at">text</span><span class="op">;</span>
+      <span class="op">}</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+
+  <span class="co">/*</span>
+<span class="co">    This function inserts the data in the right places every</span>
+<span class="co">    time we have new weather information</span>
+<span class="co">   */</span>
+  <span class="kw">function</span> <span class="at">updateWeather</span>(weatherData) <span class="op">{</span>
+    <span class="kw">var</span> temp <span class="op">=</span> <span class="va">weatherData</span>.<span class="va">main</span>.<span class="at">temp</span><span class="op">;</span>
+    <span class="va">locationEl</span>.<span class="at">innerText</span> <span class="op">=</span> <span class="va">weatherData</span>.<span class="at">name</span><span class="op">;</span>
+    <span class="va">tempEl</span>.<span class="at">innerHTML</span> <span class="op">=</span> temp <span class="op">+</span> <span class="st">&quot; &amp;#8457;&quot;</span><span class="op">;</span>
+    <span class="va">textEl</span>.<span class="at">innerText</span> <span class="op">=</span> <span class="at">getDescription</span>(temp)<span class="op">;</span>
+
+    <span class="co">// Try to figure our what we&#39;re doing here:</span>
+    <span class="va">borderEl</span>.<span class="va">style</span>.<span class="at">transform</span> <span class="op">=</span>
+      <span class="st">&quot;rotate(&quot;</span> <span class="op">+</span> (temp / <span class="dv">100</span>) <span class="op">*</span> <span class="dv">360</span> <span class="op">+</span> <span class="st">&quot;deg)&quot;</span><span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="co">/*</span>
+<span class="co">    This function just handles our form &#39;submit&#39; event,</span>
+<span class="co">    makes sure it doesn&#39;t actually submit (would cause a</span>
+<span class="co">    page change), and then fires a temperature lookup based</span>
+<span class="co">    on the ZIP code the user entered</span>
+<span class="co">   */</span>
+  <span class="kw">function</span> <span class="at">formHandler</span>(event) <span class="op">{</span>
+    <span class="va">event</span>.<span class="at">preventDefault</span>()<span class="op">;</span>
+    <span class="kw">var</span> zip <span class="op">=</span> <span class="va">zipInputEl</span>.<span class="at">value</span><span class="op">;</span>
+
+    <span class="co">// invoking our Weather App with a zipcode!</span>
+    <span class="va">weatherApp</span>.<span class="at">weatherForZipCodes</span>([zip]<span class="op">,</span> updateWeather)<span class="op">;</span>
+  <span class="op">}</span>
+
+<span class="op">}</span>)()<span class="op">;</span> <span class="co">// &lt;-- again, we have to immediately invoke our function</span></code></pre></div>
+<h4 id="weather.js">weather.js</h4>
+<p>Our original app as you already know it. Note how this time it does not include the awkward <code>&lt;script&gt;</code> tags we previously had since now we are dealing with a real JS file and not HTML anymore. The browser knows to parse the content or our file as JS.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">/*</span>
+<span class="co">  Filename: weather.js</span>
+<span class="co">  Find me on GitHub: </span>
+<span class="co">  github.com/ughcode/app/blob/master/chapter-14/web/weather.js</span>
+<span class="co">*/</span>
+
+
+(<span class="kw">function</span> () <span class="op">{</span>
+
+  <span class="kw">var</span> apiUrl <span class="op">=</span> <span class="st">&#39;http://api.openweathermap.org/data/2.5/weather&#39;</span><span class="op">;</span>
+
+  <span class="kw">var</span> apiKey <span class="op">=</span> <span class="st">&#39;fa32f&#39;</span><span class="op">;</span>
+
+  <span class="kw">function</span> <span class="at">getWeather</span>(locationObject<span class="op">,</span> callback) <span class="op">{</span>
+    <span class="kw">var</span> url <span class="op">=</span> apiUrl <span class="op">+</span>
+      <span class="st">&#39;?appid=&#39;</span> <span class="op">+</span> apiKey <span class="op">+</span>
+      <span class="st">&#39;&amp;units=imperial&#39;</span> <span class="op">+</span>
+      <span class="st">&#39;&amp;&#39;</span> <span class="op">+</span> <span class="at">parameterize</span>(locationObject)<span class="op">;</span>
+
+    <span class="at">makeRequest</span>(url<span class="op">,</span> callback)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">parameterize</span>(object) <span class="op">{</span>
+    <span class="kw">var</span> params <span class="op">=</span> []<span class="op">;</span>
+    <span class="cf">for</span> (<span class="kw">var</span> key <span class="kw">in</span> object) <span class="op">{</span>
+      <span class="va">params</span>.<span class="at">push</span>(key <span class="op">+</span> <span class="st">&#39;=&#39;</span> <span class="op">+</span> <span class="at">encodeURIComponent</span>(object[key]))<span class="op">;</span>
+    <span class="op">}</span>
+    <span class="cf">return</span> <span class="va">params</span>.<span class="at">join</span>(<span class="st">&#39;&amp;&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">makeRequest</span>(url<span class="op">,</span> callback) <span class="op">{</span>
+    <span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
+    <span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+      <span class="kw">var</span> parsedResponse <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(<span class="va">xhrObject</span>.<span class="at">responseText</span>)<span class="op">;</span>
+      <span class="at">callback</span>(parsedResponse)<span class="op">;</span>
+    <span class="op">};</span>
+    <span class="va">xhrObject</span>.<span class="at">open</span>(<span class="st">&#39;GET&#39;</span><span class="op">,</span> url<span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>
+    <span class="va">xhrObject</span>.<span class="at">send</span>()<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">getUserCoordinates</span>(callback) <span class="op">{</span>
+    <span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>(<span class="kw">function</span> (position) <span class="op">{</span>
+      <span class="cf">if</span> (<span class="va">position</span>.<span class="at">coords</span>) <span class="op">{</span>
+        <span class="at">callback</span>(<span class="va">position</span>.<span class="at">coords</span>)<span class="op">;</span>
+      <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+        <span class="va">console</span>.<span class="at">error</span>(<span class="st">&quot;Didn&#39;t get a valid coordinate, meow!&quot;</span>)<span class="op">;</span>
+      <span class="op">}</span>
+    <span class="op">}</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">weatherForMyLocation</span>(callback) <span class="op">{</span>
+    <span class="at">getUserCoordinates</span>(<span class="kw">function</span> (coord) <span class="op">{</span>
+      <span class="at">getWeather</span>(<span class="op">{</span>
+        <span class="dt">lon</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">longitude</span><span class="op">,</span>
+        <span class="dt">lat</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">latitude</span>
+      <span class="op">},</span> callback)<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">weatherForZipCodes</span>(zips<span class="op">,</span> callback) <span class="op">{</span>
+    <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">zips</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+      <span class="at">getWeather</span>(<span class="op">{</span>
+        <span class="dt">zip</span><span class="op">:</span> zips[i]
+      <span class="op">},</span> callback)<span class="op">;</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+
+  <span class="va">window</span>.<span class="at">weatherApp</span> <span class="op">=</span> <span class="op">{</span>
+    <span class="dt">weatherForMyLocation</span><span class="op">:</span> weatherForMyLocation<span class="op">,</span>
+    <span class="dt">weatherForZipCodes</span><span class="op">:</span> weatherForZipCodes
+  <span class="op">};</span>
+
+<span class="op">}</span>)()<span class="op">;</span></code></pre></div>
+<h4 id="styles.css">styles.css</h4>
+<p>And last, our <code>styles.css</code> file with some rules to make it all look visually OK. CSS is a world on its own and I promise it will eventually make more sense as you explore more of web development. For now just keep in mind that words preceded by a dot (<code>.</code>) are used to reference <em>classes</em> in the HTML (i.e. <code>&lt;div class=&quot;container&quot;&gt;</code>), words preceded by a pound sign (<code>#</code>) reference <em>ids</em> (i.e. <code>&lt;div id=&quot;form&quot;&gt;</code>), and words that are not preceded by a pound sign or a dot (i.e. neither classes nor ids), reference tag names (i.e. <code>&lt;body&gt;</code>).</p>
+<p>Commas separating between selectors (classes, ids, or tag names) -- for example, <code>body, .someClass, \#someId</code>, mean the CSS rule will apply to all the listed selectors separately. If only spaces, <em>w/out commas</em>, were to separate our selectors, then the CSS rule will only apply to the last element which is nested in under the selectors preceding it in the same order.</p>
+<div class="sourceCode"><pre class="sourceCode css"><code class="sourceCode css"><span class="co">/*</span>
+<span class="co">  Filename: styles.css</span>
+<span class="co">  Find me on GitHub: </span>
+<span class="co">  github.com/ughcode/app/blob/master/chapter-14/web/styles.css</span>
+<span class="co">*/</span>
+
+
+html, body, <span class="fl">.container</span> <span class="kw">{</span>
+  <span class="kw">height:</span> <span class="dt">100%</span><span class="kw">;</span>
+  <span class="kw">margin:</span> <span class="dt">0</span><span class="kw">;</span>
+<span class="kw">}</span>
+
+body <span class="kw">{</span>
+  <span class="kw">font-family:</span> <span class="st">&quot;Helvetica Neue&quot;</span><span class="kw">;</span>
+  <span class="kw">font-size:</span> <span class="dt">16px</span><span class="kw">;</span>
+  <span class="kw">color:</span> <span class="dt">white</span><span class="kw">;</span>
+<span class="kw">}</span>
+
+<span class="fl">.container</span> <span class="kw">{</span>
+  <span class="kw">overflow-y:</span> <span class="dt">auto</span><span class="kw">;</span>
+  <span class="kw">text-align:</span> <span class="dt">center</span><span class="kw">;</span>
+  <span class="kw">max-width:</span> <span class="dt">1000px</span><span class="kw">;</span>
+  <span class="kw">margin:</span> <span class="dt">0</span> <span class="dt">auto</span><span class="kw">;</span>
+  <span class="kw">padding:</span> <span class="dt">20px</span><span class="kw">;</span>
+  <span class="kw">box-sizing:</span> <span class="dt">border-box</span><span class="kw">;</span>
+  <span class="kw">background-color:</span> rebeccapurple<span class="kw">;</span>
+<span class="kw">}</span>
+
+<span class="fl">.temp-container</span> <span class="kw">{</span>
+  <span class="kw">position:</span> <span class="dt">relative</span><span class="kw">;</span>
+  <span class="kw">margin:</span> <span class="dt">50px</span> <span class="dt">auto</span><span class="kw">;</span>
+  <span class="kw">width:</span> <span class="dt">300px</span><span class="kw">;</span>
+  <span class="kw">height:</span> <span class="dt">300px</span><span class="kw">;</span>
+<span class="kw">}</span>
+
+<span class="fl">.temp-container</span> <span class="fl">#border</span> <span class="kw">{</span>
+  <span class="kw">border:</span> <span class="dt">20px</span> <span class="dt">solid</span> rebeccapurple<span class="kw">;</span>
+  <span class="kw">border-bottom-color:</span> <span class="dt">white</span><span class="kw">;</span>
+  <span class="kw">border-radius:</span> <span class="dt">100%</span><span class="kw">;</span>
+  <span class="kw">width:</span> <span class="dt">100%</span><span class="kw">;</span>
+  <span class="kw">height:</span> <span class="dt">100%</span><span class="kw">;</span>
+  <span class="kw">position:</span> <span class="dt">absolute</span><span class="kw">;</span>
+  <span class="kw">box-sizing:</span> <span class="dt">border-box</span><span class="kw">;</span>
+  <span class="kw">transition:</span> transform <span class="dt">2s</span> ease-out<span class="kw">;</span>
+<span class="kw">}</span>
+
+<span class="fl">.temp-container</span> <span class="fl">#temp</span> <span class="kw">{</span>
+  <span class="kw">top:</span> <span class="dt">50%</span><span class="kw">;</span>
+  <span class="kw">position:</span> <span class="dt">relative</span><span class="kw">;</span>
+<span class="kw">}</span>
+
+<span class="fl">#form</span> <span class="kw">{</span>
+  <span class="kw">width:</span> <span class="dt">300px</span><span class="kw">;</span>
+  <span class="kw">margin:</span> <span class="dt">0</span> <span class="dt">auto</span><span class="kw">;</span>
+<span class="kw">}</span>
+
+<span class="fl">#form</span> <span class="fl">#zip</span> <span class="kw">{</span>
+  <span class="kw">height:</span> <span class="dt">30px</span><span class="kw">;</span>
+  <span class="kw">width:</span> <span class="dt">100%</span><span class="kw">;</span>
+  <span class="kw">text-align:</span> <span class="dt">center</span><span class="kw">;</span>
+  <span class="kw">border:</span> <span class="dt">none</span><span class="kw">;</span>
+<span class="kw">}</span></code></pre></div>
+<p>Now I know this is a lot of new info. The above snippets of code cover HTML, DOM, the browser API, CSS and probably some more. We can't cover it all since this is going into specifics which this book wasn't meant to do, but at this point you have all the knowledge you need to understand the major points of the above application. If you want more of this stuff, go ahead and pick up a book on front-end development and the DOM. Make sure it's up-to-date as this business changes by the minute.</p>
+<p>Again, all of this code is available on the GitHub repo <a href="https://github.com/ughcode/app">here</a> so you can see how it runs in your browser without having to copy the whole thing by hand (although you know how I feel about you copying code).</p>
+<p>In order to run the above application so you can at least enjoy it, make sure you have all of your files in the same directory, and open the <code>index.html</code> file. Again, getting our current location won't work unless you use Firefox. If you want to stick with Chrome, you will have to spin up a server and access it via the localhost trick I covered in the beginning of the book.</p>
+<p>Once you have it up and running, I strongly encourage you to modify things, put <code>debugger</code> statements (or breakpoints) and <code>console.log</code> all over the place. This is how you'll learn the most.</p>
+<h3 id="from-the-cli-command-line-interface">From the CLI (Command Line Interface)</h3>
+<p>Alternatively, if our application was geared more towards computer geeks, or those who prefer their data w/out the fuss of the GUI (Graphical User Interface), we can make our application be a command-line application so we can run it from the Terminal. To do so we'll have to run JS not in the browser, and for that we're going to use <a href="https://nodejs.org/en/">Node.js</a>.</p>
+<p>Most computers (Macs at least) have Node built-in in the command-line. To access it, simply type <code>node</code> in your Terminal (to get Terminal running on Mac, look for it in your Spotlight search). If you got a JS REPL on the screen, then you have Node installed. If not, guess what? You don't, and you'll have to install it yourself (on Mac you can use Homebrew to do so easily, and on Linux you can probably use your built-in package manager, &quot;apt-get&quot; or &quot;yum&quot;). If you're on a Wee-Wee computer (Windows), it still can't be terribly bad -- check out this <a href="http://blog.teamtreehouse.com/install-node-js-npm-windows">blog post</a>.</p>
+<p>With Node, our application is gonna run a bit differently. First off, we need to create another file that we could run as an executable from the command-line and will be responsible for interacting with our <code>weather.js</code> file.</p>
+<h4 id="weather_cli.js">weather_cli.js</h4>
+<p>This is going to be the entrance point to our app for when we will run it from the command-line as shown below. Keep in mind the dollar sign (<code>$</code>) is just to notate a command-line prompt. You do not need to type it.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">node</span> weather_cli 11211 80634</code></pre></div>
+<p>And the file itself:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">/*</span>
+<span class="co">  Filename: weather_cli.js</span>
+<span class="co">  Find me on GitHub: </span>
+<span class="co">  github.com/ughcode/app/blob/master/chapter-14/cli/weather_cli.js</span>
+<span class="co">*/</span>
+
+
+<span class="co">// Load our Weather App module from the weather_app.js file</span>
+<span class="kw">var</span> weatherApp <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;./weather&#39;</span>)<span class="op">;</span>
+
+<span class="co">/*</span>
+<span class="co">  Get the command line arguments which are stored in process.argv as</span>
+<span class="co">  an array. The &#39;slice&#39; method on JS arrays returns the elements</span>
+<span class="co">  from the index provided to it. Since process.argv also contains the</span>
+<span class="co">  command (node) and the first argument (the filename), we only need</span>
+<span class="co">  the arguments following (the ZIP codes)</span>
+<span class="co"> */</span>
+<span class="kw">var</span> zipCodes <span class="op">=</span> <span class="va">process</span>.<span class="va">argv</span>.<span class="at">slice</span>(<span class="dv">2</span>)<span class="op">;</span>
+
+<span class="co">/*</span>
+<span class="co">  Invoke our weatherForZipCodes function with the ZIP codes we were</span>
+<span class="co">  provided with and print them to the screen</span>
+<span class="co"> */</span>
+<span class="va">weatherApp</span>.<span class="at">weatherForZipCodes</span>(zipCodes<span class="op">,</span> <span class="kw">function</span> (weatherData) <span class="op">{</span>
+  <span class="kw">var</span> temp <span class="op">=</span> <span class="va">weatherData</span>.<span class="va">main</span>.<span class="at">temp</span><span class="op">;</span>
+  <span class="va">console</span>.<span class="at">log</span>(
+    <span class="st">&quot;Current Temperature for &quot;</span> <span class="op">+</span> <span class="va">weatherData</span>.<span class="at">name</span> <span class="op">+</span> <span class="st">&quot;: &quot;</span> <span class="op">+</span> temp
+  )<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<h4 id="weather.js-1">weather.js</h4>
+<p>And our slightly modified <code>weather.js</code> which now will be able to work from both, the command-line with Node, and the browser:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">/*</span>
+<span class="co">  Filename: weather.js</span>
+<span class="co">  Find me on GitHub: </span>
+<span class="co">  github.com/ughcode/app/blob/master/chapter-14/cli/weather.js</span>
+<span class="co">*/</span>
+
+(<span class="kw">function</span> () <span class="op">{</span>
+
+  <span class="kw">var</span> apiUrl <span class="op">=</span> <span class="st">&#39;http://api.openweathermap.org/data/2.5/weather&#39;</span><span class="op">;</span>
+
+  <span class="kw">var</span> apiKey <span class="op">=</span> <span class="st">&#39;fa32f&#39;</span><span class="op">;</span>
+
+  <span class="kw">function</span> <span class="at">getWeather</span>(locationObject<span class="op">,</span> callback) <span class="op">{</span>
+    <span class="kw">var</span> url <span class="op">=</span> apiUrl <span class="op">+</span>
+      <span class="st">&#39;?appid=&#39;</span> <span class="op">+</span> apiKey <span class="op">+</span>
+      <span class="st">&#39;&amp;units=imperial&#39;</span> <span class="op">+</span>
+      <span class="st">&#39;&amp;&#39;</span> <span class="op">+</span> <span class="at">parameterize</span>(locationObject)<span class="op">;</span>
+
+    <span class="at">makeRequest</span>(url<span class="op">,</span> callback)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">parameterize</span>(object) <span class="op">{</span>
+    <span class="kw">var</span> params <span class="op">=</span> []<span class="op">;</span>
+    <span class="cf">for</span> (<span class="kw">var</span> key <span class="kw">in</span> object) <span class="op">{</span>
+      <span class="va">params</span>.<span class="at">push</span>(key <span class="op">+</span> <span class="st">&#39;=&#39;</span> <span class="op">+</span> <span class="at">encodeURIComponent</span>(object[key]))<span class="op">;</span>
+    <span class="op">}</span>
+    <span class="cf">return</span> <span class="va">params</span>.<span class="at">join</span>(<span class="st">&#39;&amp;&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">makeRequest</span>(url<span class="op">,</span> callback) <span class="op">{</span>
+    <span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
+    <span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+      <span class="kw">var</span> parsedResponse <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(<span class="va">xhrObject</span>.<span class="at">responseText</span>)<span class="op">;</span>
+      <span class="at">callback</span>(parsedResponse)<span class="op">;</span>
+    <span class="op">};</span>
+    <span class="va">xhrObject</span>.<span class="at">open</span>(<span class="st">&#39;GET&#39;</span><span class="op">,</span> url<span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>
+    <span class="va">xhrObject</span>.<span class="at">send</span>()<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">getUserCoordinates</span>(callback) <span class="op">{</span>
+    <span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>(<span class="kw">function</span> (position) <span class="op">{</span>
+      <span class="cf">if</span> (<span class="va">position</span>.<span class="at">coords</span>) <span class="op">{</span>
+        <span class="at">callback</span>(<span class="va">position</span>.<span class="at">coords</span>)<span class="op">;</span>
+      <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+        <span class="va">console</span>.<span class="at">error</span>(<span class="st">&quot;Didn&#39;t get a valid coordinate, meow!&quot;</span>)<span class="op">;</span>
+      <span class="op">}</span>
+    <span class="op">}</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">weatherForMyLocation</span>(callback) <span class="op">{</span>
+    <span class="at">getUserCoordinates</span>(<span class="kw">function</span> (coord) <span class="op">{</span>
+      <span class="at">getWeather</span>(<span class="op">{</span>
+        <span class="dt">lon</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">longitude</span><span class="op">,</span>
+        <span class="dt">lat</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">latitude</span>
+      <span class="op">},</span> callback)<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">weatherForZipCodes</span>(zips<span class="op">,</span> callback) <span class="op">{</span>
+    <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">zips</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+      <span class="at">getWeather</span>(<span class="op">{</span>
+        <span class="dt">zip</span><span class="op">:</span> zips[i]
+      <span class="op">},</span> callback)<span class="op">;</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+
+  <span class="co">// The only difference lies here:</span>
+
+  <span class="co">// check if we&#39;re in command line environment:</span>
+  <span class="cf">if</span> (<span class="kw">typeof</span> module <span class="op">!==</span> <span class="st">&#39;undefined&#39;</span> <span class="op">&amp;&amp;</span> <span class="va">module</span>.<span class="at">exports</span>) <span class="op">{</span>
+    <span class="va">global</span>.<span class="at">XMLHttpRequest</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;xmlhttprequest&#39;</span>).<span class="at">XMLHttpRequest</span><span class="op">;</span>
+    <span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="op">{</span>
+      <span class="dt">weatherForZipCodes</span><span class="op">:</span> weatherForZipCodes
+    <span class="op">};</span>
+
+  <span class="co">// else, if we&#39;re in a browser environment:</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">typeof</span> window <span class="op">!==</span> <span class="st">&#39;undefined&#39;</span>) <span class="op">{</span>
+    <span class="va">window</span>.<span class="at">weatherApp</span> <span class="op">=</span> <span class="op">{</span>
+      <span class="dt">weatherForMyLocation</span><span class="op">:</span> weatherForMyLocation<span class="op">,</span>
+      <span class="dt">weatherForZipCodes</span><span class="op">:</span> weatherForZipCodes
+    <span class="op">};</span>
+  <span class="op">}</span>
+
+<span class="op">}</span>)()<span class="op">;</span></code></pre></div>
+<p>Notice how we're only exposing <code>weatherForZipCodes</code> when we're using Node (in a command-line environment) as the user location API is only available in the browser. Additionally, if our <code>if</code> statement indicated we're in a command-line environment, we initialize <code>XMLHttpRequest</code> with a custom Node module which we still need to install. Since <code>XMLHttpRequest</code> is originally only available in the browser, we'll have to install an external module with the same interface from <a href="https://www.npmjs.com/package/xmlhttprequest">here</a>. To do so, in your Terminal when you're in the same directory of your application type:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># To see in what directory I&#39;m currently in:</span>
+$ <span class="kw">pwd</span> <span class="co"># Yields: /Users/peleg/code/book/app</span>
+
+<span class="co"># To see what files are in this directory:</span>
+$ <span class="kw">ls</span> <span class="co"># Yields: weather.js weather_cli.js ...</span>
+
+<span class="co"># To install the module &quot;xmlhttprequest&quot;:</span>
+$ <span class="kw">npm</span> install xmlhttprequest <span class="co"># will take a minute...</span></code></pre></div>
+<p>And to finally run this whole thing:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">node</span> weather_cli 90210 11211 80634</code></pre></div>
+<p>Outputs:</p>
+<pre><code>Current Temperature for Beverly Hills: 74.23
+Current Temperature for Long Island City: 52.07
+Current Temperature for Greeley: 64.27</code></pre>
+<div class='navigation'><a href='/www/chapter-14---tying-it-all-together.html'>Chapter 14 - Tying it All Together!</a><a class='next' href='/www/chapter-15---where-to.html'>Chapter 15 - Where To?</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-15---where-to">Chapter 15 - Where To?</h2>
+<p>An iPhone app? A web app? Whatever it may be, here's where you can start your search for the necessary knowledge. Keep in mind I'm not an expert in any of these technologies, but it's just where I would start had I wanted to do it myself.</p>
+<h3 id="iphone-app">iPhone App?</h3>
+<p>If building an iPhone app is what you're after, there is a growing number of options for you in terms of the language and technology stack. The native languages to the iPhone, or the Mac, are Objective C and Swift.</p>
+<h4 id="objective-c">Objective C</h4>
+<p>This is a superset of the C programming language and is normally statically typed and compiled. This means that unlike with a language that's normally interpreted, like JS, when you code in ObjC, your code will need to be translated (compiled) into machine language which is a very basic programming language and is meant for the target computer's CPU to execute.</p>
+<p>Because of this compilation process, when coding in ObjC, you will not have the luxury of just writing code, running it, and seeing if it works or not. The compiler will now have to check your code for errors before you can even run it. This, to some programmers, is of great help as it eliminates the possibility of having type errors in a running application. On the other hand, for a newbie like you, this could be frustrating as it forces some very strict rules on you.</p>
+<p>For example, had you coded our Weather App in ObjC (or any other statically typed, compiled language), you'd have to specify what type could each one of our functions receives as an argument and which type it could return. Having to be so specific adds a lot of boilerplate to your code which can be confusing and frustrating at times. Additionally, since you couldn't just run your code w/out compiling it first, you'd have to add many dependencies on Apple's SDK (Software Development Kit) to help you infer types and check your code as you type. While such tools are meant to help you, they also have quite a steep learning curve.</p>
+<p>So yes, statically typed, compiled languages may be more confusing at first. Also, the syntax for ObjC is kind of weird and some may say less intuitive, but all in all, that stuff shouldn't deter you from choosing that path if you wanna build native iOS apps. After all, if you've come this far in this book, I have no doubt in my mind you can learn how to program in ObjC as well.</p>
+<p>Keep in mind that in order for you to develop natively for the iPhone, you'll need to have a Mac (last time I checked) and it is most common to use <a href="https://developer.apple.com/xcode/">XCode</a> as your IDE (Integral Development Environment -- more later) since it has some neat built-in features that are meant for iOS development and make it more fluid.</p>
+<p>Some resources I enjoyed, and have heard recommendations on, include <a href="http://www.raywenderlich.com/category/ios">Ray Wenderlich Tutorials</a>.</p>
+<!-- TODO: ask James for one more resource -->
+<h4 id="swift">Swift</h4>
+<p>Apple's new language that's supposed to take over the iPhone/Mac development world and replace ObjC. It is also static. It is also compiled. But it is increasingly more elegant. Had I had to start from scratch on iOS development today, I'd probably spend most of my time learning Swift before anything else. At the same time, since it's still a new language, you'll have to be able to at least read ObjC as it's still very popular and most iPhone libraries out there were written in ObjC. However, with the amount of resources Apple has put into Swift (they can't shut up about it), and the fact that they recently <a href="https://github.com/apple/swift">open-sourced the language</a>, I find it easier to believe that Swift will outgrow ObjC in popularity one day.</p>
+<h3 id="android-app">Android App?</h3>
+<h4 id="java">Java</h4>
+<p>Android's primary development language is Java. Java is normally a statically typed language (see more info under the &quot;Objective C&quot; section above) that compiles to run on the JVM (Java Virtual Machine). If you want to develop native apps for Android, this is what you should learn. Since Java is used in many other applications (and not just to make native Android apps), you can find many different IDEs (essentially a buffed-up code editor -- more later) for it, with Eclipse and IntelliJ being the most common ones as far as I know. Since Java is big as-is and has plenty of applications in the software world, the community is pretty big and finding resources should not be difficult.</p>
+<p>A good place for you to get started would be <a href="https://developer.android.com">Google's Android Dev Portal</a>.</p>
+<p>To download Android Studio (a custom version of IntelliJ including tools for Android development), go <a href="http://developer.android.com/sdk/index.html">here</a>.</p>
+<h3 id="web-app-for-the-phone">Web App for the Phone?</h3>
+<p>Our Weather App, thus far, could be described as a web application. It runs on the browser, whether on the phone or a full-blown computer. More specifically, however, when talking about web apps, people refer to applications that are run on the browser but are backed by a server and therefore can be accessed as long as the user has Internet access.</p>
+<p>Web applications, today, offer almost all of the same capabilities as native applications. They have access to more functionality of the OS (Operating System) and therefore can perform almost everything you used to download an executable file for.</p>
+<p>Because of web apps becoming a vital part of software (when was the last time you had to download and install a file?), we must consider them also for our phones. The following technologies could help.</p>
+<h4 id="react-native">React Native</h4>
+<p>If you live on the edge, like to venture to unknown places, this may be for you. Via JavaScript, the most common language that you already know quite a bit about, you may be able to write iOS and Android apps thanks to Facebook's <a href="https://facebook.github.io/react-native/">React Native</a> that will basically turn your &quot;web&quot; app into a native app. I've never tried it, but there's a big fuss around it so it might be worth a look.</p>
+<p>However, as a beginner, your reliance on the developer community will be huge. Although I have no worries about you getting your questions answered in the JS realm, I'm afraid React Native's community is still small and you may find it harder to find solutions to your problems. Keep this in mind if you decide to choose this path.</p>
+<p>Start by reading about the &quot;original&quot; React (for the web) <a href="https://facebook.github.io/react/">here</a>, and then explore React Native in more detail.</p>
+<h4 id="cordovaphonegap">Cordova/PhoneGap</h4>
+<p>Another alternative for you, if you're looking to stick to web technologies (HTML, JS, and CSS), is <a href="https://cordova.apache.org/">Cordova</a> (used to be called PhoneGap). Cordova basically wraps your web app in a native app so the user gets all the benefits of a real app (can download it from the App/Play Store, receive push notifications, etc.).</p>
+<p>Internally, Cordova just spins up a server on your user's phone and serves your web app locally. Your &quot;native app&quot; is just a non-branded browser (aka WebView) which just loads your web app from the local server running on the user's phone.</p>
+<p>While this may seem like a hack, some pretty big companies launched their products using Cordova -- <a href="https://github.com/wikimedia/WikipediaMobile">Wikipedia</a> and <a href="http://blog.games.com/2012/02/02/zynga-germany-html5-paul-bakaus/">Zynga</a> (the gaming company) to name a few.</p>
+<h4 id="or-just-leave-it-on-the-browser">Or Just Leave it On the Browser</h4>
+<p>Or you could just ditch the <em>native</em> app idea altogether and simply build a web app that's optimized for the phone. The benefit you get from that is that you basically just have to build one app for the web and for the phone altogether. Surely you'll have to spend some time optimizing your app for both platforms as they're very different, but it'll save you time in other areas as you will not have to learn new technologies for each phone (i.e. Android vs iOS).</p>
+<p>I'm a huge advocate of building for the web first for a couple of reasons:</p>
+<ol style="list-style-type: decimal">
+<li><p>I don't like how closed-off phone technologies are. To develop for the iPhone, for example, you have to pay apple some membership fee. Not to mention everything is monitored by them to make sure you still make them money. Or at least that if you make money, they will make some of it too.</p>
+<p>This is less true for Android, as it is more open than Apple's dictatorship, but at the same time it is certainly not as open as the web.</p>
+<p>When you develop for the web you still can't do anything you want as it is still governed by some rules and regulations (duh), but as long as you're being legal about what you're building, you can basically do it all. Want to sell something on the web? You can do it. Want to add ads to your site? Go for it. Want to start a porn site? Be my guest. No one is gonna tell you no just 'cause of personal interests.</p></li>
+<li><p>The reason to go native is becoming less prominent than ever. While with the iPhone there is still a lot of important stuff you can't do with a web app (i.e. push notifications, offline cache management, etc.), in Android all of this stuff is already available. There is a sweet new(ish) thing in the web called <a href="https://www.youtube.com/watch?v=SmZ9XcTpMS4">Service Workers</a> and they let you do offline cache management, enable push notification, and give you the ability to install your web app so it loads instantly. Service Workers basically give you all the benefits native apps already have. Explore!</p></li>
+</ol>
+<h3 id="web-application">Web Application?</h3>
+<p>But in case you're still wondering what a web app even is:</p>
+<p>A web app is different than just building a site, mind you. The term website nowadays refers mostly to a static site, which is normally not backed by a server application and doesn't do much (see more below about static sites). A web app on the other hand, is versatile just like any other application, with a centralized server or servers that do the majority of the logic behind the scenes. A good example for such application is Facebook.</p>
+<p>While Facebook seems to be happening in your browser (and lots of it is), the majority of the work happens on Facebook's servers and cannot be seen by you. For example, think about it when you upload a selfie to Facebook -- you reference the location of your picture on your local drive and click &quot;upload&quot;. What happens then is completely abstracted from your browser and happens on the server itself, which saves your pic somewhere and returns to your browser with a response that contains where that picture can now be found so it can show it to you. Then when your friends log in to their Facebook feed, their browsers are presented with the same picture address where your picture is now stored.</p>
+<p>Web applications is where most of the attention of the developer community has been spent over the last couple of years. With computers becoming faster, and especially with the Internet being faster, it is now possible to do almost everything on the web. The benefits of that are felt in many ways -- customers don't need to download and install anything; their data is available anywhere and from every device.</p>
+<p>Since web applications are as broad of a topic as one can get, all you, the developer, need to do is learn to use a technology that's server compatible. In terms of the language, all of them are compatible -- you can build a server application with whatever language you choose, be it Java, Objective C (but why?), or any of the more dynamic, sexy languages such as Ruby, Python, or our good 'ol friend, JavaScript.</p>
+<h4 id="node.js">Node.js</h4>
+<p>The obvious continuation to your server-side coding exploration, could start with Node.js. If you haven't realized it yet, it is a server-side, back-end, JavaScript environment. It allows you to run JS w/out a browser and thus write server code in it.</p>
+<p>If you're after a web framework for Node, check out <a href="http://expressjs.com/">Express</a>.</p>
+<h4 id="ruby">Ruby</h4>
+<p>Syntactically, my favorite language to write server-side code in is Ruby. It has a huge community to help you when you're stuck, and there are tons of libraries for you to use so you don't have to worry about reinventing the wheel every time you write code.</p>
+<p>Additionally, Ruby at its core is a dynamic, interpreted language (just like JS) which means it isn't normally compiled and is instead interpreted at runtime only (when it runs, duh). As we've discussed earlier, while some devs would prefer the former, an interpreted language makes it much easier to write code without having to understand some more complex concepts which can be distracting at first.</p>
+<p>There are obviously plenty of ways to learn Ruby, but when I learned it I did so via the excellent <a href="https://www.railstutorial.org/">Rails Tutorial</a> (which used to be free), by Michael Hartl. It teaches you how to build a simple web app with Ruby on Rails. Rails is a Ruby framework for web development that's supposed to make your lives easier and help you focus on getting shit done instead of getting distracted with a bunch of other boilerplate code. While said boilerplate code is extremely important for you to know how to write, it is not crucial in your first iteration as a big-girl programmer.</p>
+<p>Opinionated frameworks such as Rails may turn out to not be your thing, but for now I suggest you use a framework that has one way of doing things and won't confuse you with details of implementation. You can be a decent web developer with Rails without knowing much about databases and SQL (Structured Query Language -- the language used to query databases). And although I don't advocate for you to ignore such monumental technologies of the web, you can postpone learning them until you have a better view of the entire picture that is programming.</p>
+
+<h3 id="static-site">Static Site?</h3>
+<p>Your other alternative for the web is to build a static site. This also happens on the web, but it won't have much server logic for you to build. That means you'll be working with HTML, CSS and JS only, with JS being the only &quot;real&quot; programming language involved in this equation. If we were to build our Weather App from earlier and leave it as is, it would still be a static app (although there's some application logic involved in it, it doesn't require a server application implementation from our end. All of the back-end support it needs can be provided via the Open Weather Map API and their servers.) Now, if we were to want to save our users' inputs in a database or add some form of authentication with email and password, then we would have to move up the ladder and build a full-fledged, dynamic web app with a server and all that jazz. It would make our job slightly more involved as then we would have to ultimately build two applications -- one to run on the browser and is the JS app we've already built, and the other application to run on our server and do all the logic that's there (i.e. read/write to/from the database to register a user, make sure a user exists before giving them access to our site, etc.).</p>
+<p>What you normally see as purely static sites on today's web could be portfolio sites like that of your photographer friend's. Such sites include static assets such as images or videos and some text. Normally personal/business sites that are in place to showcase a business or an individual are static.</p>
+<h3 id="hardware-project">Hardware Project?</h3>
+<p>If you wanna get more hardcore and move towards engineering for specific devices that aren't the computer (that we know) and are normally referred to as IoT or Internet of Things, then I'm probably not the right person to ask, but I do know that <a href="https://www.arduino.cc/">Arduinos</a> are pretty cool and could help you understand a lot more about electronics engineering and software development and how they come together. Needless to say, if that's your thing, there's plenty of information out there about the Internet of Things and how you can get into it. Just go look for it.</p>
+<h3 id="chrome-extensionfirefox-add-on">Chrome Extension/Firefox Add-on?</h3>
+<p>This is a great way for you to build something that's easy to distribute (via the Google Chrome Web Store), relies on the browser and does not require you to build the entire GUI, and will run on any computer (as long as it has Chrome or Firefox installed) w/out you having to worry about different compatibility issues. And the best thing? You can do it in JS, HTML, and CSS which you already know the basics of.</p>
+<p>Then how is building an extension better than building an entire web app? It's not, but it does provide you with some benefits web apps simply cannot have for security reasons. With a Chrome extension, you can basically access everything the browser can. You can access the user's history, you can access different tabs, you can access different sites. With a regular web app, your JavaScript is limited to only accessing the context of the page rendered by the same server in most cases.</p>
+<p>Here's an example. Let's say you want to inject a script to the page when the user accesses facebook.com that will show them the Twitter handle of their friends next to their Facebook posts. With a Chrome extension you can do that. The user will have to give your extension the permission to access the page when they're on facebook.com, but once that's done, your extension is basically free to do whatever it wants. To fetch the Twitter handle, it could iterate over all the posts on the page, parse out the names of your friends, and then go look for them on twitter.com for you. Such implementation is obviously lacking, but it would be a good place to start.</p>
+<p>Our web application, on the other hand, cannot access a facebook.com tab on its behalf since the browser won't allow it. Otherwise, any site could access your credit card when you're checking out on Amazon.</p>
+<h3 id="native-desktop-application">Native Desktop Application?</h3>
+<p>Well to do this you used to have to be able to code in the native language to the operating system. So C or C++ for Windows and Linux machines and Objective-C for Macs. However, today if I had to build a non performance critical &quot;native&quot; desktop application, I would opt for using a Webkit wrapper like <a href="http://nwjs.io/">node-webkit</a>.</p>
+<p>Using a Webkit wrapper to your app is similar to using Cordova/PhoneGap (see above). It allows you to code just like you would for the web or for a browser extension (using JS, HTML, and CSS) and then wrap your application in basically a custom browser that'll only load it when launched. This allows your application to be shipped with its own icon and everything so then a user downloads it like they would traditionally. Current apps that use this (or similar) technology for their desktop apps are <a href="https://www.spotify.com">Spotify</a> and <a href="https://slack.com/">Slack</a>.</p>
+<div class='navigation'><a href='/www/about-dom-document-object-model.html'>About: DOM (Document Object Model)</a><a class='next' href='/www/about-the-importance-of-community.html'>About: The Importance of Community</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

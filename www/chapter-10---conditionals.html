@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-10---conditionals">Chapter 10 - Conditionals</h2>
+<ol start="4" style="list-style-type: decimal">
+<li>Declare a function that is responsible for getting the user's coordinate</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">getUserCoordinates</span>(callback) <span class="op">{</span>
+  <span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>(<span class="kw">function</span> (position) <span class="op">{</span>
+    <span class="at">callback</span>(<span class="va">position</span>.<span class="at">coords</span>)<span class="op">;</span>
+  <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>This is, once again, a function. This time it gets our user's coordinates using the browser's API. How does it do it? It queries the browser for it. How does the browser know the user's location? What do you care? It just knows it.</p>
+<p>Well if you really wanna know how the browser knows your location, look it up. It's a combination of GPS (if your computer has one [your phone most likely does]), WiFi networks around you and their reception strength, or a simple IP address lookup (though the least accurate option). Either way, we're not here to reinvent the browser. We are here to use it. Abstraction. BAM.</p>
+<p>Back to our function. Getting the user's coordinates. First line of our function, as you can see, calls the <code>navigator</code>, which is a helper object which contains some info on the browser's state and exposes some of its under-the-hood functionality.</p>
+<p>Note that older browsers don't have that nifty <code>navigator</code> object, so be diligent enough with your users and add appropriate checks before shipping this code into the wild, meaning, don't assume <code>navigator</code> exists in all of your users' browsers -- check for its existence before assuming. We're about to learn how in a minute.</p>
+<p>The <code>navigator</code> object has a property called <code>geolocation</code>. You can see what it has by typing <code>navigator.geolocation</code> in your Console, hitting Enter, clicking on the returned value and then inspecting it in the panel on the right. Or you can just use <code>console.dir</code>:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">console</span>.<span class="at">dir</span>(<span class="va">navigator</span>.<span class="at">geolocation</span>)<span class="op">;</span></code></pre></div>
+<p><code>geolocation</code> as it turns out is just another object. I assume the reason behind nesting it like this was to group together methods related to <code>geolocation</code> under one object.</p>
+<p>So <code>geolocation</code> as you may have already understood from our code above, has a method called <code>getCurrentPosition</code>, and we're going to invoke it like so:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>()<span class="op">;</span></code></pre></div>
+<p>Again, how did I know this? Well I knew it was possible from reading stuff about it a couple of times and seeing prompts asking for me to allow site X to access my location across the web. So I knew it was possible, and when I wanted to implement it I just googled it and found docs online on how to use the browser's geolocation services.</p>
+<p>Since there's a lot that needs to happen behind the scenes in order to get the user's position (the browser needs to first ask for the user's permission, then it needs to see what geolocation tools are available on the computer, then load them, etc.), this operation is also done asynchronously (because it involves IO). This simply means the browser is not gonna sit around waiting for the coordinates to arrive. It will instead continue executing the rest of your code and serve its master user. Only when it has results from the operation (could be a failure, too), will it execute the code relevant to our geolocation logic via the callback we will provide to it.</p>
+<p>See below how we're passing another function to be used as a callback to <code>getCurrentPosition</code>:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>(<span class="kw">function</span> (position) <span class="op">{</span>
+
+  <span class="co">// some code that depends on the location goes here</span>
+
+<span class="op">}</span>)<span class="op">;</span> <span class="co">// &lt;-- note how we still need to close our getCurrentPosition&#39;s</span>
+    <span class="co">// invocation parentheses even when it spans over multiple lines.</span></code></pre></div>
+<p>Our callback function takes one argument by the name of <code>position</code>. That is because when I looked at the docs for the <code>getCurrentPosition</code> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition">method</a>, I saw that it takes several arguments, with the first one being a callback for the &quot;success&quot; scenario. That callback, when called, is said to receive one argument -- a position object when it's done being fetched. Pause and think about this callback function for a moment.</p>
+<p>So in other words: When <code>getCurrentPosition</code> is done and it's got a result for us, it will invoke our callback and pass the position to it.</p>
+<p>And what do we do with this position (which, duh, is another object)? We just pass it to our original callback which we've been carrying around since the invocation of <code>getUserCoordinates</code>.</p>
+<p>So when all of this is done, the callback we passed to <code>getCurrentPosition</code> invokes the callback we provided <code>getUserCoordinates</code> with (it still has access to it) with the needed coordinate as its argument. Note how we're extracting the coordinates (in the object <code>position.coord</code>) from the position object. We're doing this since our callback expects a coordinate object and not the full position object which could be an error and not contain the data we need at all.</p>
+<p>In the event of the position object not being what we expected and not include the coordinates we need, then we need to do something else, but either way we should not invoke our callback because our callback is only useful when we have the coordinates it needs so badly.</p>
+<p>So let's revise our line just slightly and add the following code to our function:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">getUserCoordinates</span>(callback) <span class="op">{</span>
+  <span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>(<span class="kw">function</span> (position)<span class="op">{</span>
+    <span class="cf">if</span> (<span class="va">position</span>.<span class="at">coords</span>) <span class="op">{</span> <span class="co">// &lt;-- Added this</span>
+      <span class="at">callback</span>(<span class="va">position</span>.<span class="at">coords</span>)<span class="op">;</span>
+    <span class="op">}</span>
+  <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>What is this <code>if</code> thing? Well, you should know by now how to inspect your code, so how about you play in your Console for a minute. Try using this <code>if</code> magic and see what it yields. I have a feeling you can start getting a good idea. Some magical things you could try:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="kw">false</span>) <span class="op">{</span>
+  <span class="va">console</span>.<span class="at">log</span>(<span class="kw">false</span>)<span class="op">;</span>
+<span class="op">}</span>
+
+<span class="cf">if</span> (<span class="kw">true</span>) <span class="op">{</span>
+  <span class="va">console</span>.<span class="at">log</span>(<span class="kw">true</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>Hmm I wonder which one is gonna do what. Is it gonna print <code>false</code> or <code>true</code> to the Console? Don't just stand there! Try and see for yourself! It's not like a mistake in your browser will launch a nuke and start a war, so what are you afraid of?!</p>
+<hr />
+
+<p>So conditionals.</p>
+<p>Conditionals are a huge part of programming. They basically mean if something is true, do one thing, otherwise (if it is false) do another thing.</p>
+<p>What thing?</p>
+<p>Consider the example we had before. If <code>position.coords</code> is true, the interpreter will perform what's inside the code block that follows (enclosed by the curly braces).</p>
+<p>Now you probably think this is weird since we just said <code>position</code> is an object and <code>coords</code> is another object nested within it. So how can it be true or false to satisfy a boolean condition (only <code>true</code> or <code>false</code>)?</p>
+<p>Well, it's not exactly about true or false, but rather about truthiness and falsiness. Those sound like complete and utter bullshit, but all it means is that some values (in JS, at least) are considered to be true and others are considered false when they are forced to behave in a boolean way. Generally speaking, these are considered falsy when they are forced to choose one or the other:</p>
+<p><strong>Falsy</strong> values:</p>
+<ul>
+<li>The boolean <code>false</code> - duh</li>
+<li><code>undefined</code> - no value at all</li>
+<li><code>null</code></li>
+<li><code>''</code> - empty string</li>
+<li><code>0</code> - the number zero</li>
+<li><code>NaN</code> - Not a Number (which is of type <code>number</code>...)</li>
+<li><p><code>document.all</code></p></li>
+<li><p>Disregard the fact that <code>document.all</code> can be falsy. It's a hack implemented in the language and the only reason I'm including it is for sake of completion.</p></li>
+</ul>
+<p>Anything else in JS that's not listed above, meaning the boolean <code>true</code>, non-empty strings, non-zero numbers, objects and functions are considered to be <em>truthy</em>.</p>
+<p>So in our previous example, when we said <code>if (position.coords)</code>, we were trying to see if our <code>coords</code> object had a value that is not falsy. Meaning, we were trying to see if we have something of value in it and if so, perform the code in the block below it.</p>
+<p>If the value in <code>position.coords</code> was falsy (most likely <code>undefined</code> or <code>null</code> in this case), then the code in the block below it would never get executed.</p>
+<p>So what do we want to do in case we don't have a valid coordinate? Well we probably want to show an error in the Console to let the developer know that something went wrong.</p>
+<p>We can do it like so:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">position</span>.<span class="at">coords</span>) <span class="op">{</span>
+  <span class="at">callback</span>(<span class="va">position</span>.<span class="at">coords</span>)<span class="op">;</span>
+<span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+  <span class="va">console</span>.<span class="at">error</span>(<span class="st">&quot;Didn&#39;t get a valid coordinate, Meow!&quot;</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>See how we added an <code>else</code> statement? This <code>else</code> statement follows the <code>if</code> code block immediately and tells the interpreter to perform the <code>else</code> code block if the condition in the <code>if</code> statement evaluated to false.</p>
+<p>Get it?</p>
+<p>This isn't too complex. If something is true then do one thing, otherwise do another thing. This is similar to human talk:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isCrying</span>) <span class="op">{</span> <span class="co">// He always does ...</span>
+  <span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isHungry</span>) <span class="op">{</span>
+    <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;food&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isThirsty</span>) <span class="op">{</span> <span class="co">// pay attention here</span>
+    <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;water&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+    <span class="va">charlie</span>.<span class="at">provide</span>(<span class="st">&#39;love&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>This is not real code (we don't have the above properties defined on the <code>charlie</code> object we used earlier), so don't try to run it, but this is a good representation of human language in, theoretically, valid code. Even if you have no idea what the hell JS is, just by reading this you can infer what it means. Or should be somewhat able to.</p>
+<p>If Charlie (he's a dog in case you've forgotten) is crying then you should check if he's hungry, if he is hungry, then give him food, else (if he isn't hungry), check if he's thirsty and if so give him water, if he's not hungry nor thirsty (but still crying, since we're still within the <code>if (charlie.isCrying)</code> block), then you just assume he just needs some love, so you default to giving him love.</p>
+<p>So in the above example we've introduced two new concepts. One is the ability to nest conditionals (there's an outer conditional statement and there's an inner one), and the second new concept is following an <code>else</code> statement with another <code>if</code> statement as we've seen in those <code>else if</code>s.</p>
+<h3 id="nesting-conditionals">Nesting Conditionals</h3>
+<p>In the above example the outer conditional is <code>if (charlie.isCrying)</code>. If this evaluates to false (he's not crying), then the interpreter won't even look at the block following it, meaning it won't even check to see if he's hungry or thirsty and won't provide him with anything.</p>
+<p>The inner conditional statement is broken into three pieces, and gets evaluated when the outer one is true. In the case Charlie is crying, then we will check if he's hungry or thirsty and react accordingly.</p>
+<p>So now let's talk about that <code>else if</code>:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isHungry</span>) <span class="op">{</span>
+  <span class="co">// ...</span>
+<span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isThirsty</span>) <span class="op">{</span>
+  <span class="co">// ...</span>
+<span class="op">}</span></code></pre></div>
+<p>The above code means that if Charlie is not hungry, then the interpreter will move on to the <code>else</code> statement and evaluate it. This particular <code>else</code> statement is followed by another <code>if</code> statement which means before jumping into the code block underneath it, it will make sure Charlie is thirsty first. If he is not thirsty, then the block underneath won't get evaluated at all. Try it with other expressions in your Console.</p>
+<p>What if Charlie can be hungry <em>and</em> thirsty, though? Then you'd drop the <code>else</code> statement before the second <code>if</code> statement since it isn't dependent on the result of the previous <code>if</code> statement at all, and it should look like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isHungry</span>) <span class="op">{</span>
+  <span class="co">// ...</span>
+<span class="op">}</span>
+
+<span class="cf">if</span> (<span class="va">charlie</span>.<span class="at">isThirsty</span>) <span class="op">{</span>
+  <span class="co">// ...</span>
+<span class="op">}</span></code></pre></div>
+<p>So now we have two separate <code>if</code> statements that are mutually exclusive and have nothing to do with one another. Regardless of what the first condition yields, the interpreter will still evaluate the second one as well.</p>
+<div class='navigation'><a href='/www/about-debugging.html'>About: Debugging</a><a class='next' href='/www/chapter-11---boolean-expressions.html'>Chapter 11 - Boolean Expressions</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-16---stuff-you-should-know-about">Chapter 16 - Stuff You Should Know About</h2>
+<!-- TODO: should we move "Resources" to here? -->
+<p>So there is a good chance you've been reading this entire book on a Windows machine. Not that there is anything wrong with that, but to be honest, the majority of devs I know work on Linux or Macs. I'm sure there is a way to do all of the stuff we're about to cover below on a Windows machine in one way or another, but my suggestion to you is that if you're on a Windows machine, download and install Linux (Ubuntu is a common distribution and is free) and it can live alongside your Windows. That way you will have Linux on your computer for all your dev needs without giving up MS Word.</p>
+<p>If you have a Mac then you're good to go as is. Macs are Unix based and therefore already have most of the stuff you need.</p>
+<h3 id="terminal">Terminal</h3>
+<p>The Terminal is that cool thing you see hackers use in film. Where they type random commands and the computer does crazy stuff. Only it's really not that crazy. If you have a Mac, I suggest downloading <a href="https://www.iterm2.com/">ITerm2</a> (IMO it is better than the built-in Terminal), and if you have Linux, the built-in Terminal should have all you need. Configure your Terminal to look just like that of a badass hacker (white or green font and black background) and you're good to go.</p>
+<p>You can use your Terminal to do everything you can do from the GUI and in much simpler ways. The command to copy a file is <code>cp</code>, the command to delete a file is <code>rm</code>, the command to find some file is <code>find</code>. Those commands are just applications we simply run by typing their name. It is the equivalent of double-clicking them, just more intuitive. Those commands normally take arguments (just like our functions did before) and flags (preceded by dashes <code>-</code>). For example if I want to remove all the files in a directory called <code>/Users/peleg/pron</code>, I would type:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">rm</span> -rf /Users/peleg/pron/*</code></pre></div>
+<p>All that means is this: use the <code>rm</code> command and pass it the flags <code>r</code> and <code>f</code>. <code>r</code> stands for recursive and all it means is &quot;call <code>rm</code> on all sub-directories as well (so we remove them too)&quot;. And <code>f</code> means force so the command removes directories that have files in them as well (the different behavior is to abort directory deletion when there are files in it) The only argument we had in our case was the path to the directory including the <em>wildcard</em> character <code>*</code> meaning &quot;match all&quot; to get all the files and directories inside the <code>pron</code> directory: <code>/Users/peleg/pron/*</code></p>
+<p>Looking for how to copy files from one of the computers in your network to another? Look it up! It's easy. Once you have the name of the command to do so, you could use the <code>man</code> command. The <code>man</code> command gives you the manual to how you can use other commands. So for example: <code>man rm</code> will give you all the deets you need to know for the <code>rm</code> command. If the <code>man</code> command just confuses you more, you could install (bro-pages)[http://bropages.org/] and use the <code>bro</code> command which just gives you direct examples instead of detailed explanations.</p>
+<p>Now let's say you want to find and extract all of the email addresses in a directory called <code>/Users/peleg/contacts</code> on your computer which contains a bunch of text files with your friends' contact info. We could use the <code>grep</code> command to do so:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> /Users/peleg/contacts/</code></pre></div>
+<p>This is a bit more complex, but just to pique your interest, let's try to see what we have here:</p>
+<ul>
+<li><code>grep</code> is the name of the command.</li>
+<li><code>r</code> is a flag which means &quot;recursive&quot;. Like in our previous example, it will look in all subdirectories as well.</li>
+<li><code>o</code> means only print the match itself (by default grep prints the whole line it made the match on).</li>
+<li><code>n</code> means print the line number in the file where you found the match.</li>
+<li><p><code>E</code> means &quot;use extended regular expression&quot; to make matches. Now RegEx (Regular Expression) is its own topic which could be covered in an entire book, but essentially it's all those weird signs we have surrounded with the single quotes (<code>'</code>). In this case they mean the following: Match one or more word characters (<code>\\w+</code>), which includes all letters and underscores, followed by an at sign (<code>@</code>), then followed by one or more word characters, then a period (<code>.</code>), and then, again, one or more word characters. This should match most typical email addresses, however is by no means an exhaustive solution (what if our first part includes a period in it, &quot;peleg.rosenthal@gmail.com&quot; for example?). If you're looking for a more exhaustive regular expression, look it up on the Internet.</p></li>
+<li>So <code>'\\w+@\\w+\\.\\w+'</code> is the first argument, and is the regular expression we just covered above.</li>
+<li><p><code>/Users/peleg/contacts/</code> is our second argument, and is the path to where we want <code>grep</code> to look for matches.</p></li>
+</ul>
+<p>Try it for yourself! Create a directory called <code>contacts</code> and populate it with a bunch of text files with some random text and hide some emails inside of it.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cd</span> ~/          <span class="co"># Change directory to your home directory</span>
+$ <span class="kw">pwd</span>            <span class="co"># See what directory we&#39;re in</span>
+$ <span class="kw">mkdir</span> contacts <span class="co"># Create a &quot;contacts&quot; directory</span>
+$ <span class="kw">cd</span> contacts    <span class="co"># Change directory to &quot;contacts&quot;</span>
+$ <span class="kw">touch</span> file.txt <span class="co"># Create an empty text file</span>
+$ <span class="kw">open</span> file.txt  <span class="co"># Open the file in the default app for txt files</span></code></pre></div>
+<p>Now enter a bunch of random text in your text file and hide a few email addresses in it. The only requirement is for you to separate the email addresses from the rest of the text with a non-word character (meaning space, period, comma, new line, etc.).</p>
+<p>And then execute our <code>grep</code> command:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> ./</code></pre></div>
+<p>The period (<code>./</code>) we pass in to <code>grep</code> as the second argument simply means &quot;search in the current directory&quot; which happens to be <code>~/contacts</code> if you followed the instructions above.</p>
+<p>Hit Enter, and you should get yourself a list of all the email addresses from inside your file (or files if you created more than one)!</p>
+<p>Now what if you wanna save this output to some file? Easy:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> ./ <span class="kw">&gt;</span> output.txt</code></pre></div>
+<p>The <code>&gt;</code> (angle bracket) redirects the output of our <code>grep</code> command to the <code>output.txt</code> file (it will create it if it doesn't exist).</p>
+<p>So as you can see, your Terminal, along with the built-in commands, is a pretty powerful tool. So next time you need to do something on a large scale like parsing emails out of a bunch of files and saving them to a CSV file or what not, put the time required to learn how to do it from your Terminal. At first it may be faster and easier to just do it by hand, but it's a worthwhile investment which will serve you well.</p>
+<h3 id="git-is-not-github">Git (is not GitHub)</h3>
+<p>Now <a href="https://git-scm.com/">Git</a> is a bit advanced, and you are not expected to use it right away, but it is good that you are exposed to what it is so later when you say &quot;Gawd, I wish I had a tool which could keep track of all the changes I make in my code so that I could revert changes easily,&quot; you'll know to look up Git.</p>
+<p>Git is what's called a version control management tool, and all it really is is a command line application which allows you to keep track of changes you make to files. For example, if I were to change something in our Weather App that I later learn introduced a bug, I could easily revert to the commit (like a snapshot in history) before that. This way I have a lot less to worry about.</p>
+<p>There are other version control tools out there like <a href="https://www.mercurial-scm.org/">Mercurial</a>, or <a href="https://subversion.apache.org/">Subversion</a>, but they aren't as common (at least at startups in the US) and I don't know enough about them so I should probably stop here.</p>
+<h3 id="editors">Editors</h3>
+<p>Well now you're writing code. So we need to make it more convenient for you to do so. Sure you can write code in your built-in, run of the mill, Notepad/Textmate editor like we've done so far. But that will soon become harder on you as it won't check for simple syntax mistakes you may have, it won't highlight code syntax for you to make for easy debugging, and it won't have all the nifty plugins that make software development a breeze (like find and replace, word completion, find function declarations, etc.)</p>
+<h3 id="ide-vs-text-editor">IDE vs text editor</h3>
+<p>Your options as far as the right tool for writing code are either an IDE or a simpler text editor.</p>
+<p>IDE stands for Integrated Development Environment and is normally used with compiled languages. IDEs offer a lot more than just a text editor and can help you with debugging your code, compiling it directly from within the editor, and much more. The reason they are used mostly with compiled languages, is that compiling an application has some more overhead than non-compiled, interpreted languages do. For example, with a compiled language, you would have to compile the entire application before you'd know if there are any errors or not. Whereas an interpreted language would just run w/out checking anything before it would hit the error at runtime.</p>
+<p>So IDEs make it a lot easier for you to work with compiled languages. They check your code as you type. They tell you immediately if you have errors so you don't have to go through the entire process of compiling an app before discovering that you've just missed a semicolon.</p>
+<p>The downside with IDEs is that they are heavy, use a lot of memory, and are very opinionated about the way you do things. Your alternative is just using a text editor.</p>
+<p>Text editors are just that. They are your Notepad or Textmate, or they are a bit more advanced and include some features like syntax highlighting. Text editors are normally used with interpreted languages (or languages that are normally interpreted) like Ruby, JS, or Python and are a lot simpler to debug. Why? Because you can just run the application, w/out having to compile it, in order to see if there's an error. For example, if you think about our Weather App, you could very quickly just run it and see if it has any errors. You wouldn't have to compile and wait to see if it errors, which could take some time on a computer with limited resources.</p>
+<p>What editor you choose depends vastly on the technology you're going to be developing for. If you make native apps for iPhone, most people use Apple's <a href="https://developer.apple.com/xcode/">Xcode</a>. It is a full-blown IDE that was meant for that kind of application development. It will show you where you are wrong immediately and it will allow you to compile ObjC or Swift code directly from within it.</p>
+<p>If you want to do Java, you should probably check out the IDEs Eclipse or IntelliJ. They are pretty common in that sphere.</p>
+<p>Alternatively, if you're planning on developing with an interpreted language (for web or anything else), I would suggest ditching the IDE for it's unnecessarily clumsy, in my opinion. Instead, you can pick up a buffed-up text editor like <a href="http://www.sublimetext.com/">Sublime Text</a>, <a href="https://atom.io/">Atom</a>, <a href="https://www.gnu.org/software/emacs/">Emacs</a>, or <a href="http://www.vim.org/">Vim</a> (last two are more advanced) and customize it to your likings.</p>
+<p>Personally I use Vim. I used to work with Sublime (which was great), but decided it was worth it to learn how to use Vim. I don't think you should do so right away, as you have more important things to waste your brain power on ATM, but keep it in mind for the future. Vim offers you such advanced keyboard shortcuts and scripting that it makes typing anything a breeze. Also, Vim can be run directly from your Terminal so you can use it from most servers without having to run any GUI application. I am writing this book in Vim!</p>
+<p>A new alternative which is great for beginners is a web-based IDE like Cloud9 (https://c9.io). It allows you to write JS, Ruby, or other code directly from your browser and run it on their VMs (Virtual Machine). That means you can access your code from anywhere as long as you have an Internet connection. It also means you don't have to set up your environment (installing stuff like Ruby or Node, and running servers locally) before developing your application, Cloud9 sets it all up for you, in the cloud!</p>
+<div class='navigation'><a href='/www/about-oss-open-source-software.html'>About: OSS (Open Source Software)</a><a class='next' href='/www/about-getting-a-job.html'>About: Getting a Job</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

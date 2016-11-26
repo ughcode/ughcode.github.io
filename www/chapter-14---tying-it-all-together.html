@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-14---tying-it-all-together">Chapter 14 - Tying it All Together!</h2>
+<p>So far we have written some pretty code, but we can do better than this in terms of readability. Also, there are a few issues here with the scope of some of our functions. As of now, when we load our code, the end user, or the consumer (the entity that's meant to use our app -- could be a person, or could be another application as we've seen with APIs) has access to all the intermediate functions in our application. The thing is, though, we don't want our end user to have access to anything other than our <em>interface</em> functions -- <code>weatherForMyLocation</code> and <code>weatherForZipCodes</code> If they have access to other functions, they might break the app, or not understand how it is supposed to work, and in turn, not get the correct data back from it. No good. So how can we &quot;hide&quot; the other functions from our users and restrict access to only the two interface functions? With scoping!</p>
+<h3 id="closures">Closures</h3>
+<p>Remember when we talked briefly about scopes when I said functions in JS create their own scope and then the variables declared inside their curly braces is only available to them?</p>
+<p>So check this out:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> obfuscatedSecret <span class="op">=</span> (<span class="kw">function</span> <span class="at">imClosuring</span>() <span class="op">{</span>
+  <span class="kw">var</span> secret <span class="op">=</span> <span class="st">&quot;I ate all the cake&quot;</span><span class="op">;</span>
+  <span class="cf">return</span> <span class="kw">function</span> () <span class="op">{</span>
+    <span class="cf">return</span> <span class="va">secret</span>.<span class="at">split</span>(<span class="st">&#39;&#39;</span>).<span class="at">reverse</span>().<span class="at">join</span>(<span class="st">&#39;&#39;</span>)<span class="op">;</span>
+  <span class="op">};</span>
+<span class="op">}</span>())<span class="op">;</span></code></pre></div>
+<p>So in most programming languages, we can declare functions and variables to be what's called <code>private</code>. When we do so, they cannot be accessed by any script or user that's not in the same scope. In JS we don't have this luxury, so we have to be creative and create what's called a <em>closure</em>, or IIFE (Immediately Invoked Function Expression) which is just a fancy name for a function which we invoke immediately. See above how we added a function that's called <code>imClosuring</code>? I wrapped it in another set of parentheses to make it more readable, but you can see how I'm invoking it immediately after I'm done declaring it. If you pay close attention, you can see how the return value of <code>imClosuring</code> is yet another function. That function has access to the internal variable of <code>imClosuring</code> (<code>secret</code>), but no one else can access it directly! Lastly, the function with the access to <code>secret</code>, is now stored in <code>obfuscatedSecret</code> and we can invoke it like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">obfuscatedSecret</span>()<span class="op">;</span> <span class="co">// Yields the secret reversed!</span></code></pre></div>
+<p>Closures are a common practice in JS for when you want to hide something, and that's exactly how we're gonna hide the intermediate function in our Weather App:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">/*
+  Filename: weather_app.html
+  Find me on GitHub: 
+  github.com/ughcode/app/blob/master/chapter-14/weather_app.html
+*/
+
+<span class="kw">&lt;script&gt;</span>
+
+
+(<span class="kw">function</span> () <span class="op">{</span> <span class="co">// &lt;-- We&#39;ve wrapped almost everything in a function</span>
+
+  <span class="kw">var</span> apiUrl <span class="op">=</span> <span class="st">&#39;http://api.openweathermap.org/data/2.5/weather&#39;</span><span class="op">;</span>
+
+  <span class="kw">var</span> apiKey <span class="op">=</span> <span class="st">&#39;fa32f&#39;</span><span class="op">;</span>
+
+  <span class="kw">function</span> <span class="at">getWeather</span>(locationObject<span class="op">,</span> callback) <span class="op">{</span>
+    <span class="kw">var</span> url <span class="op">=</span> apiUrl <span class="op">+</span>
+      <span class="st">&#39;?appid=&#39;</span> <span class="op">+</span> apiKey <span class="op">+</span>
+      <span class="st">&#39;&amp;units=imperial&#39;</span> <span class="op">+</span>
+      <span class="st">&#39;&amp;&#39;</span> <span class="op">+</span> <span class="at">parameterize</span>(locationObject)<span class="op">;</span>
+
+    <span class="at">makeRequest</span>(url<span class="op">,</span> <span class="kw">function</span> (responseText) <span class="op">{</span>
+      response <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(responseText)<span class="op">;</span>
+      <span class="at">callback</span>(response)<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">parameterize</span>(object) <span class="op">{</span>
+    <span class="kw">var</span> params <span class="op">=</span> []<span class="op">;</span>
+    <span class="cf">for</span> (<span class="kw">var</span> key <span class="kw">in</span> object) <span class="op">{</span>
+      <span class="va">params</span>.<span class="at">push</span>(key <span class="op">+</span> <span class="st">&#39;=&#39;</span> <span class="op">+</span> <span class="at">encodeURIComponent</span>(object[key]))<span class="op">;</span>
+    <span class="op">}</span>
+    <span class="cf">return</span> <span class="va">params</span>.<span class="at">join</span>(<span class="st">&#39;&amp;&#39;</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">makeRequest</span>(url<span class="op">,</span> callback) <span class="op">{</span>
+    <span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
+    <span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+      <span class="at">callback</span>(<span class="va">xhrObject</span>.<span class="at">responseText</span>)<span class="op">;</span>
+    <span class="op">};</span>
+    <span class="va">xhrObject</span>.<span class="at">open</span>(<span class="st">&#39;GET&#39;</span><span class="op">,</span> url<span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>
+    <span class="va">xhrObject</span>.<span class="at">send</span>()<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">getUserCoordinates</span>(callback) <span class="op">{</span>
+    <span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>(<span class="kw">function</span> (position) <span class="op">{</span>
+      <span class="cf">if</span> (<span class="va">position</span>.<span class="at">coords</span>) <span class="op">{</span>
+        <span class="at">callback</span>(<span class="va">position</span>.<span class="at">coords</span>)<span class="op">;</span>
+      <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+        <span class="va">console</span>.<span class="at">error</span>(<span class="st">&quot;Didn&#39;t get a valid coordinate, meow!&quot;</span>)<span class="op">;</span>
+      <span class="op">}</span>
+    <span class="op">}</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">printWeather</span>(weatherData) <span class="op">{</span>
+    <span class="kw">var</span> currentTemperature <span class="op">=</span> <span class="va">weatherData</span>.<span class="va">main</span>.<span class="at">temp</span><span class="op">;</span>
+    <span class="kw">var</span> location <span class="op">=</span> <span class="va">weatherData</span>.<span class="at">name</span><span class="op">;</span>
+    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;The current temprature in &quot;</span> <span class="op">+</span> location <span class="op">+</span>
+                <span class="st">&quot; is: &quot;</span> <span class="op">+</span> currentTemperature)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">weatherForMyLocation</span>() <span class="op">{</span>
+    <span class="at">getUserCoordinates</span>(<span class="kw">function</span> (coord) <span class="op">{</span>
+      <span class="at">getWeather</span>(<span class="op">{</span>
+        <span class="dt">lon</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">longitude</span><span class="op">,</span>
+        <span class="dt">lat</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">latitude</span>
+      <span class="op">},</span> printWeather)<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="kw">function</span> <span class="at">weatherForZipCodes</span>(zips) <span class="op">{</span>
+    <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">zips</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+      <span class="at">getWeather</span>(<span class="op">{</span>
+        <span class="dt">zip</span><span class="op">:</span> zips[i]
+      <span class="op">},</span> printWeather)<span class="op">;</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+
+  <span class="va">window</span>.<span class="at">weatherApp</span> <span class="op">=</span> <span class="op">{</span> <span class="co">// &lt;-- Pay attention here</span>
+    <span class="dt">weatherForMyLocation</span><span class="op">:</span> weatherForMyLocation<span class="op">,</span>
+    <span class="dt">weatherForZipCodes</span><span class="op">:</span> weatherForZipCodes
+  <span class="op">};</span>
+
+<span class="op">}</span>)()<span class="op">;</span> <span class="co">// &lt;-- Note how we&#39;re immediately invoking here</span>
+
+<span class="op">&lt;</span><span class="ss">/script&gt;</span></code></pre></div>
+<p>But wait a second, now we need to expose our two interface functions somehow... Hmm. We do so by attaching those two functions to our <code>window</code> object. The <code>window</code> object in the browser is the top-most, global object that's available to all other code. In the browser, when you create anything in the global scope, it is attached to the <code>window</code> object automatically and becomes a property of it. So in our code, since we've created a sub-scope with our closure, which isn't part of the global scope, we need to attach to <code>window</code> explicitly like so:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">window</span>.<span class="at">weatherApp</span> <span class="op">=</span> <span class="op">{</span>
+  <span class="dt">weatherForMyLocation</span><span class="op">:</span> weatherForMyLocation<span class="op">,</span>
+  <span class="dt">weatherForZipCodes</span><span class="op">:</span> weatherForZipCodes
+<span class="op">};</span></code></pre></div>
+<p>For convenience and readability we create a property on the <code>window</code> object called <code>weatherApp</code> and its purpose is just to group together our application's functions. Otherwise they'll just float in the void of the <code>window</code> object which is terribly cluttered already.</p>
+<p>So now when you run our code (copy/paste, if you will, then just refresh the page) you will not be able to access any of our &quot;private&quot; functions. The only two functions available to you from the Console will be the ones we exposed. Only difference is that now they will be accessible like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">weatherApp</span>.<span class="at">weatherForMyLocation</span>()<span class="op">;</span>
+<span class="va">weatherApp</span>.<span class="at">weatherForZipCodes</span>([<span class="dv">11211</span>])<span class="op">;</span></code></pre></div>
+<p>Note how we don't need to explicitly precede with a reference to <code>window</code> when invoking above as it is implied. We could, however, invoke our functions like this as well:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">// Referencing `window` explicitly:</span>
+<span class="va">window</span>.<span class="va">weatherApp</span>.<span class="at">weatherForMyLocation</span>()<span class="op">;</span></code></pre></div>
+<p>So wait a second, how the hell does our application work if we hide all of the intermediate functions? They are still very much necessary to our application logic. Well, since our two interface functions were originally declared <em>within</em> the same scope of the other functions, they can still access them. We can't, but they can! That's a closure.</p>
+<div class='navigation'><a href='/www/about-interviews.html'>About: Interviews</a><a class='next' href='/www/about-dom-document-object-model.html'>About: DOM (Document Object Model)</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

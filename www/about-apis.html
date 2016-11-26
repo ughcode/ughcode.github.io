@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="about-apis">About: APIs</h2>
+<p>API is just an acronym which stands for Application Program Interface. All that means is that an application is exposing its functionality in a way that's easy for your application to interact with.</p>
+<p>For example, Google Maps' API documentations can be found <a href="https://developers.google.com/maps/documentation/JavaScript/">here</a> and although it's a bit more complex than what we've done so far, it offers certain endpoints for our application to use in a programmatic fashion. There are plenty of guides or tutorials online to show you how to implement Google Maps' API in your application, so we're not gonna spend time on it, but you get the point -- an API means offering a way for an application to interact with another application in a programmatically convenient manner.</p>
+<p>Another API that's not a web-based one, is the API we've been using this whole time -- the browser's API! Yes my friend, all of those built in functions? Well some of them are original to ECMAScript specification (read: JS) itself, but stuff such as <code>XMLHttpRequest</code>, that we've already discussed, is part of the browser's API, which is just an interface for our application to interact with the browser's built-in functionality (in the case of <code>XMLHttpRequest</code> -- its ability to make requests over the Internet).</p>
+<h4 id="must-an-application-have-an-api-in-order-for-another-application-to-interact-with-it-nope-absolutely-not.">Must an application have an API in order for another application to interact with it? Nope, absolutely not.</h4>
+<p>Let's take for example the site Craigslist. Last time I checked Craigslist did not have an official API available for the public to use. So if one wanted to have their application post an ad to Craigslist automatically (which by the way is against their terms of use so I would advise against it), they would have to figure out a different way to do so. One way could be via closely inspecting the request/response cycle when they post an ad on Craigslist manually and then try to mimic it with their application. You can see all the data transferred from your browser to Craigslist and vice versa via the Network tab of your browser's DevTools (click the &quot;Network&quot; tab and execute the request). After you have all the information needed from your manual request (the endpoints the browser sends data to, the data it passes, and its formatting, etc.), you could theoretically repeat the same steps programmatically w/out a problem.</p>
+<p>APIs could also have nothing to do with web applications. For example the Apple iPhone and its OS (Operating System), iOS, have their own API, which is not used over the net, but rather is consumed via built in methods the developer can use (for example: to interact with the device's geolocation and other functionality) much like the browser's API we've mentioned before.</p>
+<h4 id="other-apis-out-there">Other APIs out there</h4>
+<p>Most likely most of the stuff you need to create your application is already available in an API of some sort. To find APIs for maps, social applications, videos, music, etc. etc. use Google. You can also search for them <a href="http://www.programmableweb.com/apis">here</a>.</p>
+
+<!-- TODO: recommend "cracking the coding interview" --><div class='navigation'><a href='/www/chapter-13---loops.html'>Chapter 13 - Loops</a><a class='next' href='/www/about-interviews.html'>About: Interviews</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

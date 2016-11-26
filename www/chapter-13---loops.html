@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-13---loops">Chapter 13 - Loops</h2>
+<p>Remember earlier when we implemented a function that took two numbers and returned the largest one? We called it <code>largest</code> and it looked like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">largest</span>(num1<span class="op">,</span> num2) <span class="op">{</span>
+  <span class="cf">if</span> (num1 <span class="op">&gt;</span> num2) <span class="op">{</span>
+    <span class="cf">return</span> num1<span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+    <span class="cf">return</span> num2<span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<h3 id="for-loop">For Loop</h3>
+<p>Well, I'm not gonna lie, this now looks to me like a half-assed solution, so I want our function to take an arbitrary number of numbers and return the largest one. This implementation does just that, using what's called a &quot;for-loop&quot;:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">largest</span>(numberArray) <span class="op">{</span>
+  <span class="kw">var</span> largest <span class="op">=</span> <span class="va">numberArray</span>.<span class="at">pop</span>()<span class="op">;</span>
+
+  <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">numberArray</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+    <span class="cf">if</span> (numberArray[i] <span class="op">&gt;</span> largest) <span class="op">{</span>
+      largest <span class="op">=</span> numberArray[i]<span class="op">;</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+
+  <span class="cf">return</span> largest<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>Hmmmm... Let's talk about our different scenarios for inputs and their expected outputs. For example, if our input were the following array:</p>
+<pre><code>[3, 2, 5, -7]</code></pre>
+<p>We should expect our output from our function now to be: <code>5</code>, as it is the largest number in the array.</p>
+<p>Now, let's think of an edge case. If the array supplied to the <code>largest</code> function were empty (<code>[]</code>), I would be okay with saying our output should be <code>undefined</code> which means no value at all. The solution above does just that.</p>
+<p>But how did we do this? We declared a <code>largest</code> variable at the top of our function. Not giving that variable an initial value would cause issues. Why? Because not giving <code>largest</code> a value at all, means that it'd just be initialized as <code>undefined</code> and when we compare <code>undefined</code> with any number, JavaScript tries to coerce <code>undefined</code> to a number which yields <code>NaN</code> (Not a Number) and therefore make it seem like <code>undefined</code> is neither bigger nor smaller than any number we compare it to. That wouldn't get us very far.</p>
+<p>So instead, we're initializing our <code>largest</code> variable with the first element of our array. We do that using the <code>pop</code> method which is available on all JS arrays. <code>pop</code> simply returns the last element in the array and removes it from the original array as well. Keep in mind that in our situation that's alright to assume the last element is the largest for now, if it isn't, it'll be replaced by the element that's bigger later. Additionally, it's cool that we remove it from the array since we don't need to iterate over it again. Think about it for a second.</p>
+<p>Now to the interesting part. In the second line of our function, we use a simple JS <code>for</code> loop and iterate over our entire array. Notice how a <code>for</code> loop takes three expressions. The first expression (<code>var i = 0;</code>) is the initial expression the loop starts with. In this case we are declaring a variable by the name of <code>i</code> which we're gonna use to keep track of the <em>index</em> of our array.</p>
+<p>In the second expression we pass to our <code>for</code> loop (<code>i &lt; numberArray.length;</code>) is a condition that as long as it evaluates to <code>true</code>, the loop will continue execution. In this case <code>numberArray.length</code> provides the count of the array members. So as long as <code>i</code> (our index) is less than the count of the elements, the loop will continue executing its code.</p>
+<p>And then the last expression we give our <code>for</code> loop (<code>i++</code>) is an expression that gets executed after each one of the loop's iterations completes. In this case we are simply incrementing our index variable, <code>i</code>, by 1 (note that <code>i++</code> is just a shorthand for <code>i = i + 1</code>.)</p>
+<p>So basically this loop just iterates over all of our array elements as you'd expect. In each iteration we have an <code>if</code> statement to check if the element we're on right now (<code>numberArray[i]</code>) is greater than the value that we already have in our variable <code>largest</code>. If the value is greater, we simply replace it and store our new greatest value in <code>largest</code>. Once we're done iterating over our array and make sure we have the largest number in <code>largest</code> we return it as the result!</p>
+<h3 id="while-loop">While Loop</h3>
+<p>Another way we could solve the challenge of finding the largest number, would be a <code>while</code> loop:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">largest</span>(numberArray) <span class="op">{</span>
+  <span class="kw">var</span> num <span class="op">=</span> <span class="va">numberArray</span>.<span class="at">pop</span>()<span class="op">;</span>
+  <span class="kw">var</span> largest <span class="op">=</span> num<span class="op">;</span>
+
+  <span class="cf">while</span> (<span class="kw">typeof</span> num <span class="op">!==</span> <span class="st">&#39;undefined&#39;</span>) <span class="op">{</span>
+    <span class="cf">if</span> (num <span class="op">&gt;</span> largest) <span class="op">{</span>
+      largest <span class="op">=</span> num<span class="op">;</span>
+    <span class="op">}</span>
+    num <span class="op">=</span> <span class="va">numberArray</span>.<span class="at">pop</span>()<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="cf">return</span> largest<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>This implementation adds a few concepts we haven't covered before, and is somewhat less straightforward than our <code>for</code> loop implementation.</p>
+<p>First thing to note, is that we declare a variable by the name of <code>num</code> which is just gonna be used to hold the number we're currently iterating over. We initialize <code>num</code> with the last element from our input array. We also still declare a <code>largest</code> variable and populate it with the same value of <code>num</code> (the last element).</p>
+<p>Then we have our <code>while</code> loop. While-loops simply continue execution as long as the expression given to them evaluates to <code>true</code>.</p>
+<p>So this while-loop, will theoretically never stop executing:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">while</span> (<span class="kw">true</span>) <span class="op">{</span>
+  <span class="co">// some code</span>
+<span class="op">}</span></code></pre></div>
+<p>In reality, your browser will kill this script as soon as it runs out of memory.</p>
+<p>So in our while-loop we have this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">while</span> (<span class="kw">typeof</span> num <span class="op">!==</span> <span class="st">&#39;undefined&#39;</span>) <span class="op">{</span>
+  <span class="co">// some code</span>
+
+  num <span class="op">=</span> <span class="va">numberArray</span>.<span class="at">pop</span>()<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>If <code>num</code> was <code>undefined</code>, <code>typeof num</code> would return the string &quot;undefined&quot; and so our while-loop wouldn't even enter its code block. On the contrary, if we initialized <code>num</code> with a perfectly legit number, say 4, then <code>typeof</code> would return &quot;number&quot; and our while-loop would execute its code block.</p>
+<p>The last line of our while-loop's code block, is already familiar to you, and simply pops out the last element from our <code>numberArray</code> and assigns it to <code>num</code> (overwriting its previous value). This methodology is a common way to iterate over all member elements of an array. When <code>numberArray</code> is finally empty, calling <code>pop</code> on it, will result in <code>undefined</code> which will terminate our while-loop.</p>
+<p>Now, some of you might be thinking to yourselves why not just write this loop as:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">while</span> (num) <span class="op">{</span>
+  <span class="co">// code</span>
+<span class="op">}</span></code></pre></div>
+<p>Since we already said JS coerces to booleans when it needs to. For example, when the expression would yield <code>7</code> JS will consider it a truthy value and enter the loop. Same will happen when it iterates over the number <code>-3</code> -- it will enter the loop. When the value will finally be <code>undefined</code> then the iteration will stop (since <code>undefined</code> is falsy). But what will happen if we had the number <code>0</code> in our array? Ah-ha! Then our loop will exit prematurely since zero will be coerced to <code>false</code>!</p>
+<p>If you are curious for a simpler solution, since you are as lazy as I am, all of this loop bizwax could be avoided by using JS's built-in <code>max</code> method like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">largest</span>(numberArray) <span class="op">{</span>
+  <span class="cf">return</span> <span class="va">Math</span>.<span class="at">max</span>(numberArray)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>But you still need to know how to use loops, so keep reading...</p>
+<p>So how are we planning on using loops in our Weather App?</p>
+<p>Our Weather App, up until now, could only show us weather for our current location. But what if we wanted it to show us weather from other locations, too? To keep this simple, let's stick to only ZIP (Zone Improvement Plan!) codes and nothing fancier.</p>
+<p>This illustrates what our app should take as an input, and what it should output to the user.</p>
+<p>Input - an array of ZIP codes:</p>
+<pre><code>[11211, 80634]</code></pre>
+<p>Desired Output (along the lines of the following text):</p>
+<pre><code> Weather in &quot;Current Location&quot; : &quot;96&quot;
+ Weather in &quot;11211&quot; : &quot;87&quot;
+ Weather in &quot;80634&quot; : &quot;65&quot;</code></pre>
+<p>In order to get there, we will need to make a few adjustments to our app.</p>
+<p>Let's start with what we have. We have a function by the name of <code>getWeather</code> It takes one argument (a user's coordinate) and a callback to be called when the weather data is fetched. So now all we need to do is make <code>getWeather</code> work when it's given a ZIP code instead of a coordinate as well.</p>
+<p>Keep in mind that in our case changing <code>getWeather</code> to take ZIPs shouldn't be too hard since the Open Weather Map API can take a ZIP code as a query parameter as well. If we were less lucky, and their API could only take coordinates, we would most likely have to introduce another API to convert our ZIPs to coordinates and only then call our <code>getWeather</code> function.</p>
+<p>In order to use a ZIP code instead of a coordinate, we can query the Open Weather Map API with the following URL:</p>
+<pre><code>http://api.openweathermap.org/data/2.5/weather
+  ?appid=fa32f&amp;units=imperial&amp;zip=11211</code></pre>
+<p>Additionally, in order for us to be able to show the weather in multiple locations at a time, we will need some wrapper function that will iterate over all of the ZIP codes provided by the user and call <code>getWeather</code> for each one of them separately.</p>
+<p>But first things first; as you can see in the URL above, the only difference in our <code>getWeather</code> function needs to be in the URL query parameters -- if our function gets a ZIP it should add the parameter <code>zip</code> and if it gets a coordinate object, it should add the parameters <code>lat</code> and <code>lon</code>. That's it.</p>
+<p>We could be cumbersome and do this to solve our scenario:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">getWeather</span>(zipOrCoordinate<span class="op">,</span> callback) <span class="op">{</span>
+
+  <span class="kw">var</span> url <span class="op">=</span> apiUrl <span class="op">+</span> <span class="st">&#39;?appid=&#39;</span> <span class="op">+</span> apiKey <span class="op">+</span> <span class="st">&#39;&amp;units=imperial&#39;</span><span class="op">;</span>
+
+  <span class="cf">if</span> (<span class="va">zipOrCoordinate</span>.<span class="at">longitude</span>) <span class="op">{</span> <span class="co">// We assume it&#39;s a coordinate</span>
+    url <span class="op">+=</span> <span class="st">&#39;&amp;lon=&#39;</span> <span class="op">+</span> <span class="va">zipOrCoordinate</span>.<span class="at">longitude</span> <span class="op">+</span>
+           <span class="st">&#39;&amp;lat=&#39;</span> <span class="op">+</span> <span class="va">zipOrCoordinate</span>.<span class="at">latitude</span><span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="co">// Assuming we have a zipcode</span>
+    url <span class="op">+=</span> <span class="st">&#39;&amp;zip=&#39;</span> <span class="op">+</span> zipOrCoordinate<span class="op">;</span>
+  <span class="op">}</span>
+
+  <span class="at">makeRequest</span>(url<span class="op">,</span> callback)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>In the scenario above we just change the first argument's name to <code>zipOrCoordinate</code> because we don't know what's in it anymore. Then we add a conditional to check whether we got ourselves an object with the key <code>longitude</code> or something else. If <code>zipOrCoordinate.longitude</code> returns any truthy value (not <code>undefined</code>), it is safe to assume <code>zipOrCoordinate</code> is a coordinate. Otherwise, <code>zipOrCoordinate</code> could be anything else, but for brevity, we're going to assume it is a string or a number representing a ZIP code and just add it as a query param to the end of the URL.</p>
+<p>But it turns out the Open Weather Map API can take even more than just a ZIP or a specific coordinate. It turns out it works with full city names as well, and we would like to take advantage of that too. Besides, our solution just seems messy and a bit too brittle. The fact that we're relying on <code>zipOrCoordinate</code> to be a ZIP if it's not a coordinate, is not really self-explanatory and I bet future you will have a hard time understanding why we did that. My suggestion, therefore, is to change our code to something like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">getWeather</span>(locationObject<span class="op">,</span> callback) <span class="op">{</span>
+
+  <span class="kw">var</span> url <span class="op">=</span> apiUrl <span class="op">+</span>
+    <span class="st">&#39;?appid=&#39;</span> <span class="op">+</span> apiKey <span class="op">+</span>
+    <span class="st">&#39;&amp;units=imperial&#39;</span> <span class="op">+</span>
+    <span class="st">&#39;&amp;&#39;</span> <span class="op">+</span> <span class="at">parameterize</span>(locationObject)<span class="op">;</span>
+
+  <span class="at">makeRequest</span>(url<span class="op">,</span> callback)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>What we did here is not that tricky. Instead of checking for the different types our <code>getWeather</code> function receives, we just made it a bit more <em>agnostic</em>. Now our function can take whatever kind of object you wanna give it. Surely it will fail to return the weather if you don't give it something it expects, but this is not its responsibility to decide that right now. Our <code>getWeather</code> function, we assume, is getting a valid input.</p>
+<p>So what's gonna be inside <code>locationObject</code>? An object with a location in it! That could mean properties such as a coordinate, a ZIP code, or a city name. Our <code>parameterize</code> function (which we haven't implemented yet) is now responsible to turn our function argument, <code>locationObject</code>, into the query params we then append to the rest of the URL.</p>
+<p>Here is an example of a valid input and output for our (future) <code>parameterize</code> function:</p>
+<p>Input:</p>
+<pre><code>{
+  lat: 40.56,
+  lon: -30.87
+}</code></pre>
+<p>Output:</p>
+<pre><code>&quot;lat=40.56&amp;lon=-30.87&quot;</code></pre>
+<h3 id="for...in-loop">For...In Loop</h3>
+<p>Here is one way to implement our <code>parameterize</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">parameterize</span>(object) <span class="op">{</span>
+  <span class="kw">var</span> params <span class="op">=</span> []<span class="op">;</span>
+  <span class="cf">for</span> (<span class="kw">var</span> key <span class="kw">in</span> object) <span class="op">{</span>
+    <span class="va">params</span>.<span class="at">push</span>(key <span class="op">+</span> <span class="st">&#39;=&#39;</span> <span class="op">+</span> <span class="at">encodeURIComponent</span>(object[key]))<span class="op">;</span>
+  <span class="op">}</span>
+  <span class="cf">return</span> <span class="va">params</span>.<span class="at">join</span>(<span class="st">&#39;&amp;&#39;</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>As you can see, it takes one object, named <code>object</code>, initializes an empty array and stores it in a variable called <code>params</code>. Then it loops over the object's keys using a <code>for...in</code> loop. Inside the loop it creates a string representing the key and the value in a &quot;parameterized&quot; way like we've demonstrated above.</p>
+<p>Note how inside the loop, we reference the value of the object like this: <code>object[key]</code>. This is because <code>key</code> is just another variable holding a string representation of the key, so when <code>key</code> has the string &quot;lat&quot; in it, <code>object[key]</code> means <code>object['lat']</code> (which is the same as <code>object.lat</code>), and it yields the value in it which is <code>40.56</code>.</p>
+<p>The reason we wrap <code>object[key]</code> in JS's built-in function, <code>encodeURIComponent</code>, is that the value in <code>object[key]</code> could be non-URI compliant. For example, if the key was <code>q</code> (to indicate free-form query of any word, most likely country or city), the value could very well contain spaces which are not allowed in URLs. So in order to account for that issue, the <code>encodeURIComponent</code> function simply replaces non-valid URI characters with their UTF-8 representation (for space that would be the string &quot;%20&quot;) so we can transfer the data accurately without causing any issues.</p>
+<p>Once we're done with creating our string, we push it to our <code>params</code> array, and move on to the next key in our object. You can find out what the <code>params</code> array will look like in each iteration by adding:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">console</span>.<span class="at">log</span>(params)<span class="op">;</span> <span class="co">// will first yield: [&quot;lat=40.56&quot;]</span></code></pre></div>
+<p>inside the loop.</p>
+<p>Moving on to our second iteration, now our <code>key</code> variable holds the string &quot;lon&quot;. Great. So we push the string &quot;lon=-30.87&quot; to our array, which makes it look like this now:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">[<span class="st">&quot;lat=40.56&quot;</span><span class="op">,</span> <span class="st">&quot;lon=-30.87&quot;</span>]</code></pre></div>
+<p>Fantastic! Now we have all of our parameters in our <code>params</code> array. All that's left for us to do is concatenate them all into one big string with an ampersand (<code>&amp;</code>) separating between (again, that's the convention for multiple query parameters). And this is how we do it:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">params</span>.<span class="at">join</span>(<span class="st">&#39;&amp;&#39;</span>)<span class="op">;</span></code></pre></div>
+<p><code>join</code> is a built in method on any array in JS and it simply joins all of the array's elements with the string provided to it as an argument. In our case, this will finally yield the following string:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="st">&quot;lat=40.56&amp;long=-30.87&quot;</span></code></pre></div>
+<p>Ta Da! This is all our <code>parameterize</code> function does, and this is all we want it to do! Keep it simple, homie.</p>
+<p>So at this point, if you've lost track, our <code>getWeather</code> function can take either a ZIP code, a coordinate, or a city/state name (via the <code>q</code> parameter) and return the current weather for it. However, our implementation is far from perfect as our function makes a pretty big assumption that it is given as an input a valid object with the keys required by the Open Weather Map API. In a real world application, we would probably want to include some validations to assert our input is valid before continuing with our execution. In the meantime if something is not right, we will most likely just get an ugly error displayed in our Console.</p>
+<p>So back to our original premise -- making our application give us weather for more than one location. First off, we need it to get us weather for an array of ZIP codes and this is one way to do it:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">weatherForZipCodes</span>(zips) <span class="op">{</span>
+  <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">zips</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+    <span class="at">getWeather</span>(<span class="op">{</span>
+      <span class="dt">zip</span><span class="op">:</span> zips[i]
+    <span class="op">},</span> printWeather)<span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<!-- TODO: "explain 'keys' of object" (Donnie) -->
+<p>And with our previous entrance point to our application, via the /linebreak <code>weatherForMyLocation</code> function, we can still get weather data for the current location. The only change <code>weatherForMyLocation</code> needs to undergo is pass a more verbose object to <code>getWeather</code> in order for it to have the correct keys since we're gonna use them as our query params' keys and so we need them to fit the Open Weather Map API convention. This is our new implementation of <code>weatherForMyLocation</code>:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">weatherForMyLocation</span>() <span class="op">{</span>
+  <span class="at">getUserCoordinates</span>(<span class="kw">function</span> (coord) <span class="op">{</span>
+    <span class="at">getWeather</span>(<span class="op">{</span>
+      <span class="dt">lon</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">longitude</span><span class="op">,</span>
+      <span class="dt">lat</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">latitude</span>
+    <span class="op">},</span> printWeather)<span class="op">;</span>
+  <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>As a recap, this is what we now have for the whole application in order for it to show us weather data for our current location <em>and</em> a list of ZIP codes.</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">/*
+  Filename: weather_app.html
+  Find me on GitHub: 
+  github.com/ughcode/app/blob/master/chapter-13/weather_app.html
+*/
+
+<span class="kw">&lt;script&gt;</span>
+
+<span class="kw">var</span> apiUrl <span class="op">=</span> <span class="st">&#39;http://api.openweathermap.org/data/2.5/weather&#39;</span><span class="op">;</span>
+
+<span class="kw">var</span> apiKey <span class="op">=</span> <span class="st">&#39;fa32f&#39;</span><span class="op">;</span>
+
+<span class="kw">function</span> <span class="at">getWeather</span>(locationObject<span class="op">,</span> callback) <span class="op">{</span>
+  <span class="kw">var</span> url <span class="op">=</span> apiUrl <span class="op">+</span>
+    <span class="st">&#39;?appid=&#39;</span> <span class="op">+</span> apiKey <span class="op">+</span>
+    <span class="st">&#39;&amp;units=imperial&#39;</span> <span class="op">+</span>
+    <span class="st">&#39;&amp;&#39;</span> <span class="op">+</span> <span class="at">parameterize</span>(locationObject)<span class="op">;</span>
+
+  <span class="at">makeRequest</span>(url<span class="op">,</span> <span class="kw">function</span> (responseText) <span class="op">{</span>
+    response <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(responseText)<span class="op">;</span>
+    <span class="at">callback</span>(response)<span class="op">;</span>
+  <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="at">parameterize</span>(object) <span class="op">{</span>
+  <span class="kw">var</span> params <span class="op">=</span> []<span class="op">;</span>
+  <span class="cf">for</span> (<span class="kw">var</span> key <span class="kw">in</span> object) <span class="op">{</span>
+    <span class="va">params</span>.<span class="at">push</span>(key <span class="op">+</span> <span class="st">&#39;=&#39;</span> <span class="op">+</span> <span class="at">encodeURIComponent</span>(object[key]))<span class="op">;</span>
+  <span class="op">}</span>
+  <span class="cf">return</span> <span class="va">params</span>.<span class="at">join</span>(<span class="st">&#39;&amp;&#39;</span>)<span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="at">makeRequest</span>(url<span class="op">,</span> callback) <span class="op">{</span>
+  <span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
+  <span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+    <span class="at">callback</span>(<span class="va">xhrObject</span>.<span class="at">responseText</span>)<span class="op">;</span>
+  <span class="op">};</span>
+  <span class="va">xhrObject</span>.<span class="at">open</span>(<span class="st">&#39;GET&#39;</span><span class="op">,</span> url<span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>
+  <span class="va">xhrObject</span>.<span class="at">send</span>()<span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="at">getUserCoordinates</span>(callback) <span class="op">{</span>
+  <span class="va">navigator</span>.<span class="va">geolocation</span>.<span class="at">getCurrentPosition</span>(<span class="kw">function</span> (position) <span class="op">{</span>
+    <span class="cf">if</span> (<span class="va">position</span>.<span class="at">coords</span>) <span class="op">{</span>
+      <span class="at">callback</span>(<span class="va">position</span>.<span class="at">coords</span>)<span class="op">;</span>
+    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+      <span class="va">console</span>.<span class="at">error</span>(<span class="st">&quot;Didn&#39;t get a valid coordinate, meow!&quot;</span>)<span class="op">;</span>
+    <span class="op">}</span>
+  <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="at">printWeather</span>(weatherData) <span class="op">{</span>
+  <span class="kw">var</span> currentTemperature <span class="op">=</span> <span class="va">weatherData</span>.<span class="va">main</span>.<span class="at">temp</span><span class="op">;</span>
+  <span class="kw">var</span> location <span class="op">=</span> <span class="va">weatherData</span>.<span class="at">name</span><span class="op">;</span>
+  <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;The current temprature in &quot;</span> <span class="op">+</span> location <span class="op">+</span>
+              <span class="st">&quot; is: &quot;</span> <span class="op">+</span> currentTemperature)<span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="at">weatherForMyLocation</span>() <span class="op">{</span>
+  <span class="at">getUserCoordinates</span>(<span class="kw">function</span> (coord) <span class="op">{</span>
+    <span class="at">getWeather</span>(<span class="op">{</span>
+      <span class="dt">lon</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">longitude</span><span class="op">,</span>
+      <span class="dt">lat</span><span class="op">:</span> <span class="va">coord</span>.<span class="at">latitude</span>
+    <span class="op">},</span> printWeather)<span class="op">;</span>
+  <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">function</span> <span class="at">weatherForZipCodes</span>(zips) <span class="op">{</span>
+  <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">zips</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+    <span class="at">getWeather</span>(<span class="op">{</span>
+      <span class="dt">zip</span><span class="op">:</span> zips[i]
+    <span class="op">},</span> printWeather)<span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="op">&lt;</span><span class="ss">/script&gt;</span></code></pre></div>
+<p>So now take all of the code above, type it into your HTML file and try to run it again. Keep in mind now we have two different entrance points to our application: When we want to get weather for ZIP codes, we'll invoke <code>weatherForZipCodes</code> with an array of ZIPs. And when we want to get weather for our current location, we'll invoke <code>weatherForMyLocation</code>. Capiche?</p>
+<p>'Nough programming for today. You've made some real progress and we're almost done with our Weather App. Go to bed.</p>
+<div class='navigation'><a href='/www/about-random-shit-i-built.html'>About: Random Shit I Built</a><a class='next' href='/www/about-apis.html'>About: APIs</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

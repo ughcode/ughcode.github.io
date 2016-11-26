@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-2---variables">Chapter 2 - Variables</h2>
+<p>The first comment in our application (the text within the <code>/* ... */</code>) was this:</p>
+<ol style="list-style-type: decimal">
+<li>Declare variables containing the URL for the Open Weather Map API and your API Key.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> apiUrl <span class="op">=</span> <span class="st">&#39;http://api.openweathermap.org/data/2.5/weather&#39;</span><span class="op">;</span>
+
+<span class="kw">var</span> apiKey <span class="op">=</span> <span class="st">&#39;fa32f&#39;</span><span class="op">;</span> <span class="co">// REPLACE WITH YOUR KEY!</span></code></pre></div>
+<p>Let's look at the first variable declaration on the first line. The part on the right surrounded by single quotes (<code>'</code>) is a string we don't need the computer to do much with. A string is a sequence of characters (could be letters, numerals, or any other symbols) surrounded by quotes. The example above is an instruction for the computer to create a string and store it in its memory. In this scenario our string is part of the URL where we're going to get our weather data from.</p>
+<p>Note: Strings in JS can be enclosed by single or double quotes. So <code>'this is a valid string'</code> and <code>&quot;This is a valid one too&quot;</code>. But they must be enclosed by quotes or else it's not a string!</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> apiUrl <span class="op">=</span> <span class="st">&#39;http://api.openweathermap.org/data/2.5/weather&#39;</span><span class="op">;</span></code></pre></div>
+<p>We declare a variable with the keyword <code>var</code>, and then assign a value to it with the following equals sign (<code>=</code>). This just means we instruct the computer to (1) allocate some memory for our application and (2) store in it a reference to where our string will live in the computer's memory. By keeping a reference to our string, we can now access it using the <code>apiUrl</code> variable.</p>
+<p>If you were to not trust your computer (you're just getting to know each other, that's cool), simply run the following commands in your Console and see for yourself. Again, the first command stores reference to our URL string in a variable called <code>apiUrl</code>. The second command simply prints its content to the screen.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> apiUrl <span class="op">=</span> <span class="st">&#39;http://api.openweathermap.org/data/2.5/weather&#39;</span><span class="op">;</span>
+
+<span class="va">console</span>.<span class="at">log</span>(apiUrl)<span class="op">;</span></code></pre></div>
+<p>Keep in mind that, since we're in a REPL (fill in the blank: R__d E______e P___t L__p), you don't have to use <code>console.log</code> to print the contents of our variable to the screen. Our Console will do it for us, so you can just type <code>apiUrl</code> and hit enter. I am choosing to use <code>console.log</code> however, so we're not confused as to why nothing happens when we run our app externally later not within our REPL.</p>
+<p>In JavaScript, it is advised that each expression, or instruction which yields a value, is followed by a semicolon (<code>;</code>) when it's on its own so that the computer doesn't get confused when executing them in case they end up on the same line.</p>
+<p>In our previous example, I chose to call our variable <code>apiUrl</code> because I wanted a name descriptive of what it holds inside. Try to avoid using non-descriptive variable names such as <code>x</code> or <code>au</code> since you will most likely forget what it holds when your application gets bigger and it will make it harder for you or someone else to debug.</p>
+<p>The reason why I capitalized the <code>U</code> of <code>Url</code> in <code>apiUrl</code> is because we're not allowed to have spaces in our variable names. If we used a space, the computer would mess up and evaluate our variable name as two different instructions. No bueno. However, I could have used an underscore like this, instead:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> api_url <span class="op">=</span> <span class="st">&#39;...&#39;</span><span class="op">;</span></code></pre></div>
+<p>But the convention in JavaScript is to use what's called the <em>camel case</em> notation which means capitalizing the first letter in each word (except for the first one). This obviously looks like a camel only if you were blind: <code>thisDoesNotRemindMeOfCamels</code>.</p>
+<h4 id="so-what-are-variables-exactly">So what are variables exactly?</h4>
+<p>Variables are just containers in our computer's memory that hold values. Well in reality it's a bit more complex, but for now that should be a sufficient explanation.</p>
+<p>So think of variables this way: I live in Brooklyn, NY. My apartment is the container; Peleg, the person (that's me), is the value, and the address for it in the world is 241 S3rd St. Apt. 18, Brooklyn, NY 11211, USA (don't come kill me). Something like that at least.</p>
+<p>Now if you were to change the value of the apartment and put my mom's dog, Charlie, in it instead of me, then now the same address would point to Charlie the dog instead of Peleg the human. So in our previous example, if we were now to change <code>apiUrl</code>'s value like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">apiUrl <span class="op">=</span> <span class="st">&#39;blah blah blah&#39;</span><span class="op">;</span></code></pre></div>
+<p>It would have this new vlaue and you could see it by printing it to the Console again:</p>
+<p><code>console.log(apiUrl);</code></p>
+<p>and it will print its new string, <code>&quot;blah blah blah&quot;</code>. Don't forget to reinstate our initial URL if you're intending to continue using it.</p>
+<p>By the way, you should note that we didn't precede our re-assignment with the keyword <code>var</code> here. That is because our variable was already declared earlier when we assigned it with the URL. Now we were just changing its value.</p>
+<p>Cool. Now the stuff I'm talking about here most likely makes sense only half the time and it's perfectly okay. This is how most people learn and if all of this information made sense to you the first time you encountered it, then good for you, show off, but for the rest of you -- don't get discouraged by ambiguity. It is how I learn too -- just power through the confusing lines of this book and get back to them some other time.</p>
+<div class='navigation'><a href='/www/chapter-1---define-programming.html'>Chapter 1 - Define Programming</a><a class='next' href='/www/about-impostor-syndrome.html'>About: Impostor Syndrome</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

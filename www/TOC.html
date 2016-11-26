@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href='/www/preface.html'>Preface</a></li>
+<li><a href='/www/about-me.html'>About: Me</a></li>
+<li><a href='/www/chapter-1---define-programming.html'>Chapter 1 - Define Programming</a></li>
+<li><a href='/www/chapter-2---variables.html'>Chapter 2 - Variables</a></li>
+<li><a href='/www/about-impostor-syndrome.html'>About: Impostor Syndrome</a></li>
+<li><a href='/www/chapter-3---types.html'>Chapter 3 - Types</a></li>
+<li><a href='/www/chapter-4---objects.html'>Chapter 4 - Objects</a></li>
+<li><a href='/www/chapter-5---arrays.html'>Chapter 5 - Arrays</a></li>
+<li><a href='/www/chapter-6---functions.html'>Chapter 6 - Functions</a></li>
+<li><a href='/www/chapter-7---operators.html'>Chapter 7 - Operators</a></li>
+<li><a href='/www/chapter-8---requests-and-servers.html'>Chapter 8 - Requests and Servers</a></li>
+<li><a href='/www/about-looking-it-up.html'>About: Looking it Up</a></li>
+<li><a href='/www/chapter-9---classes-and-objects.html'>Chapter 9 - Classes and Objects</a></li>
+<li><a href='/www/about-docs-documentations.html'>About: Docs (Documentations)</a></li>
+<li><a href='/www/about-debugging.html'>About: Debugging</a></li>
+<li><a href='/www/chapter-10---conditionals.html'>Chapter 10 - Conditionals</a></li>
+<li><a href='/www/chapter-11---boolean-expressions.html'>Chapter 11 - Boolean Expressions</a></li>
+<li><a href='/www/chapter-12---and-or-and-not-operators.html'>Chapter 12 - AND, OR, and NOT Operators</a></li>
+<li><a href='/www/about-random-shit-i-built.html'>About: Random Shit I Built</a></li>
+<li><a href='/www/chapter-13---loops.html'>Chapter 13 - Loops</a></li>
+<li><a href='/www/about-apis.html'>About: APIs</a></li>
+<li><a href='/www/about-interviews.html'>About: Interviews</a></li>
+<li><a href='/www/chapter-14---tying-it-all-together.html'>Chapter 14 - Tying it All Together!</a></li>
+<li><a href='/www/about-dom-document-object-model.html'>About: DOM (Document Object Model)</a></li>
+<li><a href='/www/chapter-15---where-to.html'>Chapter 15 - Where To?</a></li>
+<li><a href='/www/about-the-importance-of-community.html'>About: The Importance of Community</a></li>
+<li><a href='/www/about-general-resources.html'>About: General Resources</a></li>
+<li><a href='/www/about-oss-open-source-software.html'>About: OSS (Open Source Software)</a></li>
+<li><a href='/www/chapter-16---stuff-you-should-know-about.html'>Chapter 16 - Stuff You Should Know About</a></li>
+<li><a href='/www/about-getting-a-job.html'>About: Getting a Job</a></li>
+<li><a href='/www/whats-next.html'>What's Next?</a></li>
+<li><a href='/www/special-thanks.html'>Special Thanks!</a></li>
+</ul>
+</div>
+<div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

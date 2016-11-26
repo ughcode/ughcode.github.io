@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="about-debugging">About: Debugging</h2>
+<p>If you're human, and you're new to this, then there's a good chance you've already fucked up something in the process and shit isn't working so smoothly. So now would be a good time to talk about debugging your JavaScript.</p>
+<p>Here are a few of my rules:</p>
+<ol style="list-style-type: decimal">
+<li><p>Write small chunks of code. The smaller your functions, the easier it'll be to find where they're failing and thus fix them.</p></li>
+<li><p>Make sure you type your code yourself and not copy/paste it. By typing it, even if you do so verbatim, you work on your typing speed and skills and it forces you to go word by word and try to understand what you're doing. When you're just copying someone else's code (how dare you!), you sometimes overlook some of what they've done and thus miss on all the fun learning. So type, you lazy bastard!</p></li>
+<li><p>Test your code often. I'm not talking about writing tests here (which is something every developer should know how to do and do, but is not within the scope of this book), but simply open your Console, type in your functions, and test invoking them with several different arguments until you get the expected result. But try to understand why things aren't working and not just keep trying different variations till you hit jackpot.</p></li>
+<li><p>Use the <code>debugger</code> statement often. Chrome (and other browsers) has this nifty statement called <code>debugger</code>. Want the browser's interpreter to halt execution of your code in the middle of your function so you can inspect what's going on around you? No problem!</p>
+<p>Here's how it's done:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> add <span class="op">=</span> <span class="kw">function</span> (num1<span class="op">,</span> num2) <span class="op">{</span>
+  <span class="cf">debugger</span><span class="op">;</span>
+  <span class="cf">return</span> num1 <span class="op">+</span> num2<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>Not sure how the above function works? Wanna make sure it does what it should? Maybe it's broken? No worries my friend. Type the above function as is (with the <code>debugger</code> statement in it) in your browser's Console and hit Enter.</p>
+<p>Now invoke it like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">add</span>(<span class="dv">3</span><span class="op">,</span> <span class="dv">6</span>)<span class="op">;</span></code></pre></div>
+<p>And if everything worked as planned, the Debugger tab should now be highlighted. Click on it and you should see how your browser is now stopped in the middle of the function execution where you put the debugger statement.</p>
+<p>That means that you can now access the function arguments no problem. Simply hit the escape key to open your interactive Console from the Debugger tab, and now you can inspect your local function variables. Type <code>num1</code> and hit Enter and you'll see what's in it (3). Type <code>num2</code> and you'll get 6. If you don't wanna do all that typing (poor thing), simply hover over the variables with your mouse and Chrome should be kind enough to show you their values in a small tooltip (text baloon thingy).</p>
+<p>To resume the execution of the function, press the little Play icon on the top left corner of your Console.</p></li>
+<li><p>Use the <code>console.log</code> method often. If you're more old school and you don't wanna stop the function's execution in the middle, you can simply check on your function's progress via some <code>console.log</code> statements thrown all over the place:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">add</span> (num1<span class="op">,</span> num2) <span class="op">{</span>
+  <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Num1: &quot;</span> <span class="op">+</span> num1<span class="op">,</span> <span class="st">&quot;Num2: &quot;</span> <span class="op">+</span> num2)<span class="op">;</span>
+  <span class="kw">var</span> result <span class="op">=</span> num1 <span class="op">+</span> num2<span class="op">;</span>
+  <span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Result: &#39;</span> <span class="op">+</span> result)<span class="op">;</span>
+  <span class="cf">return</span> result<span class="op">;</span>
+<span class="op">}</span></code></pre></div></li>
+<li><p>Use Firefox's Network tab when debugging HTTP requests. So now let's say you wanted to test our previous function, <code>makeRequest</code>. In order to do so, simply type the function as is in your Console (or just save it as a separate HTML file and run it from your browser):</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">makeRequest</span>(url<span class="op">,</span> callback) <span class="op">{</span>
+  <span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
+  <span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+    <span class="kw">var</span> parsedResponse <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(<span class="va">xhrObject</span>.<span class="at">responseText</span>)
+    <span class="at">callback</span>(parsedResponse)<span class="op">;</span>
+  <span class="op">};</span>
+  <span class="va">xhrObject</span>.<span class="at">open</span>(<span class="st">&#39;GET&#39;</span><span class="op">,</span> url<span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>
+  <span class="va">xhrObject</span>.<span class="at">send</span>()<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>and now invoke it with a valid URL:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> url <span class="op">=</span> <span class="st">&#39;https://freemusicarchive.org/api/trackSearch&#39;</span> <span class="op">+</span>
+  <span class="st">&#39;?q=like%20a%20virgin&#39;</span><span class="op">;</span>
+
+<span class="at">makeRequest</span>(url<span class="op">,</span> <span class="kw">function</span> (response) <span class="op">{</span>
+  <span class="va">console</span>.<span class="at">log</span>(response)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>What happened there? Well we've invoked our <code>makeRequest</code> function. If you wanted to see some more about the request the browser made on your behalf, you could navigate to the Network tab and look at the last request (most likely last) that was sent. See how it shows that it finished successfully (most likely)? It has a green circle next to it and the number 200 which indicates a successful request. If there's nothing there, invoke it again!</p>
+<p>Go ahead, be Dora the Explorer and click around. Click on your request and then click on some of the different tabs you have on the right: Headers, Params, and Response. That should give you some insight on how the internet works. You'll start making sense of it with time.</p></li>
+</ol>
+<p>So now that you're a badass at debugging code, we can continue our progress. Not before you get yourself a donut to get those sugars flowing in your system. I'm assuming you're into this stuff so much, you've forgotten to eat.</p>
+<div class='navigation'><a href='/www/about-docs-documentations.html'>About: Docs (Documentations)</a><a class='next' href='/www/chapter-10---conditionals.html'>Chapter 10 - Conditionals</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

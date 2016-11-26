@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-9---classes-and-objects">Chapter 9 - Classes and Objects</h2>
+<p>The second line in our <code>makeRequest</code> function says this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span></code></pre></div>
+<p>The keyword <code>new</code> in JS is used to instantiate (create) an object. So just like before, when we had this expression:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> peleg <span class="op">=</span> <span class="op">{};</span></code></pre></div>
+<p>create a literal object for us, this time we're gonna create an object in a more unique way -- by using a constructor method.</p>
+<p>In Object Oriented Programming (OOP), we have classes and objects. Objects are just instances of classes, which therefore can be thought of as object factories. So in this case, <code>XMLHttpRequest</code> is a built-in object factory (or class), which when we invoke it with the <code>new</code> keyword, returns us with an object of its type (or an instance of the class <code>XMLHttpRequest</code>).</p>
+<p>If you're still a bit confused about this, think of how we created our <code>peleg</code> object earlier. Another way for us to create that object is this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> peleg <span class="op">=</span> <span class="kw">new</span> <span class="at">Object</span>()<span class="op">;</span></code></pre></div>
+<p>And to make sure I wasn't lying about this whole bit, you can make use of the <code>instanceof</code> operator like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> peleg <span class="op">=</span> <span class="op">{};</span>
+
+peleg <span class="kw">instanceof</span> Object<span class="op">;</span> <span class="co">// should return true</span></code></pre></div>
+<p>So in our app, by using the built-in constructor function <code>XMLHttpRequest</code>, our computer knows to construct a special object which has all the properties necessary to make requests and handle their responses.</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
+<span class="kw">typeof</span> xhrObject<span class="op">;</span> <span class="co">// &#39;object&#39;</span></code></pre></div>
+<p>will still return the string &quot;object&quot; because it is an object. However,</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">xhrObject <span class="kw">instanceof</span> XMLHttpRequest<span class="op">;</span> <span class="co">// true</span></code></pre></div>
+<p>will return <code>true</code> as the object we've created is an instance of the class <code>XMLHttpRequest</code> and as you'd expect, it has all the &quot;special&quot; properties needed to make what we call an AJAX request:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">typeof</span> <span class="va">xhrObject</span>.<span class="at">open</span><span class="op">;</span> <span class="co">// &#39;function&#39;</span>
+<span class="kw">typeof</span> <span class="va">xhrObject</span>.<span class="at">send</span><span class="op">;</span> <span class="co">// &#39;function&#39;</span></code></pre></div>
+<h3 id="asynchronous-programming">Asynchronous Programming</h3>
+<p>AJAX, this time, is not referring to the bleach, although it is pronounced the same, but rather it is an acronym for Asynchronous JavaScript and XML. This acronym means absolutely nothing to most people, including myself, but let me (or Google) tell you that all that AJAX is is just a request to a server that's being done asynchronously -- or in the background -- without having to block the computer from executing any other code while it is doing so. This concept of asynchronous programming is huge in JS and you will encounter it in many other areas of the language. I'm not entirely sure why JS is inherently asynchronous, but my assumption is that it has a lot to do with the fact that JS is mainly used in the browser to interact with elements on the page and so since such operations can take a while and are partly not within the control of the JS interpreter, those processes need to not block other processes from taking place while it is waiting for those long operations to complete. This is especially important given that the browser, up until not too long ago, had only one processing thread for each of its tabs. So if our JS blocked the browser while fetching some data from a server, the user wouldn't be able to do anything that's controlled by JS on that page until it was done with the other operation! Not cool.</p>
+<p>To better illustrate to you this concept of single-threadedness and how JS is using its asynchronous nature to mitigate the issues that arise from that, let's think of it as one person who has only one hand. That person can only do one thing at a time with their one hand. Let's say said person wants to take a sip of some coffee. Well in that case their hand will be occupied holding the coffee mug and so they could not, perhaps, shake their friend's hand while doing so. That's kinda what it means that JS is single-threaded -- it can only do one thing at a time. However, sometimes our one-handed person is relying on other people, or external processes, to execute some action. In our coffee example, such externalities could be a barista making the coffee. While the coffee is being made, our person does not need to wait and be holding the empty cup of coffee. While the coffee is being prepared for our one-handed man, he can put his cup down, shake his friend's hand, and when the coffee is ready, be notified by the barista and only then pick up the cup again. That's kind of what asynchronous means in computer-land.</p>
+<p>The barista making our friend's coffee from the previous example could be analogous to what we call in computer-land IO operation. IO means Input/Output and is simply referring to the communication done between our computer and the outside world. An input device, for example could be considered your keyboard, and an output device would be your screen. When your computer needs to rely on such IO devices to do some operations which are somewhat unpredictable and could take a while, it is best for it to not block execution of other code while waiting since it doesn't know when they will be finished. This introduces plenty of issues since our code, therefore, can not be written in a linear manner anymore, and if some code is relying on the result of some IO operation, it will need to be executed only when that IO operation is complete. And that's when we use callbacks; we execute them only when an asynchronous operation is complete and they have all the data they need.</p>
+<p>I know this is somewhat high-level thinking and it's probably still hard for you to wrap your head around this topic, but I promise that with time it is going to get easier and clearer. Most languages are not so asynchronous in nature since they are not used in the browser, but we're stuck with JS, so it's important that we cover this concept. &quot;Then why the hell are we starting with JS?!&quot;, you're probably asking yourself now. Well, my friend, because JS is one of the most common languages out there. Also, if you start thinking about programming in an asynchronous manner, it will make you a better programmer, IMO. So don't hate. I'm doing you a favor.</p>
+<p>Moreover, since JS is basically the only language that can run in your browser, it is growing in popularity by the minute. This means tech giants like Google take interest in it and make it even better! So now everything is on the web! Or the web can do most of the things that we needed native applications for until very recently. We can build iPhone apps with JS. Code editors are written in JS. Even web servers are written in JS. It's definitely a good language to know. And mastering it and its asynchronous nature will make it easier for you to understand code written in other languages as well.</p>
+<p>Either way, if our one-handed-coffee-drinking man example was not clear enough, we are soon enough going to see how this whole bit happens in practice, sit tight.</p>
+<p>Back to the codez:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span></code></pre></div>
+<p>If you inspect the variable <code>xhrObject</code>, by simply typing it again in your Console and hitting Enter, you will see some of the properties and <em>methods</em> available for you inside of it.</p>
+<p>The next line in our <code>makeRequest</code> function is responsible for setting up our request object with the arguments necessary via the <em>method</em> <code>open</code>:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">xhrObject</span>.<span class="at">open</span>(<span class="st">&#39;GET&#39;</span><span class="op">,</span> url<span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span></code></pre></div>
+<p>Methods and functions are basically the same only that functions are called methods when they are part of an object. In this case <code>open</code> is a method since it's a property of our object <code>xhrObject</code>, but it is still invoked like any other function. Well it's still a function, only that it has access to its parent object (<code>xhrObject</code>) and therefore it can mutate its data and properties via a special reference to it via the <code>this</code> keyword which luckily for you we're not going to cover in this book.</p>
+<p>So we invoke the <code>open</code> method of <code>xhrObject</code>, and we pass it three arguments, the first one is the request <em>verb</em>. This is just a fancy term for what kind of request we are going to use. The most common one is a <code>GET</code> request and it means our request has no body and all of our data is passed to the server via the URL itself. So from our previous example, when our URL looked like this:</p>
+<pre><code>http://api.openweathermap.org/data/2.5/weather
+  ?appid=fa32f&amp;units=imperial&amp;lon=30&amp;lat=10</code></pre>
+<p>it was just passing our three different parameters via the URL to the server. The server then looked for the data and returned to us with a response.</p>
+<p>Another common request verb is <code>POST</code> and the main differentiator between it and the <code>GET</code> verb is that it can include a body. If we were to <code>POST</code> our data to the Open Weather Map API (instead of using <code>GET</code>), we would do something similar to the following. Keep in mind this is just speculation and I don't know if the Open Weather Map API accepts <code>POST</code> requests for simple weather data.</p>
+<p>Theoretically, our request URL could be just this with a <code>POST</code>:</p>
+<pre><code>http://api.openweathermap.org/data/2.5/weather</code></pre>
+<p>Note how the URL does not include the query parameters (<code>lon</code>, <code>lat</code>, and <code>units</code>) anymore. So we would have to pass our data in the body of the request itself. The browser's native behavior is to send HTML forms' data directly in the body when using a <code>POST</code>, but in our case, since we're setting up the request manually via the <code>XMLHttpRequest</code> class, we can pass the body as a string to the <code>send</code> method we're going to talk about later. Our request body could be identical to what we previously sent in the URL parameters and might look like this string:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="st">&quot;appid=fa32f&amp;units=imperial&amp;lon=30&amp;lat=10&quot;</span></code></pre></div>
+<p>Using a <code>POST</code> request with a body like we do here would allow us to provide more data than our <code>GET</code> request allows since URLs are limited in length. More often than not, however, <code>POST</code> requests are reserved for requests that are intended to make some changes to data and have side effects. For example when we submit a form on a site, our data most times is transferred via the body of a POST request and is intended to create or modify a record in a database the server has access to. But this is just a convention most choose to adhere to. Theoretically, a <code>GET</code> request could provide the same effects.</p>
+<p>Back to our code. Stop distracting me.</p>
+<p>The second argument we're passing to the <code>open</code> method of our <code>XMLHttpRequest</code> object is the URL we're about to make the request with, which includes the query parameters necessary for the Open Weather Map API to know what data to return to us like we illustrated above.</p>
+<p>The third parameter we're passing to <code>open</code> is a boolean, with the value of <code>true</code> Now, I initially had no idea why we normally use the boolean <code>true</code> as the third parameter here, but if you look at the Web API Documentation from our friends at the <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#open()">Mozilla Dev Network</a> you'll see that the third argument the <code>open</code> method takes is simply whether our request should be done asynchronously or not. We definitely want it to be async so it doesn't fuck with other browser functionality while it's waiting for the Open Weather Map API to respond. Who knows, they might be busy and take long to gather our data and therefore we opt for setting it to run asynchronously via the <code>true</code> parameter. Yup.</p>
+<p>We've drifted for a while, so again, here is our <code>makeRequest</code> function as initially defined in our app:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">makeRequest</span>(url<span class="op">,</span> callback) <span class="op">{</span>
+  <span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
+  <span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+    <span class="kw">var</span> parsedResponse <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(<span class="va">xhrObject</span>.<span class="at">responseText</span>)
+    <span class="at">callback</span>(parsedResponse)<span class="op">;</span>
+  <span class="op">};</span>
+  <span class="va">xhrObject</span>.<span class="at">open</span>(<span class="st">&#39;GET&#39;</span><span class="op">,</span> url<span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span>
+  <span class="va">xhrObject</span>.<span class="at">send</span>()<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>So now let's go back to our asynchronous jungle. After you initialize <code>xhrObject</code> with a new instance of <code>XMLHttpRequest</code> like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span></code></pre></div>
+<p>Be a doll and type the following in your Console and then hit Enter:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">xhrObject</span>.<span class="at">onload</span><span class="op">;</span></code></pre></div>
+<p>What did it return? <code>undefined</code>? Well, now we're gonna talk a bit about callbacks. Callbacks are something that you'll see used often in JS and it is the language's way to mitigate the issues that arise from its asynchronous nature.</p>
+<p>Basically, a callback is just a function. This function is passed as an argument to another function at invocation time so it -- the callback -- can be invoked by the parent function at a later time. Now if you used this description with me when I first learned JS, I would probably start crying.</p>
+<p>But seriously, lemme give it another shot.</p>
+<p>Remember our call to <code>makeRequest</code> from within <code>getWeather</code>?</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">getWeather</span>(coordinate<span class="op">,</span> callback) <span class="op">{</span>
+
+  <span class="co">// some code ...</span>
+
+  <span class="at">makeRequest</span>(url<span class="op">,</span> callback)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>In the variable <code>callback</code> we already had a function from when <code>getWeather</code> was invoked. If you look ahead to when we invoke <code>getWeather</code> you can see that its callback expects to receive just one argument called <code>weatherData</code>. Just believe me for now if you can't find where it happens.</p>
+<p>However, the data we receive from the Open Weather Map API is returned as a plain string, but we need an object. To make sure our callback gets exactly what it needs, we wrap it in another function which converts our response text into a valid JS object using the built-in JSON method, <code>parse</code>, and only then invokes the initial callback.</p>
+<p>Again, we're not adding all of this complexity for nothing. Since we don't wanna block our browser and prevent it from doing other tasks on the page while the request is in progress, we have to make use of callbacks. We'll talk more callbacks soon. Keep reading.</p>
+<p>But, &quot;Why does a request take time, anyway?&quot; you ask. Well think of it this way, while you were kind enough to hit a couple of keys to initiate a request, your computer had to get its shit together, form the request for you, wait to get an available network connection from the operating system (OS), send the packets (blocks of bytes) over the air to your router, then your router needed to send it to your ISP (Internet Service Provider which is Comcast/Verizon/Time Warner -- whichever one is your thief of choice) via cables (that basically span across the entire <a href="https://en.wikipedia.org/wiki/Transatlantic_communications_cable">world</a>), then they send the request to the destination server which could be placed on the other side of the planet (whatever that means), and then all of this needs to happen again from the other side of the server when it sends you the response (after it's done preparing it for you). AND on top of it all you complain when your computer wants to do more work while waiting for the request? Well, you ungrateful brat, I don't see you travel across continents at the speed of light (<a href="https://en.wikipedia.org/wiki/Optical_fiber#Index_of_refraction">or two-thirds of it</a>). But seriously now, my explanation barely even scratches the surface when it comes to describing what happens when your computer sends a request... If you're still curious you should check out <a href="https://github.com/alex/what-happens-when">this</a> phenomenal attempt at describing the process in more detail.</p>
+<p>So with our XHR request, since it's done asynchronously using AJAX, we don't know exactly when it will be done and ready with our result, but our application is kinda dependent on it -- we need that weather data before we can continue. So now our <code>xhrObject</code> has a special property called <code>onload</code> which is initially empty as you've seen, but in our case, we're going to fill it with our callback function that we've passed in to <code>makeRequest</code> earlier. So when our request to the server is complete (we've got the response data), then (and only then) we want our callback function to be called. And this achieves it:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+  <span class="at">callback</span>(<span class="va">xhrObject</span>.<span class="at">responseText</span>)<span class="op">;</span>
+<span class="op">};</span></code></pre></div>
+<p>To confuse you even more, we wrap this callback in one more function, called <em>event handler</em> and store it in the <code>onload</code> property of our <code>xhrObject</code>. This event handler, by default, will be called when the <code>load</code> event takes place which signifies the request has finished. Our handler, as you can see, finally invokes <code>callback</code> with our <code>xhrObject</code>'s <code>responseText</code> property which should now be populated with the response data.</p>
+<p>Keep in mind <code>callback</code> in the example above holds the function we declared when invoking <code>makeRequest</code> and it looks like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> (responseText) <span class="op">{</span>
+  response <span class="op">=</span> <span class="va">JSON</span>.<span class="at">parse</span>(responseText)<span class="op">;</span>
+  <span class="at">callback</span>(response)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>The callback the above function invokes is finally the callback we initially passed in to <code>getWeather</code>.</p>
+<p>So back to <code>makeRequest</code>, now it has all we need: we set its destination URL, the HTTP request verb (<code>GET</code>), and lastly, the code we want it to execute when it's complete (the <code>onload</code> callback). So let's set it free and push it to the vast ocean that is the Internets like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">xhrObject</span>.<span class="at">send</span>()<span class="op">;</span></code></pre></div>
+<p>Where <code>send</code>, as you've probably guessed by now, is yet another method in our <code>xhrObject</code> object.</p>
+<p>Capiche?</p>
+<p>If this makes sense to you, give yourself a pat on the back, pour yourself some whiskey, and go watch an episode of whatever the latest craze is on Netflix. Otherwise, if this just got you more confused, go get some sleep. Read this again tomorrow when your thinking isn't so murky anymore. I still love you.</p>
+<div class='navigation'><a href='/www/about-looking-it-up.html'>About: Looking it Up</a><a class='next' href='/www/about-docs-documentations.html'>About: Docs (Documentations)</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

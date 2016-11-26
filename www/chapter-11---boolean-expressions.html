@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-11---boolean-expressions">Chapter 11 - Boolean Expressions</h2>
+<p>So we just talked about <code>if</code>/<code>then</code>/<code>else</code> (conditional statements). Those route code execution based on the truthiness of the values given to them. Like earlier:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">position</span>.<span class="at">coords</span>) <span class="op">{</span>
+  <span class="co">// some code here</span>
+<span class="op">}</span></code></pre></div>
+<p>We expect <code>position.coords</code> to have an object in it which in JS is truthy. This means that when it's forced to act as a boolean value (coerced into boolean), its value is turned to <code>true</code>. So theoretically, to get the same result, we could just use the boolean value <code>true</code> by itself, like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="kw">true</span>) <span class="op">{</span>
+  <span class="co">// some code</span>
+<span class="op">}</span></code></pre></div>
+<p>and the code inside its block will get executed.</p>
+<p>So what other things yield boolean values (<code>true</code>/<code>false</code>)? Well I'm glad you've asked because it's important that you know this stuff. The answer is -- boolean expressions! Boolean expressions are expressions that yield the value of either <code>true</code> or <code>false</code>. Such expressions are the following:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="dv">4</span> <span class="op">==</span> <span class="st">&#39;4&#39;</span>   <span class="co">// true</span>
+<span class="dv">4</span> <span class="op">===</span> <span class="st">&#39;4&#39;</span>  <span class="co">// false</span>
+<span class="dv">4</span> <span class="op">!=</span> <span class="st">&#39;4&#39;</span>   <span class="co">// false</span>
+<span class="dv">4</span> <span class="op">!==</span> <span class="st">&#39;4&#39;</span>  <span class="co">// true</span>
+<span class="dv">4</span> <span class="op">&gt;</span> <span class="st">&#39;4&#39;</span>    <span class="co">// false</span>
+<span class="dv">4</span> <span class="op">&lt;</span> <span class="st">&#39;4&#39;</span>    <span class="co">// false</span>
+<span class="dv">4</span> <span class="op">&gt;=</span> <span class="st">&#39;4&#39;</span>   <span class="co">// true</span>
+<span class="dv">4</span> <span class="op">&lt;=</span> <span class="st">&#39;4&#39;</span>   <span class="co">// true</span></code></pre></div>
+<p>So here we're basically comparing two values. In all of the above examples, the first value (the one on the left) is the <em>number</em> four and the second value we're comparing it to (the one on the right), is the <em>string</em> four (because it's enclosed in quotes, it's a string).</p>
+<p>The first boolean expression yields the boolean value <code>true</code> since JS converts (coerces) the type of our values when we use the <em>non-strict</em> equality operator, or the <em>double</em> equals (<code>==</code>), and thus make the entire expression evaluate to <code>true</code>.</p>
+<p>Contrarily, when we use the <em>strict</em> equality operator (<em>triple</em> equals, or <code>===</code>), we just tell JS to <em>not</em> do any type conversion for us, and therefore, since one of our values is the <em>number</em> four and the other is the <em>string</em> four, those are <em>not</em> equal and thus yield the boolean value <code>false</code>.</p>
+<p>Some more comparison operators:</p>
+<p><code>!=</code> simply means <em>not</em> equal and <em>will</em> convert types for you. <code>!==</code> is the <em>strict</em> version of it and will NOT convert types.</p>
+<p><code>4 &gt; '4'</code> checks if the number four is greater than the <em>string</em> four and will do a conversion here as well. We will get <code>false</code> in this case, since four isn't greater than four.</p>
+<p>And the other way around <code>4 &lt; '4'</code> will also be <code>false</code>.</p>
+<p><code>4 &gt;= '4'</code> asks if the number four is greater than <em>or equal</em> to the string four. This operator also uses JavaScript's conversion of types and therefore will convert the second four (the string) to the number four and yield <code>true</code> since four <em>is</em> equal to four.</p>
+<p>So how can we use this stuff?</p>
+<p>Like this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">largest</span>(num1<span class="op">,</span> num2) <span class="op">{</span>
+  <span class="cf">if</span> (num1 <span class="op">&gt;</span> num2) <span class="op">{</span>
+    <span class="cf">return</span> num1<span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+    <span class="cf">return</span> num2<span class="op">;</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<p>In our function above we simply check to find which of the numbers supplied has the largest value. If the first number (<code>num1</code>) is greater than the number in <code>num2</code> then <code>num1</code> will be returned. Otherwise we have two options: either they're equal, or <code>num2</code> is greater than <code>num1</code>. In both cases it'll be safe to return <code>num2</code>.</p>
+<p>Note that when comparing values for equality, it is not advised to use the non-strict operators (<code>==</code> and <code>!=</code>) if you can use the strict ones instead (<code>===</code> and <code>!==</code>) in order to avoid unexpected results. For example, if we were to compare the number <code>0</code> with an empty string <code>&quot;&quot;</code> with the non-strict operator <code>==</code>, we would get <code>true</code>. That is because JS will convert them to be the same type before doing the comparison. Had we used the <em>strict</em> operator, <code>===</code>, we would get <code>false</code> since no type conversion would take place. So unless you're sure of what you're doing, do this: <code>if (num1 === num2)</code> and NOT <code>if (num1 == num2)</code>, Hmmkay?</p>
+<div class='navigation'><a href='/www/chapter-10---conditionals.html'>Chapter 10 - Conditionals</a><a class='next' href='/www/chapter-12---and-or-and-not-operators.html'>Chapter 12 - AND, OR, and NOT Operators</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

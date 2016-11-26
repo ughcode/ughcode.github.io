@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="chapter-6---functions">Chapter 6 - Functions</h2>
+<p>Back to our original application (the one that was supposed to get us weather information). The next step was the following:</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Declare a function that is responsible for getting the weather for a given coordinate.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">getWeather</span>(coordinate<span class="op">,</span> callback) <span class="op">{</span>
+
+  <span class="kw">var</span> url <span class="op">=</span> apiUrl <span class="op">+</span>
+    <span class="st">&#39;?appid=&#39;</span> <span class="op">+</span> apiKey <span class="op">+</span>
+    <span class="st">&#39;&amp;units=imperial&#39;</span> <span class="op">+</span>
+    <span class="st">&#39;&amp;lon=&#39;</span> <span class="op">+</span> <span class="va">coordinate</span>.<span class="at">longitude</span> <span class="op">+</span>
+    <span class="st">&#39;&amp;lat=&#39;</span> <span class="op">+</span> <span class="va">coordinate</span>.<span class="at">latitude</span><span class="op">;</span>
+
+  <span class="at">makeRequest</span>(url<span class="op">,</span> callback)<span class="op">;</span>
+
+<span class="op">}</span></code></pre></div>
+<p>You hear the word function and all you can think of is your math teacher in high school and it's making you sick. Well take a deep breath. Now read the first line above and STFU. What do you think our function will do? It is going to get us weather information for a given coordinate, genius.</p>
+<p>We declare a function with the keyword <code>function</code> and call it <code>getWeather</code> (see how it's using the same camelCase convention we used with variables?), and it takes arguments, in this case two arguments by the names of <code>coordinate</code> and <code>callback</code>. Boom. Those arguments are just variables that will be later passed to our function when we call it. So just like <code>apiUrl</code> from earlier was a variable, our arguments also carry the same properties only that they are <em>scoped</em> to our function and therefore they are only accessible inside of its body -- the code that is part of it and is surrounded by those curly braces.</p>
+<p>Let's code. Type the following in your Console (use Shift + Enter to start a new line) or in an HTML file (don't forget the <code>&lt;script&gt;</code> tags if you do).</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> first <span class="op">=</span> <span class="st">&#39;Hello&#39;</span><span class="op">;</span>
+
+<span class="kw">function</span> <span class="at">scopeExample</span>(last) <span class="op">{</span>
+  <span class="cf">return</span> first <span class="op">+</span> <span class="st">&#39; &#39;</span> <span class="op">+</span> last<span class="op">;</span>
+<span class="op">}</span>
+
+<span class="va">console</span>.<span class="at">log</span>( <span class="at">scopeExample</span>(<span class="st">&#39;World&#39;</span>) )<span class="op">;</span> <span class="co">// will print &#39;Hello World&#39;</span>
+
+<span class="va">console</span>.<span class="at">log</span>(first <span class="op">+</span> <span class="st">&#39; &#39;</span> <span class="op">+</span> last)<span class="op">;</span> <span class="co">// will error</span></code></pre></div>
+<p>First thing to note is the <code>return</code> statement in our function is used to return a value from its invocation. This may sound trivial, but in some cases you don't care for the value itself and you only care about the &quot;side-effects&quot; of the function. In those cases you can leave out the <code>return</code> statement as we've done in our weather application's functions thus far. When you leave out the <code>return</code> statement of a function, it will return <code>undefined</code>.</p>
+<p>Second, look at how our <code>scopeExample</code> function takes an argument by the name of <code>last</code>. Later on, when we call (or invoke) the function to be executed by the computer, we pass to it the string &quot;World&quot; which will be mapped to the argument <code>last</code>.</p>
+<p>Additionally, the above code should give you a pretty good idea as to how scopes work in JS. Our variable <code>first</code> was declared outside of our function's scope and therefore is considered to be in the <em>global</em> scope of our script. This means it can be accessed from anywhere, including from within the function as we've demonstrated above.</p>
+<p>On the other hand, the variable <code>last</code>, being our function's argument, has only the scope of our function's body and therefore can only be accessed from inside our function. When we try to access the value in <code>last</code> outside of our function, we should get an error since it was not even declared for that external, global scope.</p>
+<hr />
+<p>Functions employ the epitome of computers -- <em>efficiency</em>.</p>
+<p>Why would you write this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span><span class="op">;</span></code></pre></div>
+<p>When you can simply write this:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="dv">2</span> <span class="op">*</span> <span class="dv">6</span><span class="op">;</span></code></pre></div>
+<p>Both of the expressions above result in the value 12 and so using the latter and shorter expression is just more efficient in terms of communicating the concept of 12 (well I guess just writing '12' would be the easiest and most efficient).</p>
+<p>The same goes for computers: We don't want to repeat the code that's responsible for getting our weather information, so we simply put it in a function. It's an easy way to extract and encapsulate our code so we don't have to repeat ourselves when we want to execute it again.</p>
+<p>Functions are also used to group together pieces of code that do specific things; they help us with abstraction. To illustrate the concept of abstraction, think of your phone. You most likely don't have an exact idea as to how it works, but that doesn't mean you can't use it. As a matter of fact, you're damn proficient at using it without knowing the first thing about how it works! It's the same thing with our <code>getWeather</code> function: Once we wrote it and we know it works (which we don't yet), all we need to remember is that it gets our weather. Once it is proven to work, how it does it is none of our concern anymore and we move on to building the rest of our application.</p>
+<p>That's abstraction, and it is a precious concept to use when we're trying to build big and complex applications. After all, our brains are very limited. If we had to relearn each line of code to understand what our application does and build atop of it, we would quickly limit our pace of progress. Instead, I'm an advocate of grouping your code, even when used only once, into small functions with clear and descriptive names. If I see a function <code>getWeather</code> in any piece of software, I already have a pretty good idea as to what I can expect it to do. Don't you?</p>
+<p>Back to our function. We called it <code>getWeather</code> and so we know what it does. Its execution results in our weather data. But note how <code>getWeather</code> itself doesn't do much. First, it constructs our URL to include the coordinates and then it just calls the <code>makeRequest</code> function to do the only thing it's good for -- sending a request wherever we tell it to. In this case we're going to use it to send a request to the Open Weather Map's servers for the data we need!</p>
+<div class='navigation'><a href='/www/chapter-5---arrays.html'>Chapter 5 - Arrays</a><a class='next' href='/www/chapter-7---operators.html'>Chapter 7 - Operators</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

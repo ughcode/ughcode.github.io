@@ -35,7 +35,7 @@ p {
 }
 
 .cover {
-  max-width: 600px;
+  max-width: 590px;
   padding-top: 5%;
   min-height: 100%;
   position: relative;
@@ -74,11 +74,11 @@ p {
 }
 
 .social {
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: center;
 }
 
-.social > * {
+.social > .inline {
   display: inline-block;
   vertical-align: bottom;
   margin: 10px;

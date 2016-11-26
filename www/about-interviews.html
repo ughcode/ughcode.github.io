@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">
+<meta name="keywords" content="JavaScript,programming,coding,learn to code,HTML,CSS">
+<meta name="author" content="Peleg Rosenthal">
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+<meta property="og:url" content="https://ughco.de">
+<meta property="og:image" content="">
+<meta property="og:title" content="Ugh, Code">
+<meta property="og:description" content="A JavaScript Primer to Programming for the Slightly Less Enthused">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700" rel='stylesheet' type="text/css">
+<link rel="stylesheet" href="/www/assets/style.css" media="all" type="text/css">
+<title>Ugh, Code</title>
+
+</head>
+<body>
+  <div class="container">
+    <h2 id="about-interviews">About: Interviews</h2>
+<p>Time for a story:</p>
+<p>In the current tech scene, there is a huge demand for software engineers. With that being said, my first time interviewing for a software job didn't go very smoothly, to say the least. My interviewer, who I remember as an asshole (though he really wasn't), asked me about classes and objects, instance variables and class variables, scopes and other stuff that we've only skimmed the surface about in this book.</p>
+<p>Either way, all of those things I was asked about were reasonable to expect from a software engineer to know regardless of how junior I was. But I didn't know shit. I barely ever heard of the term Object Oriented Programming at the time. I was a true noob.</p>
+<p>A few years go by, now I can definitely answer such trivial questions about OOP (Object Oriented Programming). But guess what? This time when I interviewed for a job, I had no idea how to write a damn function to return the Fibonacci number at the N-th place.</p>
+<p>God dammit, I thought to myself. Why is it that last time I checked I was a pretty good developer, but still couldn't figure out how to land a job as a junior developer?</p>
+<p>Well in hindsight, I realized, all those interviewers always asked the same questions -- find the largest number; build a T9 dictionary (that annoying thing that would help(?) us text before we had smartphones); do the Fibonacci thing; sort an array; write a method that will calculate if a number is a prime; and a few other questions I'm not gonna list here so I can still trick you when you come interview with me one day.</p>
+<p>So at this point you must be asking yourself: &quot;Why don't interviewers come up with new questions to test those interviewees more accurately?&quot; Well I thought the same to myself, but it turns out it isn't that easy to come up with your own set of original interviewing questions. What most programmers do is solve pretty benign problems in their daily jobs, so they'd basically have to be pretty good researchers to &quot;invent&quot; one, and most interviewers just aren't. So they recycle questions they were asked before, or questions that someone else had posted on a blog that cycled on Hacker News (you'll see) under a title such as &quot;Interview Questions We Ask at Twitter.&quot; There's nothing wrong with that. It's just that by expecting you to know the answers to those questions all those interviewers test is your ability to memorize. Which shouldn't be undermined. Remembering how to iterate over an array will definitely be useful in your job, but keep in mind that all programmers, no matter how good they are today, at some point also saw the Fibonacci question for the first time. Do you think that when they did they had the solution to it impromptu? I doubt it. It's not an easy one to answer when you're in the midst of a stressful interview.</p>
+<p>For the curious, here is what most interviewers want you to get to in regards to the Fibonacci algorithm:</p>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">fibonacci</span>(n) <span class="op">{</span>
+  <span class="cf">if</span> (n <span class="op">&lt;</span> <span class="dv">3</span>) <span class="op">{</span>
+    <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+    <span class="cf">return</span> <span class="at">fibonacci</span>(n <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> <span class="at">fibonacci</span>(n <span class="op">-</span> <span class="dv">2</span>)<span class="op">;</span>
+  <span class="op">}</span></code></pre></div>
+<!-- TODO: this section, before this part, is kinda shitty -->
+<p>Go on, plug it in your Console, and make sure to play with it a bit so you understand what happens here. Whatever it is -- it was at one point hard on everyone to understand it.</p>
+<p>In fact, when solving problems, we all rely on previous knowledge. Had the interviewer not known what the Fibonacci sequence is, could they solve it then? Had they not known or worked with recursion (when we call the <code>fibonacci</code> function again from within itself in the code snippet above), could they solve it then? Fuck, let's go even further: Had they not known about basic algebra, addition, and subtraction, would they then be able to solve it?</p>
+<p>This isn't an attack on interviewers for being tricky, but rather to show you that there's absolutely no need for you to feel bad, or ashamed, for not knowing how to solve a problem. This is not a gauge for your intelligence. It does not reflect on how good a programmer you are or will be. In most cases, it just means you have yet to see this question in a textbook, on a blog post, or utterly fucked it up on an interview before. But you will fuck it up one day. You'll get it all wrong. And then you'll think about it, and then you'll solve it at home with the help of the Internets, and then you'll subconsciously forget that one day you had no clue how to solve this, and then you'll turn into an interviewer that asks the same question expecting everyone to have had the same experience she had; and the cycle continues.</p>
+<p>What will make you a good programmer, really, is having the ability to apply knowledge from a vast array of fields and experiences in your life. I don't think there is a formula to being a good programmer. But I'm pretty sure your life smarts are going to be of more value to you in this field than anything you will have read in a book. Including this one, duh.</p>
+<p>So whatever background that you come from, or how shitty your experience has been so far, you have a pretty good chance at programming. Just apply what you've learned in life. My short life experiences have given me an immense amount of help in my career as a problem solver. Who knows how much your experiences will help you.</p>
+<div class='navigation'><a href='/www/about-apis.html'>About: APIs</a><a class='next' href='/www/chapter-14---tying-it-all-together.html'>Chapter 14 - Tying it All Together!</a></div><div class='toc'><a href='/www/TOC.html'>Table of Contents</a></div><div class='toc'><a href='/index.html'>Home</a></div>
+    <div class="social">
+      <div class="amzn">
+  <a target="_blank" href="https://www.amazon.com/gp/product/1533278105/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1533278105&linkCode=as2&tag=ughcode-20&linkId=16bdd66b225bb68133d4c520d8d33259">
+    Buy on Amazon ($9.99)
+  </a>
+  <img src="//ir-na.amazon-adsystem.com/e/ir?t=ughcode-20&l=am2&o=1&a=1533278105" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> 
+</div>
+<div class="twitter inline">
+  <a href="https://twitter.com/share" class="twitter-share-button"
+    data-url="https://ughco.de" data-text="Ugh, Code - A JavaScript Primer to Programming for the Slightly Less Enthused">Tweet</a>
+  <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+</div>
+<div class="facebook inline">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1747107702176263";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="https://ughco.de" data-layout="button" data-mobile-iframe="true"></div>
+</div>
+<div class="reddit inline">
+  <a target="_blank"
+    href="//www.reddit.com/submit?url=https%3A%2F%2Fughco.de&title=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">
+    <img src="//www.redditstatic.com/spreddit7.gif" alt="submit to reddit" border="0" />
+  </a>
+</div>
+<div class="hacker-news inline">
+  <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20to%20Programming%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>
