@@ -29,11 +29,11 @@
 <h3 id="terminal">Terminal</h3>
 <p>The Terminal is that cool thing you see hackers use in film. Where they type random commands and the computer does crazy stuff. Only it's really not that crazy. If you have a Mac, I suggest downloading <a href="https://www.iterm2.com/">ITerm2</a> (IMO it is better than the built-in Terminal), and if you have Linux, the built-in Terminal should have all you need. Configure your Terminal to look just like that of a badass hacker (white or green font and black background) and you're good to go.</p>
 <p>You can use your Terminal to do everything you can do from the GUI and in much simpler ways. The command to copy a file is <code>cp</code>, the command to delete a file is <code>rm</code>, the command to find some file is <code>find</code>. Those commands are just applications we simply run by typing their name. It is the equivalent of double-clicking them, just more intuitive. Those commands normally take arguments (just like our functions did before) and flags (preceded by dashes <code>-</code>). For example if I want to remove all the files in a directory called <code>/Users/peleg/pron</code>, I would type:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">rm</span> -rf /Users/peleg/pron/*</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">rm</span> -rf /Users/peleg/pron/*</code></pre></div>
 <p>All that means is this: use the <code>rm</code> command and pass it the flags <code>r</code> and <code>f</code>. <code>r</code> stands for recursive and all it means is &quot;call <code>rm</code> on all sub-directories as well (so we remove them too)&quot;. And <code>f</code> means force so the command removes directories that have files in them as well (the different behavior is to abort directory deletion when there are files in it) The only argument we had in our case was the path to the directory including the <em>wildcard</em> character <code>*</code> meaning &quot;match all&quot; to get all the files and directories inside the <code>pron</code> directory: <code>/Users/peleg/pron/*</code></p>
 <p>Looking for how to copy files from one of the computers in your network to another? Look it up! It's easy. Once you have the name of the command to do so, you could use the <code>man</code> command. The <code>man</code> command gives you the manual to how you can use other commands. So for example: <code>man rm</code> will give you all the deets you need to know for the <code>rm</code> command. If the <code>man</code> command just confuses you more, you could install (bro-pages)[http://bropages.org/] and use the <code>bro</code> command which just gives you direct examples instead of detailed explanations.</p>
 <p>Now let's say you want to find and extract all of the email addresses in a directory called <code>/Users/peleg/contacts</code> on your computer which contains a bunch of text files with your friends' contact info. We could use the <code>grep</code> command to do so:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> /Users/peleg/contacts/</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> /Users/peleg/contacts/</code></pre></div>
 <p>This is a bit more complex, but just to pique your interest, let's try to see what we have here:</p>
 <ul>
 <li><code>grep</code> is the name of the command.</li>
@@ -45,19 +45,19 @@
 <li><p><code>/Users/peleg/contacts/</code> is our second argument, and is the path to where we want <code>grep</code> to look for matches.</p></li>
 </ul>
 <p>Try it for yourself! Create a directory called <code>contacts</code> and populate it with a bunch of text files with some random text and hide some emails inside of it.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cd</span> ~/          <span class="co"># Change directory to your home directory</span>
-$ <span class="kw">pwd</span>            <span class="co"># See what directory we&#39;re in</span>
-$ <span class="kw">mkdir</span> contacts <span class="co"># Create a &quot;contacts&quot; directory</span>
-$ <span class="kw">cd</span> contacts    <span class="co"># Change directory to &quot;contacts&quot;</span>
-$ <span class="kw">touch</span> file.txt <span class="co"># Create an empty text file</span>
-$ <span class="kw">open</span> file.txt  <span class="co"># Open the file in the default app for txt files</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="bu">cd</span> ~/          # Change directory to your home directory
+$ <span class="bu">pwd</span>            # See what directory we<span class="st">&#39;re in</span>
+<span class="st">$ mkdir contacts # Create a &quot;contacts&quot; directory</span>
+<span class="st">$ cd contacts    # Change directory to &quot;contacts&quot;</span>
+<span class="st">$ touch file.txt # Create an empty text file</span>
+<span class="st">$ open file.txt  # Open the file in the default app for txt files</span></code></pre></div>
 <p>Now enter a bunch of random text in your text file and hide a few email addresses in it. The only requirement is for you to separate the email addresses from the rest of the text with a non-word character (meaning space, period, comma, new line, etc.).</p>
 <p>And then execute our <code>grep</code> command:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> ./</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> ./</code></pre></div>
 <p>The period (<code>./</code>) we pass in to <code>grep</code> as the second argument simply means &quot;search in the current directory&quot; which happens to be <code>~/contacts</code> if you followed the instructions above.</p>
 <p>Hit Enter, and you should get yourself a list of all the email addresses from inside your file (or files if you created more than one)!</p>
 <p>Now what if you wanna save this output to some file? Easy:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> ./ <span class="kw">&gt;</span> output.txt</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> ./ <span class="op">&gt;</span> output.txt</code></pre></div>
 <p>The <code>&gt;</code> (angle bracket) redirects the output of our <code>grep</code> command to the <code>output.txt</code> file (it will create it if it doesn't exist).</p>
 <p>So as you can see, your Terminal, along with the built-in commands, is a pretty powerful tool. So next time you need to do something on a large scale like parsing emails out of a bunch of files and saving them to a CSV file or what not, put the time required to learn how to do it from your Terminal. At first it may be faster and easier to just do it by hand, but it's a worthwhile investment which will serve you well.</p>
 <h3 id="git-is-not-github">Git (is not GitHub)</h3>
@@ -112,6 +112,14 @@ $ <span class="kw">open</span> file.txt  <span class="co"># Open the file in the
 <div class="hacker-news inline">
   <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
 </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93492375-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
     </div>
   </div>
