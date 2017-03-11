@@ -57,7 +57,7 @@ switch to FF exclusively. its about time Chrome goes away (?) -->
 <span class="op">&lt;</span><span class="ss">/script&gt;</span></code></pre></div>
 <p>The file could be called something like <code>hello\_world.html</code>. Now open the file in Firefox, open the Console (Cmd + Shift + I, then click &quot;Console&quot;), and you should see &quot;Hello, World!&quot; printed in it.</p>
 <p>So now that we're all on the same page (and it's important that we are), let's program our first (real) application. I'm going to show you in a few lines of JavaScript how to get the current weather in your location from a free and awesome service called the <a href="http://openweathermap.org">Open Weather Map</a>. Keep in mind you are not expected to understand <em>any</em> of the following code, but you should try to understand <em>all</em> of it. Try hard, even if it hurts; that's the only way you'll learn.</p>
-<p></p>
+
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">/*
   Filename: weather_app.html
   Find me on GitHub: 
@@ -137,7 +137,7 @@ switch to FF exclusively. its about time Chrome goes away (?) -->
   <span class="op">}</span>)<span class="op">;</span>
 <span class="op">}</span>
 
-<span class="op">&lt;</span><span class="ss">/script&gt;</span></code></pre></div>
+<span class="kw">&lt;/script&gt;</span></code></pre></div>
 <p>Now this is a shit-ton of information even though it looks concise. But don't you worry, we're going to dissect this code in the rest of the book.</p>
 <p>First thing to note is that in the code above, the text between the <code>/* ... */</code> is comments for humans only and the computer doesn't care one bit about them when executing our application.</p>
 <p>Now here's a quick overview of the entire application we just wrote as noted in the comments preceding our <em>functions</em> above:</p>
@@ -202,6 +202,14 @@ switch to FF exclusively. its about time Chrome goes away (?) -->
 <div class="hacker-news inline">
   <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
 </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93492375-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
     </div>
   </div>

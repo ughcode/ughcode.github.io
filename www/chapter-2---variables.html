@@ -31,7 +31,7 @@
 
 <span class="kw">var</span> apiKey <span class="op">=</span> <span class="st">&#39;fa32f&#39;</span><span class="op">;</span> <span class="co">// REPLACE WITH YOUR KEY!</span></code></pre></div>
 <p>Let's look at the first variable declaration on the first line. The part on the right surrounded by single quotes (<code>'</code>) is a string we don't need the computer to do much with. A string is a sequence of characters (could be letters, numerals, or any other symbols) surrounded by quotes. The example above is an instruction for the computer to create a string and store it in its memory. In this scenario our string is part of the URL where we're going to get our weather data from.</p>
-<p>Note: Strings in JS can be enclosed by single or double quotes. So <code>'this is a valid string'</code> and <code>&quot;This is a valid one too&quot;</code>. But they must be enclosed by quotes or else it's not a string!</p>
+<p>Note that Strings in JS can be enclosed by single (<code>'</code>) or double (<code>&quot;</code>) quotes. So <code>'this is a valid string'</code> and <code>&quot;This is a valid one too&quot;</code>. But they must be enclosed by quotes or else it's not a string!</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> apiUrl <span class="op">=</span> <span class="st">&#39;http://api.openweathermap.org/data/2.5/weather&#39;</span><span class="op">;</span></code></pre></div>
 <p>We declare a variable with the keyword <code>var</code>, and then assign a value to it with the following equals sign (<code>=</code>). This just means we instruct the computer to (1) allocate some memory for our application and (2) store in it a reference to where our string will live in the computer's memory. By keeping a reference to our string, we can now access it using the <code>apiUrl</code> variable.</p>
 <p>If you were to not trust your computer (you're just getting to know each other, that's cool), simply run the following commands in your Console and see for yourself. Again, the first command stores reference to our URL string in a variable called <code>apiUrl</code>. The second command simply prints its content to the screen.</p>
@@ -89,6 +89,14 @@
 <div class="hacker-news inline">
   <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
 </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93492375-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
     </div>
   </div>

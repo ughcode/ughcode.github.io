@@ -395,7 +395,7 @@ body <span class="kw">{</span>
 <p>With Node, our application is going to run a bit differently. First off, we need to create another file that we could run as an executable from the command-line and will be responsible for interacting with our <code>weather.js</code> file.</p>
 <h4 id="weather_cli.js">weather_cli.js</h4>
 <p>This is going to be the entrance point to our app for when we will run it from the command-line as shown below. Keep in mind the dollar sign (<code>$</code>) is just to notate a command-line prompt. You do not need to type it.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">node</span> weather_cli 11211 80634</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">node</span> weather_cli 11211 80634</code></pre></div>
 <p>And the file itself:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="co">/*</span>
 <span class="co">  Filename: weather_cli.js</span>
@@ -514,15 +514,15 @@ body <span class="kw">{</span>
 <span class="op">}</span>)()<span class="op">;</span></code></pre></div>
 <p>Notice how we're only exposing <code>weatherForZipCodes</code> when we're using Node (in a command-line environment) as the user location API is only available in the browser. Additionally, if our <code>if</code> statement indicated we're in a command-line environment, we initialize <code>XMLHttpRequest</code> with a custom Node module which we still need to install. Since <code>XMLHttpRequest</code> is originally only available in the browser, we'll have to install an external module with the same interface from <a href="https://www.npmjs.com/package/xmlhttprequest">here</a>. To do so, in your Terminal when you're in the same directory of your application type:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># To see in what directory I&#39;m currently in:</span>
-$ <span class="kw">pwd</span> <span class="co"># Yields: /Users/peleg/code/book/app</span>
+$ <span class="bu">pwd</span> <span class="co"># Yields: /Users/peleg/code/book/app</span>
 
 <span class="co"># To see what files are in this directory:</span>
-$ <span class="kw">ls</span> <span class="co"># Yields: weather.js weather_cli.js ...</span>
+$ <span class="fu">ls</span> <span class="co"># Yields: weather.js weather_cli.js ...</span>
 
 <span class="co"># To install the module &quot;xmlhttprequest&quot;:</span>
-$ <span class="kw">npm</span> install xmlhttprequest <span class="co"># will take a minute...</span></code></pre></div>
+$ <span class="ex">npm</span> install xmlhttprequest <span class="co"># will take a minute...</span></code></pre></div>
 <p>And to finally run this whole thing:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">node</span> weather_cli 90210 11211 80634</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">node</span> weather_cli 90210 11211 80634</code></pre></div>
 <p>Outputs:</p>
 <pre><code>Current Temperature for Beverly Hills: 74.23
 Current Temperature for Long Island City: 52.07
@@ -562,6 +562,14 @@ Current Temperature for Greeley: 64.27</code></pre>
 <div class="hacker-news inline">
   <a target="_blank" href="http://news.ycombinator.com/submitlink?u=https%3A%2F%2Fughco.de&t=Ugh%2C%20Code%20-%20A%20JavaScript%20Primer%20for%20the%20Slightly%20Less%20Enthused">Vote on HN</a>
 </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93492375-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
     </div>
   </div>
