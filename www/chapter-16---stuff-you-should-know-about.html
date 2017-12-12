@@ -46,11 +46,11 @@
 </ul>
 <p>Try it for yourself! Create a directory called <code>contacts</code> and populate it with a bunch of text files with some random text and hide some emails inside of it.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="bu">cd</span> ~/          # Change directory to your home directory
-$ <span class="bu">pwd</span>            # See what directory we<span class="st">&#39;re in</span>
-<span class="st">$ mkdir contacts # Create a &quot;contacts&quot; directory</span>
-<span class="st">$ cd contacts    # Change directory to &quot;contacts&quot;</span>
-<span class="st">$ touch file.txt # Create an empty text file</span>
-<span class="st">$ open file.txt  # Open the file in the default app for txt files</span></code></pre></div>
+$ <span class="bu">pwd</span>            # See what directory we are in
+$ <span class="fu">mkdir</span> contacts <span class="co"># Create a &quot;contacts&quot; directory</span>
+$ <span class="bu">cd</span> contacts    # Change directory to <span class="st">&quot;contacts&quot;</span>
+$ <span class="fu">touch</span> file.txt <span class="co"># Create an empty text file</span>
+$ <span class="ex">open</span> file.txt  # Open the file in the default app for txt files</code></pre></div>
 <p>Now enter a bunch of random text in your text file and hide a few email addresses in it. The only requirement is for you to separate the email addresses from the rest of the text with a non-word character (meaning space, period, comma, new line, etc.).</p>
 <p>And then execute our <code>grep</code> command:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">grep</span> -ronE <span class="st">&#39;\w+@\w+\.\w+&#39;</span> ./</code></pre></div>

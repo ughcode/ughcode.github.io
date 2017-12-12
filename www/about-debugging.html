@@ -48,7 +48,7 @@
   <span class="va">console</span>.<span class="at">log</span>(<span class="st">&#39;Result: &#39;</span> <span class="op">+</span> result)<span class="op">;</span>
   <span class="cf">return</span> result<span class="op">;</span>
 <span class="op">}</span></code></pre></div></li>
-<li><p>Use Firefox's Network tab when debugging HTTP requests. So now let's say you wanted to test our previous function, <code>makeRequest</code>. In order to do so, simply type the function as is in your Console (or just save it as a separate HTML file and run it from your browser):</p>
+<li><p>Use Chrome's Network tab when debugging HTTP requests. So now let's say you wanted to test our previous function, <code>makeRequest</code>. In order to do so, simply type the function as is in your Console (or just save it as a separate HTML file and run it from your browser):</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">makeRequest</span>(url<span class="op">,</span> callback) <span class="op">{</span>
   <span class="kw">var</span> xhrObject <span class="op">=</span> <span class="kw">new</span> <span class="at">XMLHttpRequest</span>()<span class="op">;</span>
   <span class="va">xhrObject</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
